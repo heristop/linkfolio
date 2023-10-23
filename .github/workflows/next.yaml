@@ -20,6 +20,6 @@ jobs:
           pnpm run lint
       - uses: cypress-io/github-action@v5
         with:
-          working-directory: packages/front
+          working-directory: ./
           build: pnpm run build
           start: pnpm run dev
