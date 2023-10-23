@@ -21,10 +21,10 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
-      - name: Run Playwright tests
-        run: pnpm exec playwright test
       - name: Run Server
         run: pnpn run dev
+      - name: Run Playwright tests
+        run: pnpm exec playwright test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
