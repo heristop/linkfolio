@@ -9,8 +9,9 @@ import {
   threadsIcon,
   xIcon,
 } from "./assets";
+import { UserConfigType } from "./types";
 
-const defaultConfig = {
+const defaultConfig: UserConfigType = {
   socialNetworks: [
     {
       url: "https://",

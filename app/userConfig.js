@@ -8,7 +8,7 @@ import {
   snapchatIcon,
   threadsIcon,
   xIcon,
-} from "linkfolio/assets";
+} from "../src/assets";
 
 const userConfig = {
   avatarSrc: "/assets/avatar.webp",

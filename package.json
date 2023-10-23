@@ -1,6 +1,6 @@
 {
   "name": "linkfolio",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "Minimalist web page that acts as a hub for all your online presence",
   "main": "./src/index.ts",
   "scripts": {
@@ -29,18 +29,19 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "next": "13.5.5",
+    "next": "^13.5.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.32.6"
   },
   "devDependencies": {
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.11",
+    "@playwright/test": "^1.39.0",
     "@types/node": "^20.8.6",
     "@types/react": "^18.2.28",
     "@types/react-dom": "^18.2.13",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "autoprefixer": "^10.4.16",
-    "cypress": "^13.3.2",
     "eslint": "^8.51.0",
     "eslint-config-next": "13.5.5",
     "husky": "^8.0.3",
