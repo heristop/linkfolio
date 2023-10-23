@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  body {
+    color: theme('colors.primary');
+    @apply bg-gradient-background;
+  }
+
+  .secondary-color {
+    color: theme('colors.secondary');
+  }
+
+  a:hover {
+    color: theme('colors.secondary');
+  }
+
+  @keyframes fade-in-up-bounce {
+    from {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+
+    40% {
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up-bounce {
+    animation: fade-in-up-bounce 0.8s forwards;
+  }
+
+  .description {
+    white-space: break-spaces;
+  }
+}
