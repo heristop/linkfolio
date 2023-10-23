@@ -11,13 +11,13 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - run: |
-          pnpm install
-          pnpm run lint
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "pnpm"
+      - run: |
+          pnpm install --frozen-lockfile
+          pnpm run lint
       - uses: cypress-io/github-action@v5
         with:
           working-directory: packages/front

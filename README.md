@@ -81,9 +81,7 @@ LinkFolio uses TailwindCSS for styling. If you wish to customize styles, you can
 
 ## Example Usage
 
-For a practical implementation of LinkFolio, check out my example repository:
-
-[LinkFolio Example Repository](https://github.com/heristop/my-linkfolio)
+For a practical implementation of LinkFolio, check out my example repository: [My LinkFolio Page](https://github.com/heristop/my-linkfolio).
 
 This repository demonstrates how to integrate and customize LinkFolio in a Next.js project.
 
