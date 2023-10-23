@@ -1,4 +1,5 @@
 import { defineConfig } from "cypress";
+import path from "path";
 
 export default defineConfig({
   e2e: {
@@ -11,6 +12,13 @@ export default defineConfig({
     devServer: {
       framework: "next",
       bundler: "webpack",
+      webpackConfig: {
+        resolve: {
+          alias: {
+            "@linkfolio": path.resolve(__dirname, "../src"),
+          },
+        },
+      },
     },
   },
 });

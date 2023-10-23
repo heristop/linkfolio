@@ -9,7 +9,7 @@ import {
   threadsIcon,
   xIcon,
 } from "linkfolio/assets";
-  
+
 const userConfig = {
   avatarSrc: "/assets/avatar.webp",
   avatarAlt: "Avatar",

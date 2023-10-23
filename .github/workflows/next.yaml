@@ -20,6 +20,7 @@ jobs:
           pnpm run lint
       - uses: cypress-io/github-action@v5
         with:
+          command: npx cypress info
           working-directory: ./
-          build: pnpm run build
-          start: pnpm run dev
+          #build: pnpm run build
+          #start: pnpm run dev
