@@ -12,7 +12,7 @@ jobs:
         with:
           version: 8
       - run: |
-          pnpm install --frozen-lockfile
+          pnpm install
           pnpm run lint
       - uses: actions/setup-node@v3
         with:
