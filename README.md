@@ -10,9 +10,11 @@ A sleek, minimalist landing page that connects your audience to all of your onli
 
 ## Features
 
-- 🚀 Built with Next.js for optimal performance
-- 💅 Styled using TailwindCSS for a modern look
-- 🛠️ Easy configuration to add or remove links
+🚀 Built with Next.js for optimal performance
+
+💅 Styled using TailwindCSS for a modern look
+
+🛠️ Easy configuration to add or remove links
 
 ## Installation:
 
@@ -20,7 +22,7 @@ There are two methods to get started with LinkFolio:
 
 ### 1. Integrating into an existing Next.js project
 
-- **Installation**
+**Installation**
 
 Install LinkFolio in your Next.js / Tailwind project:
 
@@ -38,7 +40,7 @@ yarn add linkfolio
 pnpm add linkfolio
 ```
 
-- **Implementation**
+**Implementation**
 
 Import and utilize the `LinkFolio` component in your project:
 

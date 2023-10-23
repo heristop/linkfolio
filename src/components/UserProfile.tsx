@@ -6,10 +6,10 @@ function UserProfile({ userConfig }: UserProfileProps) {
   return (
     <header className="profile mb-12 text-center">
       <Image
-        src={(userConfig.avatarSrc ??= defaultAvatarIcon)}
-        alt={(userConfig.avatarAlt ??= "Avatar")}
-        width={(userConfig.avatarSize ??= 120)}
-        height={(userConfig.avatarSize ??= 120)}
+        src={(userConfig.avatarSrc ?? defaultAvatarIcon)}
+        alt={(userConfig.avatarAlt ?? "Avatar")}
+        width={(userConfig.avatarSize ?? 120)}
+        height={(userConfig.avatarSize ?? 120)}
         className="avatar rounded-full mb-4 mx-auto shadow-lg"
       />
 
