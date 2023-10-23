@@ -22,7 +22,7 @@ There are two methods to get started with LinkFolio:
 
 ### 1. Integrating into an existing Next.js project
 
-- **Installation**
+**Installation**
 
 Install LinkFolio in your Next.js / Tailwind project:
 
@@ -40,7 +40,7 @@ yarn add linkfolio
 pnpm add linkfolio
 ```
 
-- **Implementation**
+**Implementation**
 
 Import and utilize the `LinkFolio` component in your project:
 
