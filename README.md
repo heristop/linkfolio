@@ -10,9 +10,11 @@ A sleek, minimalist landing page that connects your audience to all of your onli
 
 ## Features
 
-- 🚀 Built with Next.js for optimal performance
-- 💅 Styled using TailwindCSS for a modern look
-- 🛠️ Easy configuration to add or remove links
+🚀 Built with Next.js for optimal performance
+
+💅 Styled using TailwindCSS for a modern look
+
+🛠️ Easy configuration to add or remove links
 
 ## Installation:
 
