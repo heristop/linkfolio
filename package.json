@@ -1,6 +1,6 @@
 {
   "name": "linkfolio",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Minimalist web page that acts as a hub for all your online presence",
   "main": "./src/index.ts",
   "scripts": {
