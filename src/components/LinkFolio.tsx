@@ -10,7 +10,7 @@ function LinkFolio({
   footerContent,
 }: LinkFolioProps) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-10 md:p-16 lg:px-15% lg:py-10 max-w-screen-lg mx-auto font-roboto">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-10 md:p-16 lg:px-15% lg:py-10 max-w-screen-lg lg:mx-auto font-roboto rounded-lg m-4 shadow-lg">
       <UserProfile userConfig={userConfig || defaultConfig} />
 
       <SocialLinks userConfig={userConfig || defaultConfig} />

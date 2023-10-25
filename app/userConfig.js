@@ -18,9 +18,21 @@ const userConfig = {
   socialNetworks: [
     {
       url: "https://",
+      iconSrc: xIcon,
+      title: "Twitter / X",
+      description: "#DevLife #CodeNewbie 🐦",
+    },
+    {
+      url: "https://",
       iconSrc: githubIcon,
       title: "GitHub",
       description: "Versioning my projects 📁",
+    },
+    {
+      url: "https://",
+      iconSrc: linkedinIcon,
+      title: "LinkedIn",
+      description: "Building my professional network. Let's connect! 🌐",
     },
     {
       url: "https://",
@@ -33,18 +45,6 @@ const userConfig = {
       iconSrc: instagramIcon,
       title: "Instagram",
       description: "Capturing life's frames 📷",
-    },
-    {
-      url: "https://",
-      iconSrc: xIcon,
-      title: "Twitter / X",
-      description: "#DevLife #CodeNewbie 🐦",
-    },
-    {
-      url: "https://",
-      iconSrc: linkedinIcon,
-      title: "LinkedIn",
-      description: "Building my professional network. Let's connect! 🌐",
     },
     {
       url: "https://",
@@ -74,4 +74,3 @@ const userConfig = {
 };
 
 export default userConfig;
-  

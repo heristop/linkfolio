@@ -15,8 +15,8 @@ function Footer({ children }: FooterProps) {
           src={linkfolioIcon}
           title="LinkFolio"
           alt="LinkFolio"
-          width={30}
-          height={30}
+          width={40}
+          height={40}
         />
 
         {children && children.defaultContent ? (

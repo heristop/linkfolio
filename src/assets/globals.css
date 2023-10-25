@@ -16,6 +16,10 @@
     color: theme('colors.secondary');
   }
 
+  .description {
+    white-space: break-spaces;
+  }
+
   @keyframes fade-in-up-bounce {
     from {
       opacity: 0;
@@ -36,7 +40,19 @@
     animation: fade-in-up-bounce 0.8s forwards;
   }
 
-  .description {
-    white-space: break-spaces;
+  @keyframes soft-bounce {
+    from {
+      transform: translateY(0);
+    } 
+    40% {
+      transform: translateY(-1px);
+    }
+    to {
+      transform: translateY(0px);
+    }
+  }
+
+  .animate-bounce {
+    animation: soft-bounce 0.7s forwards;
   }
 }

@@ -6,7 +6,7 @@ A sleek, minimalist landing page that connects your audience to all of your onli
 
 ## Preview
 
-![Preview](https://github.com/heristop/linkfolio/blob/main/docs/preview.png?raw=true)
+![Preview](https://github.com/heristop/linkfolio/blob/main/docs/preview.jpg?raw=true)
 
 ## Features
 
@@ -79,7 +79,7 @@ Using this method, you can quickly deploy a LinkFolio page with Vercel using the
 
 ## Customizing Styles with TailwindCSS
 
-LinkFolio uses TailwindCSS for styling. If you wish to customize styles, you can use the default Tailwind configuration (`tailwind.config.ts`) provided with the package.
+LinkFolio uses TailwindCSS for styling. If you wish to customize styles, you can use the default Tailwind configuration `tailwind.config.ts` provided with the package.
 
 ## Example Usage
 
