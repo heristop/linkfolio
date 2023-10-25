@@ -1,5 +1,5 @@
 import defaultAvatarIcon from "./img/avatar.webp";
-import linkfolioIcon from "./img/linkfolio.webp";
+import linkfolioIcon from "./img/linkfolio_logo.svg";
 import blueSkyIcon from "./img/bluesky.webp";
 import facebookIcon from "./img/facebook.webp";
 import githubIcon from "./img/github.webp";
