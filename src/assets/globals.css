@@ -55,4 +55,23 @@
   .animate-bounce {
     animation: soft-bounce 0.7s forwards;
   }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+  }
+  
+  @keyframes blink {
+    50% {
+      border-color: transparent;
+    }
+  }
+  
+  .alias-typing {
+    overflow: hidden;
+    border-right: .2em solid;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end), blink 1s step-end infinite;
+  }
 }
