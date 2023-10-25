@@ -5,7 +5,7 @@ import { SocialNetworkProps } from "../types";
 const SocialNetwork: React.FC<SocialNetworkProps> = ({ config, delay = 0 }) => {
   return (
     <div
-      className="flex items-start justify-center p-2 w-full md:w-1/4 rounded hover:bg-gray-200 hover:opacity-90 transition duration-300 ease-in-out fade-in-up-bounce"
+      className="network flex items-start justify-center p-2 w-full md:w-1/4 rounded hover:bg-gray-200 hover:opacity-90 transition duration-300 ease-in-out fade-in-up-bounce"
       style={{ animationDelay: `${delay}ms` }}
     >
       <a href={config.url} target="blank" className="group">
