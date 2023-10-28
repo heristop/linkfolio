@@ -1,11 +1,14 @@
 {
   "name": "linkfolio",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Minimalist web page that acts as a hub for all your online presence",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:package": "tsup --tsconfig tsconfig.build.json",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,7 +22,7 @@
     "linktree"
   ],
   "files": [
-    "src",
+    "dist",
     "tailwind.config.ts",
     "LICENSE",
     "README.md"
@@ -31,26 +34,33 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "next": "^13.5.6",
+    "next": "^13.5.6|^14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "tailwindcss": "^3.3.5",
     "sharp": "^0.32.6"
+  },
+  "peerDependenciesMeta": {
+    "sharp": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.11",
     "@playwright/test": "^1.39.0",
-    "@types/node": "^20.8.6",
-    "@types/react": "^18.2.28",
-    "@types/react-dom": "^18.2.13",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@swc/core": "^1.3.95",
+    "@types/node": "^20.8.9",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.51.0",
+    "eslint": "^8.52.0",
     "eslint-config-next": "13.5.5",
     "husky": "^8.0.3",
-    "lint-staged": "^15.0.1",
+    "lint-staged": "^15.0.2",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
-    "tailwindcss": "^3.3.3",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   }
 }
