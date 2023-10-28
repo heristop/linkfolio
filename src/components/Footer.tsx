@@ -1,8 +1,9 @@
+import React from "react";
 import Image from "next/image";
 import { FooterProps } from "../types";
 import { linkfolioIcon } from "../assets";
 
-function Footer({ children }: FooterProps) {
+const Footer = ({ children }: FooterProps) => {
   return (
     <footer className="w-48 mx-auto mt-10 bg-gray-150 text-gray-600 px-6 py-2 text-xs rounded">
       <a
@@ -27,6 +28,6 @@ function Footer({ children }: FooterProps) {
       </a>
     </footer>
   );
-}
+};
 
 export default Footer;

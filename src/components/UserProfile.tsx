@@ -1,22 +1,24 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { UserProfileProps } from "../types";
 import { defaultAvatarIcon } from "../assets";
 
-function UserProfile({ userConfig }: UserProfileProps) {
-  const aliasText = userConfig.alias ?? "@your_alias";
+let aliasText = "";
 
-  const [isMounted, setIsMounted] = React.useState(false);
-  const [typing, setTyping] = React.useState(false);
-  const [alias, setAlias] = React.useState("");
-  const [index, setIndex] = React.useState(0);
+const UserProfile = ({ userConfig }: UserProfileProps) => {
+  aliasText = userConfig.alias ?? "@your_alias";
 
-  React.useEffect(() => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [alias, setAlias] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typing && index < aliasText.length) {
       const timeoutId = setTimeout(() => {
         setAlias((prev) => prev + aliasText[index]);
@@ -27,7 +29,7 @@ function UserProfile({ userConfig }: UserProfileProps) {
     }
   }, [alias, typing, index]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isMounted) {
       const timeoutId = setTimeout(() => setTyping(true), 1000);
 
@@ -55,6 +57,6 @@ function UserProfile({ userConfig }: UserProfileProps) {
       </p>
     </header>
   );
-}
+};
 
 export default UserProfile;
