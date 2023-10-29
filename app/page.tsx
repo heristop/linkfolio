@@ -1,4 +1,3 @@
-import React from "react";
 import { LinkFolio } from "../src";
 import userConfig from "./userConfig";
 
