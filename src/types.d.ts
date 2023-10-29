@@ -4,6 +4,8 @@ type UserConfigType = {
   avatarSize?: avatarSize;
   fullName?: string;
   alias?: string;
+  metaTitle?: string;
+  metaDescription?: string;
   socialNetworks?: SocialNetwork[];
 };
 

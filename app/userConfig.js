@@ -15,6 +15,8 @@ const userConfig = {
   avatarAlt: "Avatar",
   fullName: "Your Name",
   alias: "@your_alias",
+  metaTitle: "LinkFolio",
+  metaDescription: "LinkFolio",
   socialNetworks: [
     {
       url: "#",
