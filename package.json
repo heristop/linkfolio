@@ -1,6 +1,6 @@
 {
   "name": "linkfolio",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Minimalist web page that acts as a hub for all your online presence",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:package": "tsup --tsconfig tsconfig.build.json",
+    "build:package": "sh ./scripts/build.sh",
     "start": "next start",
     "lint": "next lint"
   },

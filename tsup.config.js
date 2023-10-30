@@ -12,6 +12,8 @@ export default defineConfig({
     options.banner = {
       js: '"use client"',
     };
+
+    options.assetNames = "assets/img/[name]";
   },
   loader: {
     ".svg": "dataurl",
