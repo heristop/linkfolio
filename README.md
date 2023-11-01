@@ -24,7 +24,7 @@ There are two methods to get started with LinkFolio:
 
 [![Deploy](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fheristop%2Flinkfolio&&install-command=npm%20install%20%20--legacy-peer-deps)
 
-Edit the `linkfolio.config.ts` file in the `app` directory to personalize and tailor your profile to your preferences.
+Edit the `user.config.ts` file in the `app` directory to personalize and tailor your profile to your preferences.
 
 Using this method, you can quickly deploy a LinkFolio page with Vercel using the provided template.
 
