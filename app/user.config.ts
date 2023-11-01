@@ -20,7 +20,7 @@ const userConfig: UserConfigType = {
   fullName: "Your Name",
   alias: "@your_alias",
   metaTitle: "LinkFolio",
-  metaDescription: "LinkFolio",
+  metaDescription: "A hub for all your online links 🔗",
   socialNetworks: [
     {
       url: "#",

@@ -44,7 +44,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#da532c" />
-        <meta name="theme-color" content="#2f5d62" />
+        <meta name="theme-color" content={userConfig.themeColor ?? "#2f5d62"} />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
@@ -56,7 +56,21 @@ export default function RootLayout({
         />
         <meta
           property="og:image"
-          content="https://linkfolio-demo.vercel.app/assets/linkfolio.jpg"
+          content={process.env.NEXT_APP_URL + "/assets/linkfolio.webp"}
+        />
+        <meta property="og:url" content={process.env.NEXT_APP_URL} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:image"
+          content={process.env.NEXT_APP_URL + "/assets/linkfolio.webp"}
+        />
+        <meta
+          property="twitter:title"
+          content={userConfig.metaTitle ?? "LinkFolio"}
+        />
+        <meta
+          property="twitter:description"
+          content={userConfig.metaDescription ?? "LinkFolio"}
         />
 
         <Analytics />
