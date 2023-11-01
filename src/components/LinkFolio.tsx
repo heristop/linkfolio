@@ -1,7 +1,5 @@
 import React from "react";
-import Footer from "./Footer";
-import SocialLinks from "./SocialLinks";
-import UserProfile from "./UserProfile";
+import { UserProfile, SocialLinks, Footer } from "..";
 import { LinkFolioProps } from "../types";
 import defaultConfig from "../defaultConfig";
 

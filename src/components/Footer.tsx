@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FooterProps } from "../types";
 import { linkfolioIcon } from "../assets";
 
 const Footer = ({ children }: FooterProps) => {
   return (
     <footer className="w-48 mx-auto mt-10 bg-gray-150 text-gray-600 px-6 py-2 text-xs rounded">
-      <a
+      <Link
         className="flex flex-col items-center justify-center"
         href="https://github.com/heristop/linkfolio"
         target="_blank"
@@ -25,7 +26,7 @@ const Footer = ({ children }: FooterProps) => {
         ) : (
           <div className="mt-2">Made by heristop</div>
         )}
-      </a>
+      </Link>
     </footer>
   );
 };

@@ -1,4 +1,5 @@
-import { LinkFolio } from "../src";
+import React from "react";
+import { LinkFolio } from "@/index";
 import userConfig from "./userConfig";
 
 export default function Home() {
