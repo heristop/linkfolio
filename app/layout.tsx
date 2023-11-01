@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "@/assets/globals.css";
 import { Analytics } from "@/index";
-import userConfig from "./userConfig";
+import userConfig from "./linkfolio.config";
 
 const roboto = Roboto({
   weight: "400",
@@ -54,6 +54,7 @@ export default function RootLayout({
           property="og:description"
           content={userConfig.metaDescription ?? "LinkFolio"}
         />
+        <meta property="og:image" content={userConfig.avatarSrc} />
 
         <Analytics />
       </head>

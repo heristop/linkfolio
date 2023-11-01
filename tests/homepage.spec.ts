@@ -3,6 +3,7 @@ import { test, expect } from "@playwright/test";
 test("displays social network list", async ({ browser }) => {
   const page = await browser.newPage();
   await page.goto("/");
+  await expect(page).toHaveScreenshot();
 
   await expect(page.locator(".avatar")).toBeVisible();
   await expect(page.locator("h1")).toBeVisible();

@@ -1,22 +1,14 @@
 import {
-  blueSkyIcon,
   facebookIcon,
   githubIcon,
   instagramIcon,
   linkedinIcon,
-  mastodonIcon,
   snapchatIcon,
-  threadsIcon,
   xIcon,
-} from "../src/assets";
+} from "./assets";
+import { UserConfigType } from "./types";
 
-const userConfig = {
-  avatarSrc: "/assets/avatar.webp",
-  avatarAlt: "Avatar",
-  fullName: "Your Name",
-  alias: "@your_alias",
-  metaTitle: "LinkFolio",
-  metaDescription: "LinkFolio",
+const defaultConfig: UserConfigType = {
   socialNetworks: [
     {
       url: "#",
@@ -54,25 +46,7 @@ const userConfig = {
       title: "Snapchat",
       description: "Capturing daily moments 📸",
     },
-    {
-      url: "#",
-      iconSrc: mastodonIcon,
-      title: "Mastodon",
-      description: "Sharing without the mainstream noise 🐘",
-    },
-    {
-      url: "#",
-      iconSrc: blueSkyIcon,
-      title: "BlueSky",
-      description: "Exploring open social web 💙",
-    },
-    {
-      url: "#",
-      iconSrc: threadsIcon,
-      title: "Threads",
-      description: "Quick updates and stories! 🌀",
-    },
   ],
 };
 
-export default userConfig;
+export default defaultConfig;

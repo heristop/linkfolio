@@ -1,3 +1,4 @@
+import { UserConfigType } from "@/types";
 import {
   blueSkyIcon,
   facebookIcon,
@@ -6,12 +7,20 @@ import {
   linkedinIcon,
   mastodonIcon,
   snapchatIcon,
+  telegramIcon,
   threadsIcon,
+  whatsappIcon,
   xIcon,
-} from "./assets";
-import { UserConfigType } from "./types";
+  youtubeIcon,
+} from "@/assets";
 
-const defaultConfig: UserConfigType = {
+const userConfig: UserConfigType = {
+  avatarSrc: "/assets/avatar.webp",
+  avatarAlt: "Avatar",
+  fullName: "Your Name",
+  alias: "@your_alias",
+  metaTitle: "LinkFolio",
+  metaDescription: "LinkFolio",
   socialNetworks: [
     {
       url: "#",
@@ -51,6 +60,24 @@ const defaultConfig: UserConfigType = {
     },
     {
       url: "#",
+      iconSrc: whatsappIcon,
+      title: "WhatsApp",
+      description: "Simple, reliable messaging and calling 🟢",
+    },
+    {
+      url: "#",
+      iconSrc: telegramIcon,
+      title: "Telegram",
+      description: "Messaging focusing on speed and security 🚀",
+    },
+    {
+      url: "#",
+      iconSrc: youtubeIcon,
+      title: "YouTube",
+      description: "Discover, watch, and share your passion 🎥",
+    },
+    {
+      url: "#",
       iconSrc: mastodonIcon,
       title: "Mastodon",
       description: "Sharing without the mainstream noise 🐘",
@@ -70,4 +97,4 @@ const defaultConfig: UserConfigType = {
   ],
 };
 
-export default defaultConfig;
+export default userConfig;
