@@ -1,7 +1,7 @@
 import React from "react";
 import { UserProfile, SocialLinks, Footer } from "..";
 import { LinkFolioProps } from "../types";
-import defaultConfig from "../defaultConfig";
+import defaultConfig from "../default.config";
 
 const LinkFolio = ({
   userConfig,
