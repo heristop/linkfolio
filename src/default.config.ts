@@ -1,10 +1,16 @@
 import {
+  blueSkyIcon,
   facebookIcon,
   githubIcon,
   instagramIcon,
   linkedinIcon,
+  mastodonIcon,
   snapchatIcon,
+  telegramIcon,
+  threadsIcon,
+  whatsappIcon,
   xIcon,
+  youtubeIcon,
 } from "./assets";
 import { UserConfigType } from "./types";
 
@@ -45,6 +51,42 @@ const defaultConfig: UserConfigType = {
       iconSrc: snapchatIcon,
       title: "Snapchat",
       description: "Capturing daily moments 📸",
+    },
+    {
+      url: "#",
+      iconSrc: whatsappIcon,
+      title: "WhatsApp",
+      description: "Simple, reliable messaging and calling 🟢",
+    },
+    {
+      url: "#",
+      iconSrc: telegramIcon,
+      title: "Telegram",
+      description: "Messaging focusing on speed and security 🚀",
+    },
+    {
+      url: "#",
+      iconSrc: youtubeIcon,
+      title: "YouTube",
+      description: "Discover, watch, and share your passion 🎥",
+    },
+    {
+      url: "#",
+      iconSrc: mastodonIcon,
+      title: "Mastodon",
+      description: "Sharing without the mainstream noise 🐘",
+    },
+    {
+      url: "#",
+      iconSrc: blueSkyIcon,
+      title: "BlueSky",
+      description: "Exploring open social web 💙",
+    },
+    {
+      url: "#",
+      iconSrc: threadsIcon,
+      title: "Threads",
+      description: "Quick updates and stories! 🌀",
     },
   ],
 };

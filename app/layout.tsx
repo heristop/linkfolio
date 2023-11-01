@@ -54,7 +54,10 @@ export default function RootLayout({
           property="og:description"
           content={userConfig.metaDescription ?? "LinkFolio"}
         />
-        <meta property="og:image" content={userConfig.avatarSrc} />
+        <meta
+          property="og:image"
+          content="https://linkfolio-demo.vercel.app/assets/linkfolio.jpg"
+        />
 
         <Analytics />
       </head>

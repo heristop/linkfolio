@@ -1,4 +1,6 @@
 "use client";
+import React from "react";
+
 const Analytics = () => {
   const token = process.env.NEXT_BEAM_TOKEN;
 
