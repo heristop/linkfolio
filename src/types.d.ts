@@ -6,6 +6,7 @@ type UserConfigType = {
   alias?: string;
   metaTitle?: string;
   metaDescription?: string;
+  themeColor?: string;
   socialNetworks?: SocialNetwork[];
 };
 
