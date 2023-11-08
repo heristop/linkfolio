@@ -16,6 +16,10 @@ A sleek, minimalist landing page that connects your audience to all of your onli
 
 🛠️ Easy configuration to add or remove links
 
+## Performance
+
+![Lighthouse](https://github.com/heristop/linkfolio/blob/main/docs/lighthouse.jpg?raw=true)
+
 ## Installation:
 
 There are two methods to get started with LinkFolio:
