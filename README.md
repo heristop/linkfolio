@@ -18,7 +18,7 @@ A sleek, minimalist landing page that connects your audience to all of your onli
 
 ## Performance
 
-![Lighthouse](https://github.com/heristop/linkfolio/blob/main/docs/lighthouse.jpg?raw=true)
+![Lighthouse](https://github.com/heristop/linkfolio/blob/main/docs/lighthouse.png?raw=true)
 
 ## Installation:
 
