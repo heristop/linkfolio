@@ -27,7 +27,7 @@ dependencies:
 devDependencies:
   '@babel/plugin-transform-nullish-coalescing-operator':
     specifier: ^7.22.11
-    version: 7.22.11(@babel/core@7.23.2)
+    version: 7.23.4(@babel/core@7.23.2)
   '@playwright/test':
     specifier: ^1.39.0
     version: 1.39.0
@@ -862,8 +862,8 @@ packages:
       '@babel/helper-plugin-utils': 7.22.5
     dev: false
 
-  /@babel/plugin-transform-nullish-coalescing-operator@7.22.11(@babel/core@7.23.2):
-    resolution: {integrity: sha512-YZWOw4HxXrotb5xsjMJUDlLgcDXSfO9eCmdl1bgW4+/lAGdkjaEvOnQ4p5WKKdUgSzO39dgPl0pTnfxm0OAXcg==}
+  /@babel/plugin-transform-nullish-coalescing-operator@7.23.4(@babel/core@7.23.2):
+    resolution: {integrity: sha512-jHE9EVVqHKAQx+VePv5LLGHjmHSJR76vawFPTdlxR/LVJPfOEGxREQwQfjuZEOPTwG92X3LINSh3M40Rv4zpVA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -1149,7 +1149,7 @@ packages:
       '@babel/plugin-transform-modules-umd': 7.22.5(@babel/core@7.23.2)
       '@babel/plugin-transform-named-capturing-groups-regex': 7.22.5(@babel/core@7.23.2)
       '@babel/plugin-transform-new-target': 7.22.5(@babel/core@7.23.2)
-      '@babel/plugin-transform-nullish-coalescing-operator': 7.22.11(@babel/core@7.23.2)
+      '@babel/plugin-transform-nullish-coalescing-operator': 7.23.4(@babel/core@7.23.2)
       '@babel/plugin-transform-numeric-separator': 7.22.11(@babel/core@7.23.2)
       '@babel/plugin-transform-object-rest-spread': 7.22.15(@babel/core@7.23.2)
       '@babel/plugin-transform-object-super': 7.22.5(@babel/core@7.23.2)
