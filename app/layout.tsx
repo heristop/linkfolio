@@ -1,12 +1,12 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Quicksand } from "next/font/google";
+import { Cormorant } from "next/font/google";
 import "@/assets/globals.css";
 import { Analytics } from "@/index";
 import userConfig from "../config/user.config";
 
-const font = Quicksand({
-  weight: "400",
+const font = Cormorant({
+  weight: "700",
   subsets: ["latin"],
 });
 
