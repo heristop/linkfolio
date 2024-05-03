@@ -43,10 +43,12 @@
   @keyframes soft-bounce {
     from {
       transform: translateY(0);
-    } 
+    }
+
     40% {
       transform: translateY(-1px);
     }
+
     to {
       transform: translateY(0px);
     }
@@ -61,13 +63,13 @@
       width: 0;
     }
   }
-  
+
   @keyframes blink {
     50% {
       border-color: transparent;
     }
   }
-  
+
   .alias-typing {
     overflow: hidden;
     border-right: .2em solid;
