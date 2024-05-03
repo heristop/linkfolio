@@ -12,8 +12,8 @@ const config: Config = {
       colors: {
         primary: "#B37E9A",
         secondary: "#A78CB3",
-        "background-start": "#FFD3E6",
-        "background-end": "#BDA0CB",
+        "background-start": "#D9E2F3",
+        "background-end": "#E2D9F3",
       },
       backgroundImage: ({ theme }) => ({
         "gradient-background": `linear-gradient(

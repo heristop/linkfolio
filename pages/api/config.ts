@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import userConfig from "../../app/user.config";
+import userConfig from "~/user.config";
 
 type ResponseData = {
   message: string;

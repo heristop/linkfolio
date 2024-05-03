@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "@/assets/globals.css";
 import { Analytics } from "@/index";
-import userConfig from "./user.config";
+import userConfig from "../config/user.config";
 
 const font = Quicksand({
   weight: "400",

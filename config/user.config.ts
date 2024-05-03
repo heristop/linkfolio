@@ -93,7 +93,7 @@ const userConfig: UserConfigType = {
       url: "#",
       iconSrc: threadsIcon,
       title: "Threads",
-      description: "Quick updates and stories! 🌀",
+      description: "Updates and stories! 🌀",
     },
   ],
 };
