@@ -3,7 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { SocialNetworkProps } from "../types";
 
-const SocialNetwork: React.FC<SocialNetworkProps> = ({ config, delay = 0 }) => {
+const SocialNetwork: React.FC<SocialNetworkProps> = ({
+  config,
+  delay = 0,
+}: SocialNetworkProps) => {
   return (
     <div
       className="network flex items-start justify-center p-2 w-full md:w-1/4 rounded hover:bg-gray-200 hover:opacity-90 transition duration-300 ease-in-out fade-in-up-bounce"

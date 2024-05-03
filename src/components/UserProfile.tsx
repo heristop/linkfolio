@@ -19,23 +19,31 @@ const UserProfile = ({ userConfig }: UserProfileProps) => {
   }, []);
 
   useEffect(() => {
+    if (false === userConfig.enableTypingAlias) {
+      return;
+    }
+
     if (typing && index < aliasText.length) {
       const timeoutId = setTimeout(() => {
-        setAlias((prev) => prev + aliasText[index]);
-        setIndex((prev) => prev + 1);
+        setAlias((prev: string) => prev + aliasText[index]);
+        setIndex((prev: number) => prev + 1);
       }, 100);
 
       return () => clearTimeout(timeoutId);
     }
-  }, [alias, typing, index]);
+  }, [alias, typing, index, userConfig.enableTypingAlias]);
 
   useEffect(() => {
+    if (false === userConfig.enableTypingAlias) {
+      return;
+    }
+
     if (isMounted) {
-      const timeoutId = setTimeout(() => setTyping(true), 1000);
+      const timeoutId = setTimeout(() => setTyping(true), 300);
 
       return () => clearTimeout(timeoutId);
     }
-  }, [isMounted]);
+  }, [isMounted, userConfig.enableTypingAlias]);
 
   return (
     <header className="profile mb-12 text-center">
@@ -52,8 +60,14 @@ const UserProfile = ({ userConfig }: UserProfileProps) => {
         {(userConfig.fullName ??= "Your Name")}
       </h1>
 
-      <p className="alias mt-2 text-gray-600 font-semibold">
-        <span className="alias-typing">{alias}</span>
+      <p className="alias mt-2 text-gray-500 font-semibold">
+        {userConfig.enableTypingAlias ? (
+          <>
+            <span className="alias-typing">{alias}</span>
+          </>
+        ) : (
+          aliasText
+        )}
       </p>
     </header>
   );

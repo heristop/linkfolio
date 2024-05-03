@@ -1,11 +1,11 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import "@/assets/globals.css";
 import { Analytics } from "@/index";
 import userConfig from "./user.config";
 
-const roboto = Roboto({
+const font = Quicksand({
   weight: "400",
   subsets: ["latin"],
 });
@@ -103,7 +103,7 @@ export default function RootLayout({
         <Analytics />
       </head>
 
-      <body className={roboto.className}>{children}</body>
+      <body className={font.className}>{children}</body>
     </html>
   );
 }
