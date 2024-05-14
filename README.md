@@ -85,6 +85,20 @@ function MyPage() {
 
 LinkFolio uses TailwindCSS for styling. If you wish to customize styles, you can use the default Tailwind configuration `tailwind.config.ts` provided with the package.
 
+## Customizing Fonts
+
+LinfFolio uses the `Cabin` font by default. If you wish to change the font, you can update the `font-family` in `layout.tsx`:
+
+```javascript
+import { Roboto } from "next/font/google";
+
+const font = Roboto({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+```
+
 ## Testing with Playwright
 
 To ensure the integrity and functionality of the project, we utilize Playwright for end-to-end testing.
