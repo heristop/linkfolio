@@ -1,13 +1,14 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Cormorant } from "next/font/google";
+import { Cardo } from "next/font/google";
 import "@/assets/globals.css";
 import { Analytics } from "@/index";
 import userConfig from "../config/user.config";
 
-const font = Cormorant({
-  weight: "700",
+const font = Cardo({
+  weight: "400",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

@@ -60,7 +60,7 @@ const UserProfile = ({ userConfig }: UserProfileProps) => {
         {(userConfig.fullName ??= "Your Name")}
       </h1>
 
-      <p className="alias mt-2 text-gray-500 font-semibold">
+      <p className="alias mt-2 text-base text-gray-600 font-semibold">
         {userConfig.enableTypingAlias ? (
           <>
             <span className="alias-typing">{alias}</span>
