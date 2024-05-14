@@ -24,7 +24,7 @@ const Footer = ({ children }: FooterProps) => {
         {children && children.defaultContent ? (
           children.defaultContent
         ) : (
-          <div className="mt-2">Made by heristop</div>
+          <div className="text-xs mt-2">Made by heristop</div>
         )}
       </Link>
     </footer>
