@@ -79,9 +79,9 @@ const userConfig: UserConfigType = {
     },
     {
       url: "#",
-      iconSrc: mastodonIcon,
-      title: "Mastodon",
-      description: "Sharing without the mainstream noise 🐘",
+      iconSrc: threadsIcon,
+      title: "Threads",
+      description: "Updates and stories! 🌀",
     },
     {
       url: "#",
@@ -91,9 +91,9 @@ const userConfig: UserConfigType = {
     },
     {
       url: "#",
-      iconSrc: threadsIcon,
-      title: "Threads",
-      description: "Updates and stories! 🌀",
+      iconSrc: mastodonIcon,
+      title: "Mastodon",
+      description: "Sharing without the mainstream noise 🐘",
     },
   ],
 };
