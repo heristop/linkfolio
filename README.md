@@ -81,6 +81,14 @@ function MyPage() {
 }
 ```
 
+Add Typewriter effect on Alias:
+
+```javascript
+const userConfig = {
+  enableTypingAlias: true,
+};
+```
+
 ## Customizing Styles with TailwindCSS
 
 LinkFolio uses TailwindCSS for styling. If you wish to customize styles, you can use the default Tailwind configuration `tailwind.config.ts` provided with the package.
