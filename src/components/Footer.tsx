@@ -17,14 +17,16 @@ const Footer = ({ children }: FooterProps) => {
           src={linkfolioIcon}
           title="LinkFolio"
           alt="LinkFolio"
+          aria-label="LinkFolio"
           width={40}
           height={40}
+          className="drop-shadow-lg"
         />
 
         {children && children.defaultContent ? (
           children.defaultContent
         ) : (
-          <div className="text-xs mt-2">Made by heristop</div>
+          <div className="text-xs mt-2 drop-shadow-lg">Made by heristop</div>
         )}
       </Link>
     </footer>
