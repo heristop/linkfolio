@@ -21,7 +21,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
       {
         root: null,
         rootMargin: "0px",
-        threshold: 0.1,
+        threshold: 0.05,
       },
     );
 
@@ -51,6 +51,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
             alt={config.description}
             width={300}
             height={100}
+            aria-label={config.title}
             className="object-cover w-[300px] h-[100px] rounded-lg overflow-hidden shadow-lg"
             priority={true}
           />
