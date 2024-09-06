@@ -6,7 +6,7 @@ import { linkfolioIcon } from "../assets";
 
 const Footer: React.FC<FooterProps> = ({ children }) => {
   return (
-    <footer className="w-48 mx-auto mt-10 bg-gray-150 text-gray-600 px-6 py-2 text-xs rounded">
+    <footer className="w-48 mx-auto mt-8 bg-gray-150 text-gray-600 px-6 py-2 text-xs rounded">
       <Link
         className="flex flex-col items-center justify-center"
         href="https://github.com/heristop/linkfolio"

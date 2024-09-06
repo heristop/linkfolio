@@ -46,13 +46,13 @@ const UserProfile = ({ userConfig }: UserProfileProps) => {
   }, [isMounted, userConfig.enableTypingAlias]);
 
   return (
-    <header className="profile mb-16 text-center">
+    <header className="profile mt-2 mb-12 text-center">
       <Image
         src={userConfig.avatarSrc ?? defaultAvatarIcon}
         alt={userConfig.avatarAlt ?? "Avatar"}
         width={userConfig.avatarSize ?? 120}
         height={userConfig.avatarSize ?? 120}
-        className="avatar rounded-full mb-4 mx-auto shadow-lg glitter-effect"
+        className="avatar rounded-full mb-6 mx-auto shadow-lg glitter-effect"
         priority={true}
       />
 
