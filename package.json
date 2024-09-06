@@ -34,6 +34,9 @@
     "url": "git+https://github.com/heristop/linkfolio.git"
   },
   "license": "MIT",
+  "dependencies": {
+    "next": "15.0.0-rc.0"
+  },
   "peerDependencies": {
     "next": "^15.0.0-rc.0",
     "sharp": "^0.33.3",
