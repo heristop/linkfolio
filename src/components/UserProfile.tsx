@@ -46,7 +46,7 @@ const UserProfile = ({ userConfig }: UserProfileProps) => {
   }, [isMounted, userConfig.enableTypingAlias]);
 
   return (
-    <header className="profile mb-12 text-center">
+    <header className="profile mb-16 text-center">
       <Image
         src={userConfig.avatarSrc ?? defaultAvatarIcon}
         alt={userConfig.avatarAlt ?? "Avatar"}
