@@ -19,8 +19,8 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
       },
       {
         root: null,
-        rootMargin: "20px",
-        threshold: 0.025,
+        rootMargin: "0px",
+        threshold: 0.1,
       },
     );
 
