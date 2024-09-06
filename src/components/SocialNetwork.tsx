@@ -13,7 +13,6 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Animate the element once it is in the viewport
         if (entry.isIntersecting) {
           entry.target.classList.add("fade-in-up-bounce");
         }
@@ -21,7 +20,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
       {
         root: null,
         rootMargin: "0px",
-        threshold: 0.05,
+        threshold: 0.01,
       },
     );
 
@@ -52,7 +51,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
             width={300}
             height={100}
             aria-label={config.title}
-            className="object-cover w-[300px] h-[100px] rounded-lg overflow-hidden shadow-lg"
+            className="object-cover w-64 h-24 rounded-lg overflow-hidden shadow-lg"
             priority={true}
           />
         </div>

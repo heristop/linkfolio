@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FooterProps } from "../types";
 import { linkfolioIcon } from "../assets";
 
-const Footer = ({ children }: FooterProps) => {
+const Footer: React.FC<FooterProps> = ({ children }) => {
   return (
     <footer className="w-48 mx-auto mt-10 bg-gray-150 text-gray-600 px-6 py-2 text-xs rounded">
       <Link
@@ -13,21 +13,20 @@ const Footer = ({ children }: FooterProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <Image
-          src={linkfolioIcon}
-          title="LinkFolio"
-          alt="LinkFolio"
-          aria-label="LinkFolio"
-          width={40}
-          height={40}
-          className="drop-shadow-lg"
-        />
+        <div className="relative w-10 h-10">
+          <Image
+            src={linkfolioIcon}
+            alt="LinkFolio"
+            title="LinkFolio"
+            fill
+            sizes="40px"
+            className="drop-shadow-lg object-contain"
+          />
+        </div>
 
-        {children && children.defaultContent ? (
-          children.defaultContent
-        ) : (
-          <div className="text-xs mt-2 drop-shadow-lg">Made by heristop</div>
-        )}
+        <div className="text-xs mt-2 drop-shadow-lg">
+          {children?.defaultContent || "Made by heristop"}
+        </div>
       </Link>
     </footer>
   );
