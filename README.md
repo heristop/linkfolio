@@ -95,7 +95,7 @@ LinkFolio uses TailwindCSS for styling. If you wish to customize styles, you can
 
 ## Customizing Fonts
 
-LinfFolio uses the `Cabin` font by default. If you wish to change the font, you can update the `font-family` in `layout.tsx`:
+LinfFolio uses the `Raleway` font by default. If you wish to change the font, you can update the `font-family` in `layout.tsx`:
 
 ```javascript
 import { Roboto } from "next/font/google";
