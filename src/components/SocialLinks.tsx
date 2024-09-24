@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useMemo } from "react";
 import SocialNetwork from "./SocialNetwork";
 import { SocialLinksProps, SocialNetworkType } from "../types";
 
-const SocialLinks = ({ userConfig }: SocialLinksProps) => {
-  if (!userConfig.socialNetworks) {
+const SocialLinks: React.FC<SocialLinksProps> = ({ userConfig }) => {
+  const filteredNetworks = useMemo(
+    () =>
+      userConfig.socialNetworks?.filter(
+        (config: SocialNetworkType) => !config.hidden,
+      ) ?? [],
+    [userConfig.socialNetworks],
+  );
+
+  if (filteredNetworks.length === 0) {
     return null;
   }
 
-  const filteredNetworks = userConfig.socialNetworks.filter(
-    (config: SocialNetworkType) => !config.hidden,
-  );
-
   return (
-    <main className="flex flex-wrap gap-y-4 gap-x-20 justify-center">
+    <main className="flex flex-wrap gap-y-4 gap-x-20 justify-center px-4 max-w-screen-xl mx-auto">
       {filteredNetworks.map((config: SocialNetworkType, index: number) => (
-        <SocialNetwork key={index} config={config} delay={index * 100} />
+        <SocialNetwork
+          key={config.url || index}
+          config={config}
+          delay={index * 100}
+        />
       ))}
     </main>
   );
