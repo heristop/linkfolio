@@ -18,6 +18,8 @@ Linkfolio is an elegant, minimalist landing page that connects your audience to 
 
 📱 Responsive design for all devices
 
+🔧 Customizable components for maximum flexibility
+
 ## Installation
 
 There are two methods to get started with Linkfolio:
@@ -32,7 +34,7 @@ Using this method, you can quickly deploy a Linkfolio page with Vercel using the
 
 ### 2. Integrating into an existing Next.js project
 
-Install `linkfolio` package in your Next.js / Tailwind project:
+Install the `linkfolio` package in your Next.js / Tailwind project:
 
 ```bash
 npm install linkfolio
@@ -48,22 +50,22 @@ yarn add linkfolio
 pnpm add linkfolio
 ```
 
-Import and utilize the `LinkFolio` component in your project:
+## Usage
+
+### Basic Usage
+
+Here's a simple example of how to use the `<LinkFolio />` component with just the `userConfig`:
 
 ```javascript
 import { LinkFolio } from "linkfolio";
-```
 
-Add your configuration:
-
-```javascript
 const userConfig = {
   avatarSrc: "/assets/avatar.webp",
   avatarAlt: "Avatar",
   fullName: "Your Name",
   alias: "@your_alias",
-  metaTitle: "Linkfolio",
-  metaDescription: "Linkfolio",
+  metaTitle: "LinkFolio",
+  metaDescription: "A Hub for all your online links 🔗",
   socialNetworks: [
     {
       url: "https://github.com/{your_alias}",
@@ -71,11 +73,44 @@ const userConfig = {
       title: "GitHub",
       description: "Open-source contributions",
     },
+    // Add more social networks here
   ],
 };
 
 function MyPage() {
   return <LinkFolio userConfig={userConfig} />;
+}
+```
+
+This basic setup will create a Linkfolio page using the default components and styles.
+
+### Customization Options
+
+For more advanced customization, you can use the optional component props. Here's an example showing how to use custom components and add additional content:
+
+```jsx
+import { LinkFolio } from "linkfolio";
+import MyCustomFooter from "./MyCustomFooter";
+
+function MyPage() {
+  return (
+    <LinkFolio
+      userConfig={userConfig}
+      BeforeSocialLinksComponent={() => (
+        <div className="mb-8 text-center">
+          <h2>Welcome to my page!</h2>
+          <p>Check out my social links below:</p>
+        </div>
+      )}
+      AfterSocialLinksComponent={() => (
+        <div className="mt-8 text-center">
+          <h2>Thanks for visiting!</h2>
+          <p>Feel free to connect with me on any platform.</p>
+        </div>
+      )}
+      FooterComponent={MyCustomFooter}
+    />
+  );
 }
 ```
 

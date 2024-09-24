@@ -17,8 +17,8 @@ import {
 const userConfig: UserConfigType = {
   avatarSrc: "/assets/avatar.webp",
   avatarAlt: "Avatar",
-  fullName: "Your Name",
-  alias: "@your_alias",
+  fullName: "Linkfolio",
+  alias: "demo",
   metaTitle: "Linkfolio",
   metaDescription: "A Hub for all your online links 🔗",
   enableTypingAlias: false,
