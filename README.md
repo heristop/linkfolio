@@ -161,7 +161,9 @@ fetch("https://your-linkfolio-site.com/api/config")
   .catch((error) => console.error("Error:", error));
 ```
 
-Note: Since this API is public, ensure that you don't include any sensitive information in your Linkfolio configuration that you wouldn't want to be publicly accessible.
+> [!TIP]
+>
+> Since this API is public, ensure that you don't include any sensitive information in your Linkfolio configuration that you wouldn't want to be publicly accessible.
 
 ## Example Usage
 
