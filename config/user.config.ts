@@ -13,6 +13,7 @@ import {
   xIcon,
   youtubeIcon,
 } from "@/assets";
+import { group } from "console";
 
 const userConfig: UserConfigType = {
   avatarSrc: "/assets/avatar.webp",
@@ -94,6 +95,8 @@ const userConfig: UserConfigType = {
       iconSrc: mastodonIcon,
       title: "Mastodon",
       description: "Sharing without the mainstream noise 🐘",
+      group: "opensource",
+      hidden: false,
     },
   ],
 };

@@ -7,13 +7,15 @@ const SocialLinks = ({ userConfig }: SocialLinksProps) => {
     return null;
   }
 
+  const filteredNetworks = userConfig.socialNetworks.filter(
+    (config: SocialNetworkType) => !config.hidden,
+  );
+
   return (
     <main className="flex flex-wrap gap-y-4 gap-x-20 justify-center">
-      {userConfig.socialNetworks.map(
-        (config: SocialNetworkType, index: number) => (
-          <SocialNetwork key={index} config={config} delay={index * 100} />
-        ),
-      )}
+      {filteredNetworks.map((config: SocialNetworkType, index: number) => (
+        <SocialNetwork key={index} config={config} delay={index * 100} />
+      ))}
     </main>
   );
 };
