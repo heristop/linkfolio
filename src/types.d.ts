@@ -30,6 +30,8 @@ type SocialNetworkType = {
   iconSrc: string | StaticImageData;
   title: string;
   description: string;
+  hidden?: boolean;
+  group?: string;
 };
 
 export interface SocialNetworkProps {
