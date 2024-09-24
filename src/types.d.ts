@@ -13,8 +13,11 @@ type UserConfigType = {
 
 export interface LinkFolioProps {
   userConfig?: UserConfigType;
-  additionalContent?: React.ReactNode;
-  footerContent?: React.ReactNode;
+  UserProfileComponent?: React.ComponentType;
+  BeforeSocialLinksComponent?: React.ComponentType;
+  SocialLinksComponent?: React.ComponentType;
+  AfterSocialLinksComponent?: React.ComponentType;
+  FooterComponent?: React.ComponentType;
 }
 
 export interface UserProfileProps {

@@ -5,7 +5,7 @@ import { UserProfileProps } from "../types";
 import { defaultAvatarIcon } from "../assets";
 
 const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
-  const aliasText = userConfig.alias ?? "@your_alias";
+  const aliasText = userConfig.alias;
 
   const [isMounted, setIsMounted] = useState(false);
   const [typing, setTyping] = useState(false);
@@ -17,6 +17,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
   }, []);
 
   const typeAlias = useCallback(() => {
+    if (!aliasText) return;
+
     if (typing && index < aliasText.length) {
       const timeoutId = setTimeout(() => {
         setAlias((prev) => prev + aliasText[index]);
