@@ -12,14 +12,16 @@ const config: Config = {
       colors: {
         primary: "#A56B8C",
         secondary: "#937FA3",
-        "background-start": "#E8EFF7",
-        "background-end": "#EDE8F7",
+        background: {
+          start: "#E8EFF7",
+          end: "#EDE8F7",
+        },
       },
       backgroundImage: ({ theme }) => ({
         "gradient-background": `linear-gradient(
           to bottom, 
-          ${theme("colors.background-start")}, 
-          ${theme("colors.background-end")}
+          ${theme("colors.background.start")}, 
+          ${theme("colors.background.end")}
         )`,
       }),
     },

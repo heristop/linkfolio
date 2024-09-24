@@ -1,19 +1,19 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Cardo } from "next/font/google";
+import { Raleway } from "next/font/google";
 import "@/assets/globals.css";
 import { Analytics } from "@/index";
 import userConfig from "../config/user.config";
 
-const font = Cardo({
+const font = Raleway({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: userConfig.metaTitle,
-  description: userConfig.metaDescription,
+  title: userConfig.metaTitle ?? "Linkfolio",
+  description: userConfig.metaDescription ?? "Linkfolio",
 };
 
 export default function RootLayout({
@@ -26,17 +26,17 @@ export default function RootLayout({
       <head>
         <meta
           name="application-name"
-          content={userConfig.metaTitle ?? "LinkFolio"}
+          content={userConfig.metaTitle ?? "Linkfolio"}
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta
           name="apple-mobile-web-app-title"
-          content={userConfig.metaTitle ?? "LinkFolio"}
+          content={userConfig.metaTitle ?? "Linkfolio"}
         />
         <meta
           name="description"
-          content={userConfig.metaDescription ?? "LinkFolio"}
+          content={userConfig.metaDescription ?? "Linkfolio"}
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
