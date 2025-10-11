@@ -16,7 +16,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ userConfig }) => {
   }
 
   return (
-    <main className="flex flex-wrap gap-y-4 gap-x-20 justify-center px-4 max-w-screen-xl mx-auto">
+    <main className="flex flex-wrap gap-y-4 gap-x-20 justify-center px-4 max-w-(--breakpoint-xl) mx-auto">
       {filteredNetworks.map((config: SocialNetworkType, index: number) => (
         <SocialNetwork
           key={config.url || index}

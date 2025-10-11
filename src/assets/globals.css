@@ -1,23 +1,70 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #2f5d62;
+  --color-secondary: #5e8b7e;
+
+  --color-background-start: #d9e2e1;
+  --color-background-end: #f2f7f6;
+
+  --background-image-gradient-background: linear-gradient(
+    to bottom,
+    #d9e2e1,
+    #f2f7f6
+  );
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility secondary-color {
+  color: var(--color-secondary);
+}
+
+@utility description {
+  white-space: break-spaces;
+}
+
+@utility fade-in-up-bounce {
+  animation: fade-in-up-bounce 0.8s forwards;
+}
+
+@utility animate-bounce {
+  animation: soft-bounce 0.7s forwards;
+}
+
+@utility alias-typing {
+  overflow: hidden;
+  border-right: 0.2em solid;
+  white-space: nowrap;
+  animation:
+    typing 2s steps(30, end),
+    blink 1s step-end infinite;
+}
 
 @layer utilities {
   body {
-    color: theme('colors.primary');
+    color: var(--color-primary);
     @apply bg-gradient-background;
   }
 
-  .secondary-color {
-    color: theme('colors.secondary');
-  }
-
   a:hover {
-    color: theme('colors.secondary');
-  }
-
-  .description {
-    white-space: break-spaces;
+    color: var(--color-secondary);
   }
 
   @keyframes fade-in-up-bounce {
@@ -36,10 +83,6 @@
     }
   }
 
-  .fade-in-up-bounce {
-    animation: fade-in-up-bounce 0.8s forwards;
-  }
-
   @keyframes soft-bounce {
     from {
       transform: translateY(0);
@@ -54,10 +97,6 @@
     }
   }
 
-  .animate-bounce {
-    animation: soft-bounce 0.7s forwards;
-  }
-
   @keyframes typing {
     from {
       width: 0;
@@ -68,12 +107,5 @@
     50% {
       border-color: transparent;
     }
-  }
-
-  .alias-typing {
-    overflow: hidden;
-    border-right: .2em solid;
-    white-space: nowrap;
-    animation: typing 2s steps(30, end), blink 1s step-end infinite;
   }
 }
