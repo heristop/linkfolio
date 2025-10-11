@@ -1,13 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { UserConfigType } from "@/types";
 import userConfig from "~/user.config";
-
-type ResponseData = {
-  message: string;
-};
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>,
+  res: NextApiResponse<UserConfigType>,
 ) {
   res.status(200).json(userConfig);
 }

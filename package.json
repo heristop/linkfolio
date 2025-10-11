@@ -1,13 +1,13 @@
 {
   "name": "linkfolio",
-  "version": "0.11.0",
+  "version": "1.0.0",
   "description": "Minimalist web page that acts as a hub for all your online presence",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "packageManager": "pnpm@9.9.0",
+  "packageManager": "pnpm@10.18.2",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "build:package": "sh ./scripts/build.sh",
     "start": "next start",
@@ -20,7 +20,8 @@
     "linktree",
     "ssr",
     "portfolio",
-    "template"
+    "template",
+    "linkfolio"
   ],
   "files": [
     "dist",
@@ -35,16 +36,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "next": "15.0.0-rc.0",
-    "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dom": "19.0.0-rc-f994737d14-20240522"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "peerDependencies": {
-    "next": "^14.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "sharp": "^0.33.3",
-    "tailwindcss": "^3.4.3"
+    "tailwindcss": "^4.1.14"
   },
   "peerDependenciesMeta": {
     "sharp": {
@@ -52,24 +52,26 @@
     }
   },
   "devDependencies": {
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.7",
-    "@playwright/test": "^1.47.2",
-    "@swc/core": "^1.7.28",
-    "@types/node": "^22.6.1",
-    "@types/react": "^18.3.9",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.7.0",
-    "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "15.0.2",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.30.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
-    "postcss": "^8.4.47",
-    "prettier": "^3.3.3",
-    "tsup": "^8.3.0",
-    "typescript": "^5.6.2"
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.27.1",
+    "@playwright/test": "^1.56.0",
+    "@swc/core": "^1.13.5",
+    "@tailwindcss/postcss": "^4.1.14",
+    "@types/node": "^24.7.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "15.5.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
+    "next": "15.5.4",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "sass": "^1.93.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
   }
 }

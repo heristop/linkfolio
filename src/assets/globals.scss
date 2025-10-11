@@ -1,0 +1,111 @@
+@use 'tailwindcss';
+
+@theme {
+  --color-primary: #2f5d62;
+  --color-secondary: #5e8b7e;
+
+  --color-background-start: #d9e2e1;
+  --color-background-end: #f2f7f6;
+
+  --background-image-gradient-background: linear-gradient(
+    to bottom,
+    #d9e2e1,
+    #f2f7f6
+  );
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility secondary-color {
+  color: var(--color-secondary);
+}
+
+@utility description {
+  white-space: break-spaces;
+}
+
+@utility fade-in-up-bounce {
+  animation: fade-in-up-bounce 0.8s forwards;
+}
+
+@utility subtle-bounce {
+  animation: soft-bounce 0.8s;
+}
+
+@utility alias-typing {
+  overflow: hidden;
+  border-right: 0.2em solid;
+  white-space: nowrap;
+  animation:
+    typing 2s steps(30, end),
+    blink 1s step-end infinite;
+}
+
+@layer utilities {
+  body {
+    color: var(--color-primary);
+    @apply bg-gradient-background;
+  }
+
+  a:hover {
+    color: var(--color-secondary);
+  }
+
+  @keyframes fade-in-up-bounce {
+    from {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+
+    40% {
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes soft-bounce {
+    from {
+      transform: translateY(0);
+    }
+
+    25% {
+      transform: translateY(-2px);
+    }
+
+    to {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      border-color: transparent;
+    }
+  }
+}
