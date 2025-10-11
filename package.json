@@ -11,8 +11,7 @@
     "build": "next build",
     "build:package": "sh ./scripts/build.sh",
     "start": "next start",
-    "lint": "next lint",
-    "test:e2e": "pnpm build && npx playwright test"
+    "lint": "next lint"
   },
   "sideEffects": false,
   "keywords": [
