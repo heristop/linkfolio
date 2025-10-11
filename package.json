@@ -1,6 +1,6 @@
 {
   "name": "linkfolio",
-  "version": "0.12.0",
+  "version": "1.0.0",
   "description": "Minimalist web page that acts as a hub for all your online presence",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -20,7 +20,8 @@
     "linktree",
     "ssr",
     "portfolio",
-    "template"
+    "template",
+    "linkfolio"
   ],
   "files": [
     "dist",
@@ -42,7 +43,8 @@
     "next": "^15.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sharp": "^0.33.3"
+    "sharp": "^0.33.3",
+    "tailwindcss": "^4.1.14"
   },
   "peerDependenciesMeta": {
     "sharp": {
@@ -68,7 +70,7 @@
     "next": "15.5.4",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
-    "tailwindcss": "^4.1.14",
+    "sass": "^1.93.2",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3"
   }

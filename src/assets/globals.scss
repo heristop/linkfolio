@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@use 'tailwindcss';
 
 @theme {
   --color-primary: #2f5d62;
@@ -44,8 +44,8 @@
   animation: fade-in-up-bounce 0.8s forwards;
 }
 
-@utility animate-bounce {
-  animation: soft-bounce 0.7s forwards;
+@utility subtle-bounce {
+  animation: soft-bounce 0.8s;
 }
 
 @utility alias-typing {
@@ -88,8 +88,8 @@
       transform: translateY(0);
     }
 
-    40% {
-      transform: translateY(-1px);
+    25% {
+      transform: translateY(-2px);
     }
 
     to {
