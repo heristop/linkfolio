@@ -154,6 +154,32 @@ const font = Roboto({
 });
 ```
 
+## Theme Customization
+
+To customize the theme, you can override the default CSS variables in your own CSS file. If you have installed `linkfolio` as a package, you can import the default styles and override the variables like this:
+
+```css
+@import "tailwindcss";
+@import "linkfolio/dist/assets/globals.css";
+
+@source "../node_modules/linkfolio/dist";
+
+@theme {
+  --color-primary: #937FA3;
+  --color-secondary: #A56B8C;
+  --color-background-start: #E8EFF7;
+  --color-background-end: #EDE8F7;
+
+  --background-image-gradient-background: linear-gradient(
+    to bottom,
+    var(--color-background-start),
+    var(--color-background-end)
+  );
+}
+```
+
+If you are using the template, you can directly modify the `src/assets/globals.css` file.
+
 ## Testing with Playwright
 
 To ensure the integrity and functionality of the project, we utilize Playwright for end-to-end testing.

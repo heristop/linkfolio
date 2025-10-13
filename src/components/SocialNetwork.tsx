@@ -21,8 +21,8 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
   useEffect(() => {
     const observer = new IntersectionObserver(callback, {
       root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
+      rootMargin: "100px",
+      threshold: 0.05,
     });
 
     const currentRef = ref.current;
@@ -50,7 +50,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
         rel="noopener noreferrer"
         className="group w-full"
       >
-        <div className="group-hover:animate-bounce flex justify-center">
+        <div className="group-hover:subtle-bounce flex justify-center">
           <div className="relative w-full h-24 overflow-hidden rounded-lg shadow-lg">
             <Image
               src={config.iconSrc}
