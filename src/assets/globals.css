@@ -1,23 +1,58 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Global styles and CSS variables */
+
+@theme {
+  --color-primary: #2f5d62;
+  --color-secondary: #5e8b7e;
+
+  --color-background-start: #d9e2e1;
+  --color-background-end: #f2f7f6;
+
+  --background-image-gradient-background: linear-gradient(
+    to bottom,
+    var(--color-background-start),
+    var(--color-background-end)
+  );
+}
+
+/* Utility classes */
+
+@utility secondary-color {
+  color: var(--color-secondary);
+}
+
+@utility description {
+  white-space: break-spaces;
+}
+
+@utility fade-in-up-bounce {
+  animation: fade-in-up-bounce 0.8s forwards;
+}
+
+@utility subtle-bounce {
+  animation: soft-bounce 0.8s;
+}
+
+@utility alias-typing {
+  overflow: hidden;
+  border-right: 0.2em solid;
+  white-space: nowrap;
+  animation:
+    typing 2s steps(30, end),
+    blink 1s step-end infinite;
+}
+
+/* Custom global styles */
 
 @layer utilities {
   body {
-    color: theme('colors.primary');
+    color: var(--color-primary);
     @apply bg-gradient-background;
   }
 
-  .secondary-color {
-    color: theme('colors.secondary');
-  }
-
   a:hover {
-    color: theme('colors.secondary');
-  }
-
-  .description {
-    white-space: break-spaces;
+    color: var(--color-secondary);
   }
 
   @keyframes fade-in-up-bounce {
@@ -36,26 +71,18 @@
     }
   }
 
-  .fade-in-up-bounce {
-    animation: fade-in-up-bounce 0.8s forwards;
-  }
-
   @keyframes soft-bounce {
     from {
       transform: translateY(0);
     }
 
-    40% {
-      transform: translateY(-1px);
+    25% {
+      transform: translateY(-2px);
     }
 
     to {
       transform: translateY(0px);
     }
-  }
-
-  .animate-bounce {
-    animation: soft-bounce 0.7s forwards;
   }
 
   @keyframes typing {
@@ -68,12 +95,5 @@
     50% {
       border-color: transparent;
     }
-  }
-
-  .alias-typing {
-    overflow: hidden;
-    border-right: .2em solid;
-    white-space: nowrap;
-    animation: typing 2s steps(30, end), blink 1s step-end infinite;
   }
 }
