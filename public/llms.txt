@@ -1,0 +1,78 @@
+# Linkfolio
+
+> A minimalist, open-source landing page that connects your audience to all of your online presences. Built with Next.js and Tailwind CSS.
+
+Linkfolio is a customizable link-in-bio page (similar to Linktree) that can be deployed as a standalone template or integrated as a package into an existing Next.js project. It is designed for performance, accessibility, and SEO.
+
+## Key Features
+
+- Built with Next.js (App Router) and Tailwind CSS v4
+- Fully responsive design for all devices
+- Customizable components (profile, social links, footer)
+- Typewriter effect on alias text (optional)
+- Animated card entrance with intersection observer
+- Accessible (WCAG AA): keyboard navigation, screen reader support, reduced motion support
+- SEO optimized: Open Graph, Twitter Cards, JSON-LD structured data, dynamic sitemap
+- Deployable to Vercel with one click
+- Public configuration API at /api/config
+
+## Getting Started
+
+Clone the template and deploy directly to Vercel, or fork the repository.
+
+## Usage
+
+```jsx
+import { LinkFolio } from "@/index";
+
+const userConfig = {
+  avatarSrc: "/assets/avatar.webp",
+  avatarAlt: "Avatar",
+  fullName: "Your Name",
+  alias: "@your_alias",
+  metaTitle: "My Links",
+  metaDescription: "All my online links in one place",
+  socialNetworks: [
+    {
+      url: "https://github.com/username",
+      iconSrc: githubIcon,
+      title: "GitHub",
+      description: "Open-source contributions",
+    },
+  ],
+};
+
+function MyPage() {
+  return <LinkFolio userConfig={userConfig} />;
+}
+```
+
+## Configuration Options
+
+- `avatarSrc`: Path or import for profile image
+- `avatarAlt`: Alt text for profile image
+- `fullName`: Display name
+- `alias`: Username or tagline
+- `metaTitle`: Page title for SEO
+- `metaDescription`: Page description for SEO
+- `themeColor`: Theme color for browser chrome
+- `enableTypingAlias`: Enable typewriter animation on alias (boolean)
+- `socialNetworks`: Array of social link objects with url, iconSrc, title, description, hidden, and group fields
+
+## Customization
+
+Custom components can be injected via props: `UserProfileComponent`, `BeforeSocialLinksComponent`, `SocialLinksComponent`, `AfterSocialLinksComponent`, `FooterComponent`.
+
+Theme colors are customizable via CSS variables in globals.css:
+
+- `--color-primary`
+- `--color-secondary`
+- `--color-background-start`
+- `--color-background-end`
+
+## Links
+
+- Source code: https://github.com/heristop/linkfolio
+- Demo: https://linkfolio-demo.vercel.app
+- Example implementation: https://github.com/heristop/my-linkfolio
+- License: MIT
