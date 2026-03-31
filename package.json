@@ -19,14 +19,13 @@
   },
   "files": [
     "dist",
-    "tailwind.config.ts",
     "LICENSE",
     "README.md"
   ],
   "sideEffects": false,
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -54,7 +53,7 @@
     "oxfmt": "^0.43.0",
     "oxlint": "^1.58.0",
     "postcss": "^8.5.8",
-    "tsdown": "^0.12.5",
+    "tsdown": "^0.21.7",
     "typescript": "^6.0.2"
   },
   "peerDependencies": {
