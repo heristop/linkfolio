@@ -10,19 +10,23 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
 }: SocialNetworkProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const callback = useCallback((entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("fade-in-up-bounce");
-      }
-    });
-  }, []);
+  const callback = useCallback(
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fade-in-up-bounce");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    [],
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(callback, {
       root: null,
-      rootMargin: "100px",
-      threshold: 0.05,
+      rootMargin: "50px",
+      threshold: 0.1,
     });
 
     const currentRef = ref.current;
@@ -41,23 +45,24 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
   return (
     <div
       ref={ref}
-      className="network flex flex-col items-center p-2 w-full md:w-1/3 lg:w-1/4 rounded-lg hover:bg-neutral-300/20 transition duration-300 ease-in-out opacity-0"
-      style={{ animationDelay: `${delay}ms` }}
+      className="network flex flex-col items-center p-2 w-full md:w-1/3 lg:w-1/4 rounded-lg hover:bg-neutral-300/20 transition-colors duration-300 opacity-0"
+      style={{ animationDelay: `${delay}ms`, transitionTimingFunction: "var(--ease-out-expo)" }}
     >
       <Link
         href={config.url}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`${config.title} (opens in a new tab)`}
         className="group w-full"
       >
         <div className="group-hover:subtle-bounce flex justify-center">
-          <div className="relative w-full h-24 overflow-hidden rounded-lg shadow-lg">
+          <div className="relative w-full max-w-xs mx-auto h-24 overflow-hidden rounded-lg shadow-lg">
             <Image
               src={config.iconSrc}
-              alt={config.title}
+              alt=""
               fill
               className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
               quality={100}
               priority
             />

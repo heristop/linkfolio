@@ -49,21 +49,37 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
         alt={userConfig.avatarAlt ?? "Avatar"}
         width={userConfig.avatarSize ?? 120}
         height={userConfig.avatarSize ?? 120}
-        className="avatar rounded-full mb-6 mx-auto shadow-lg transition-shadow duration-300 glitter-effect"
+        className="avatar rounded-full mb-6 mx-auto shadow-lg transition-shadow duration-300 glitter-effect fade-in"
+        style={{ animationDelay: "0.1s" }}
         priority
       />
 
-      <h1 className="fullname text-2xl font-semibold">
+      <h1
+        className="fullname text-2xl font-semibold fade-in"
+        style={{ animationDelay: "0.25s" }}
+      >
         {userConfig.fullName ?? "Your Name"}
       </h1>
 
-      <p className="alias mt-2 text-base text-neutral-600 font-semibold">
+      <p
+        className="alias mt-2 text-base text-neutral-600 font-semibold fade-in"
+        style={{ animationDelay: "0.4s" }}
+      >
         {userConfig.enableTypingAlias ? (
-          <span className="alias-typing">{alias}</span>
+          <>
+            <span className="sr-only">{aliasText}</span>
+            <span className="alias-typing" aria-hidden="true">{alias}</span>
+          </>
         ) : (
           aliasText
         )}
       </p>
+
+      <div
+        className="w-12 h-0.5 bg-current opacity-30 mt-4 mx-auto origin-left reveal-line"
+        style={{ animationDelay: "0.55s" }}
+        role="presentation"
+      />
     </header>
   );
 };

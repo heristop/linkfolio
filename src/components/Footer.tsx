@@ -11,7 +11,8 @@ const Footer: React.FC<FooterProps> = ({ children }) => {
         className="flex flex-col items-center justify-center"
         href="https://github.com/heristop/linkfolio"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
+        aria-label="Linkfolio on GitHub (opens in a new tab)"
       >
         <div className="relative w-10 h-10">
           <Image
