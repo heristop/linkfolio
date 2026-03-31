@@ -14,6 +14,8 @@
     var(--color-background-start),
     var(--color-background-end)
   );
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Utility classes */
@@ -27,11 +29,19 @@
 }
 
 @utility fade-in-up-bounce {
-  animation: fade-in-up-bounce 0.8s forwards;
+  animation: fade-in-up-bounce 0.7s var(--ease-out-expo) forwards;
 }
 
 @utility subtle-bounce {
-  animation: soft-bounce 0.8s;
+  animation: soft-bounce 0.4s var(--ease-out-expo);
+}
+
+@utility fade-in {
+  animation: fade-in 0.6s var(--ease-out-expo) both;
+}
+
+@utility reveal-line {
+  animation: reveal-line 0.8s var(--ease-out-expo) both;
 }
 
 @utility alias-typing {
@@ -46,23 +56,80 @@
 /* Custom global styles */
 
 @layer utilities {
+  html {
+    min-height: 100%;
+    background-color: var(--color-background-end);
+    scroll-behavior: smooth;
+    @apply bg-gradient-background;
+  }
+
+  /* Theme-tinted text selection */
+  ::selection {
+    background-color: var(--color-secondary);
+    color: white;
+  }
+
   body {
     color: var(--color-primary);
-    @apply bg-gradient-background;
+  }
+
+  a {
+    transition: color 0.3s var(--ease-out-expo);
   }
 
   a:hover {
     color: var(--color-secondary);
   }
 
+  /* Focus styles */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Avatar hover */
+  .avatar {
+    transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
+  }
+
+  .avatar:hover {
+    transform: scale(1.05);
+  }
+
+  /* Footer hover */
+  footer a {
+    opacity: 0.6;
+    transition: opacity 0.3s var(--ease-out-expo);
+  }
+
+  footer a:hover {
+    opacity: 1;
+  }
+
+  /* Social card hover effects */
+  .network img {
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  .network .group:hover img {
+    transform: scale(1.03);
+  }
+
+  .network .shadow-lg {
+    transition: box-shadow 0.4s var(--ease-out-expo);
+  }
+
+  .network .group:hover .shadow-lg {
+    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Smooth entrance — no bounce */
   @keyframes fade-in-up-bounce {
     from {
       opacity: 0;
-      transform: translateY(100px);
-    }
-
-    40% {
-      transform: translateY(-6px);
+      transform: translateY(32px);
     }
 
     to {
@@ -71,17 +138,40 @@
     }
   }
 
+  /* Smooth scale on hover — replaces bouncy translateY */
   @keyframes soft-bounce {
     from {
-      transform: translateY(0);
+      transform: scale(1);
     }
 
-    25% {
-      transform: translateY(-2px);
+    50% {
+      transform: scale(1.02);
     }
 
     to {
-      transform: translateY(0px);
+      transform: scale(1);
+    }
+  }
+
+  /* Profile entrance */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Accent line reveal */
+  @keyframes reveal-line {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
     }
   }
 
@@ -94,6 +184,21 @@
   @keyframes blink {
     50% {
       border-color: transparent;
+    }
+  }
+
+  /* Accessibility: respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 }
