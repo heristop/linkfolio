@@ -1,76 +1,73 @@
 {
   "name": "linkfolio",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Minimalist web page that acts as a hub for all your online presence",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "packageManager": "pnpm@10.18.2",
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "build:package": "sh ./scripts/build.sh",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "sideEffects": false,
   "keywords": [
-    "next.js",
-    "tailwind",
+    "linkfolio",
     "linktree",
-    "ssr",
+    "next.js",
     "portfolio",
-    "template",
-    "linkfolio"
+    "ssr",
+    "tailwind",
+    "template"
   ],
+  "license": "MIT",
+  "author": "Alexandre Mogère (heristop)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heristop/linkfolio.git"
+  },
   "files": [
     "dist",
     "tailwind.config.ts",
     "LICENSE",
     "README.md"
   ],
-  "author": "Alexandre Mogère (heristop)",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/heristop/linkfolio.git"
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "build:package": "sh ./scripts/build.sh",
+    "start": "next start",
+    "lint": "oxlint",
+    "fmt": "oxfmt --write .",
+    "fmt:check": "oxfmt --check ."
   },
-  "license": "MIT",
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.28.6",
+    "@playwright/test": "^1.58.2",
+    "@swc/core": "^1.15.21",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "next": "16.2.1",
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.58.0",
+    "postcss": "^8.5.8",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.2"
   },
   "peerDependencies": {
-    "next": "^15.0.0",
+    "next": "^15.0.0 || ^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sharp": "^0.33.3",
-    "tailwindcss": "^4.1.14"
+    "tailwindcss": "^4.1.0"
   },
   "peerDependenciesMeta": {
     "sharp": {
       "optional": true
     }
   },
-  "devDependencies": {
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.27.1",
-    "@playwright/test": "^1.56.0",
-    "@swc/core": "^1.13.5",
-    "@tailwindcss/postcss": "^4.1.14",
-    "@types/node": "^24.7.2",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.1",
-    "@typescript-eslint/eslint-plugin": "^8.46.0",
-    "eslint": "^9.37.0",
-    "eslint-config-next": "15.5.4",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.4",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.4",
-    "next": "16.0.10",
-    "postcss": "^8.5.6",
-    "prettier": "^3.6.2",
-    "tsup": "^8.5.0",
-    "typescript": "^5.9.3"
-  }
+  "packageManager": "pnpm@10.18.2"
 }
