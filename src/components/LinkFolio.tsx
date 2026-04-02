@@ -5,6 +5,7 @@ import defaultConfig from "../default.config";
 
 const LinkFolio: React.FC<LinkFolioProps> = ({
   userConfig,
+  className,
   UserProfileComponent,
   BeforeSocialLinksComponent,
   SocialLinksComponent,
@@ -34,11 +35,26 @@ const LinkFolio: React.FC<LinkFolioProps> = ({
     },
   };
 
+  const jsonLdString = JSON.stringify(jsonLd);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-100 p-10 md:p-16 lg:px-15% lg:py-10 max-w-screen-lg lg:mx-auto font-roboto rounded-lg sm:m-4 m-2 shadow-lg">
+    <div
+      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto font-roboto sm:m-4 m-2 ${className || ""}`}
+      style={{
+        backgroundColor: "var(--lf-card-bg)",
+        borderRadius: "var(--lf-card-radius)",
+        boxShadow: "var(--lf-card-shadow)",
+        border: "var(--lf-card-border)",
+        padding: "var(--lf-card-padding-y) var(--lf-card-padding-x)",
+        minHeight: "var(--lf-card-min-height)",
+        backdropFilter: "var(--lf-card-backdrop)",
+        WebkitBackdropFilter: "var(--lf-card-backdrop)",
+        ...(config.themeColor && { "--color-primary": config.themeColor } as React.CSSProperties),
+      }}
+    >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString }}
       />
       <UserProfileToRender userConfig={config} />
 

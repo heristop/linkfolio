@@ -16,6 +16,31 @@
   );
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Card container */
+  --lf-card-bg: #f5f5f5;
+  --lf-card-radius: 0.75rem;
+  --lf-card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --lf-card-border: none;
+  --lf-card-padding-x: 2.5rem;
+  --lf-card-padding-y: 2.5rem;
+  --lf-card-min-height: auto;
+  --lf-card-backdrop: none;
+
+  /* Profile section */
+  --lf-profile-margin-bottom: 3rem;
+  --lf-name-font-size: 1.5rem;
+  --lf-name-font-weight: 600;
+  --lf-name-color: inherit;
+  --lf-alias-color: #525252;
+  --lf-accent-line-width: 3rem;
+  --lf-accent-line-color: currentColor;
+  --lf-accent-line-opacity: 0.3;
+
+  /* Social links container */
+  --lf-links-gap-x: 1rem;
+  --lf-links-gap-y: 0.5rem;
+  --lf-links-padding-x: 1rem;
 }
 
 /* Utility classes */
@@ -63,7 +88,6 @@
     @apply bg-gradient-background;
   }
 
-  /* Theme-tinted text selection */
   ::selection {
     background-color: var(--color-secondary);
     color: white;
@@ -81,7 +105,6 @@
     color: var(--color-secondary);
   }
 
-  /* Focus styles */
   a:focus-visible,
   button:focus-visible {
     outline: 2px solid var(--color-primary);
@@ -89,16 +112,16 @@
     border-radius: 4px;
   }
 
-  /* Avatar hover */
-  .avatar {
+  /* Avatar */
+  .lf-avatar {
     transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
   }
 
-  .avatar:hover {
+  .lf-avatar:hover {
     transform: scale(1.05);
   }
 
-  /* Footer hover */
+  /* Footer */
   footer a {
     opacity: 0.6;
     transition: opacity 0.3s var(--ease-out-expo);
@@ -108,7 +131,7 @@
     opacity: 1;
   }
 
-  /* Social card hover effects */
+  /* Network card hover effects */
   .network img {
     transition: transform 0.5s var(--ease-out-expo);
   }
@@ -117,77 +140,140 @@
     transform: scale(1.03);
   }
 
-  .network .shadow-lg {
-    transition: box-shadow 0.4s var(--ease-out-expo);
+  .network .lf-icon-container {
+    transition: box-shadow 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo);
   }
 
-  .network .group:hover .shadow-lg {
+  .network:hover .lf-icon-container {
     box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
   }
 
-  /* Smooth entrance — no bounce */
+  /* ── Group separator — subtle line between sections ── */
+  .lf-group + .lf-group {
+    position: relative;
+    padding-top: 0.5rem;
+  }
+
+  .lf-group + .lf-group::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.15;
+  }
+
+  /* ── Group: socialnetwork — compact pills ── */
+  [data-group="socialnetwork"] .network {
+    width: 16%;
+  }
+
+  [data-group="socialnetwork"] .lf-icon-container {
+    height: 3rem;
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 0.75rem;
+  }
+
+  [data-group="socialnetwork"] .lf-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  [data-group="socialnetwork"] .lf-description {
+    display: none;
+  }
+
+  [data-group="socialnetwork"] .lf-data {
+    padding: 0.3rem 0.25rem;
+  }
+
+  /* ── Group: project — showcase cards ── */
+  [data-group="project"] .network {
+    width: 30%;
+  }
+
+  [data-group="project"] .lf-icon-container {
+    height: 6rem;
+    box-shadow: 0 2px 12px -3px rgba(0, 0, 0, 0.12);
+    border-radius: 0.875rem;
+  }
+
+  [data-group="project"] .lf-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  [data-group="project"]:hover .lf-icon-container {
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.18);
+    transform: translateY(-3px);
+  }
+
+  /* ── Group: website — medium treatment ── */
+  [data-group="website"] .network {
+    width: 30%;
+  }
+
+  [data-group="website"] .lf-icon-container {
+    height: 5rem;
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+  }
+
+  /* ── Mobile responsive ── */
+  @media (max-width: 767px) {
+    [data-group="socialnetwork"] .network {
+      width: 42%;
+    }
+
+    [data-group="project"] .network,
+    [data-group="website"] .network {
+      width: 90%;
+    }
+  }
+
+  /* Animations */
   @keyframes fade-in-up-bounce {
     from {
       opacity: 0;
-      transform: translateY(32px);
+      transform: translateY(24px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
 
-  /* Smooth scale on hover — replaces bouncy translateY */
   @keyframes soft-bounce {
-    from {
-      transform: scale(1);
-    }
-
-    50% {
-      transform: scale(1.02);
-    }
-
-    to {
-      transform: scale(1);
-    }
+    from { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    to { transform: scale(1); }
   }
 
-  /* Profile entrance */
   @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
-  /* Accent line reveal */
   @keyframes reveal-line {
-    from {
-      transform: scaleX(0);
-    }
-
-    to {
-      transform: scaleX(1);
-    }
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
   }
 
   @keyframes typing {
-    from {
-      width: 0;
-    }
+    from { width: 0; }
   }
 
   @keyframes blink {
-    50% {
-      border-color: transparent;
-    }
+    50% { border-color: transparent; }
   }
 
-  /* Accessibility: respect reduced motion preference */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

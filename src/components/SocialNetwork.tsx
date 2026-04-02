@@ -45,7 +45,8 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
   return (
     <div
       ref={ref}
-      className="network flex flex-col items-center p-2 w-full md:w-1/3 lg:w-1/4 rounded-lg hover:bg-neutral-300/20 transition-colors duration-300 opacity-0"
+      data-group={config.group || "socialnetwork"}
+      className="network flex flex-col items-center p-2 rounded-lg hover:bg-neutral-300/20 transition-colors duration-300 opacity-0"
       style={{ animationDelay: `${delay}ms`, transitionTimingFunction: "var(--ease-out-expo)" }}
     >
       <Link
@@ -56,7 +57,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
         className="group w-full"
       >
         <div className="group-hover:subtle-bounce flex justify-center">
-          <div className="relative w-full max-w-xs mx-auto h-24 overflow-hidden rounded-lg shadow-lg">
+          <div className="lf-icon-container relative w-full max-w-xs mx-auto h-24 overflow-hidden rounded-lg">
             <Image
               src={config.iconSrc}
               alt=""
@@ -69,9 +70,9 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
           </div>
         </div>
 
-        <div className="data px-2 py-4 text-center">
-          <h2 className="text-xl font-bold mb-2">{config.title}</h2>
-          <p className="description text-neutral-600 text-sm truncate">
+        <div className="lf-data px-2 py-4 text-center">
+          <h2 className="lf-title text-xl font-bold mb-2">{config.title}</h2>
+          <p className="lf-description description text-neutral-600 text-sm truncate">
             {config.description}
           </p>
         </div>
