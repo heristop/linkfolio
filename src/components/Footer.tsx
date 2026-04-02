@@ -6,7 +6,7 @@ import { linkfolioIcon } from "../assets";
 
 const Footer: React.FC<FooterProps> = ({ children }) => {
   return (
-    <footer className="w-48 mx-auto mt-8 bg-neutral-150 text-neutral-600 px-6 py-2 text-xs rounded-sm">
+    <footer className="lf-footer mx-auto mt-8 px-6 py-2 text-xs">
       <Link
         className="flex flex-col items-center justify-center"
         href="https://github.com/heristop/linkfolio"
@@ -21,11 +21,11 @@ const Footer: React.FC<FooterProps> = ({ children }) => {
             title="Linkfolio Logo"
             fill
             sizes="40px"
-            className="drop-shadow-lg object-contain"
+            className="object-contain"
           />
         </div>
 
-        <div className="text-xs mt-2 drop-shadow-lg">
+        <div className="text-xs mt-2">
           {children?.defaultContent || "Made by heristop"}
         </div>
       </Link>

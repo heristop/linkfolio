@@ -46,7 +46,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
     <div
       ref={ref}
       data-group={config.group || "socialnetwork"}
-      className="network flex flex-col items-center p-2 rounded-lg hover:bg-neutral-300/20 transition-colors duration-300 opacity-0"
+      className="network flex flex-col items-center p-2 opacity-0"
       style={{ animationDelay: `${delay}ms`, transitionTimingFunction: "var(--ease-out-expo)" }}
     >
       <Link

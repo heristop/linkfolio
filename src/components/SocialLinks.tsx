@@ -49,7 +49,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ userConfig }) => {
               <SocialNetwork
                 key={config.url || idx}
                 config={config}
-                delay={idx * 100}
+                delay={idx * 60}
               />
             );
           })}

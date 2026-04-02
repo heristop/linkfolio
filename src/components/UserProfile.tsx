@@ -52,8 +52,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
         alt={userConfig.avatarAlt ?? "Avatar"}
         width={userConfig.avatarSize ?? 120}
         height={userConfig.avatarSize ?? 120}
-        className="lf-avatar avatar rounded-full mb-6 mx-auto shadow-lg transition-shadow duration-300 glitter-effect fade-in"
-        style={{ animationDelay: "0.1s" }}
+        className="lf-avatar avatar rounded-full mb-6 mx-auto fade-in"
+        style={{ animationDelay: "0.05s" }}
         priority
       />
 
@@ -63,7 +63,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
           fontSize: "var(--lf-name-font-size)",
           fontWeight: "var(--lf-name-font-weight)" as React.CSSProperties["fontWeight"],
           color: "var(--lf-name-color)",
-          animationDelay: "0.25s",
+          animationDelay: "0.15s",
         }}
       >
         {userConfig.fullName ?? "Your Name"}
@@ -73,7 +73,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
         className="lf-alias alias mt-2 text-base font-semibold fade-in"
         style={{
           color: "var(--lf-alias-color)",
-          animationDelay: "0.4s",
+          animationDelay: "0.25s",
         }}
       >
         {userConfig.enableTypingAlias ? (
@@ -95,7 +95,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
           opacity: "var(--lf-accent-line-opacity)",
           marginTop: "1rem",
           marginInline: "auto",
-          animationDelay: "0.55s",
+          animationDelay: "0.35s",
         }}
         role="presentation"
       />

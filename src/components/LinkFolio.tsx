@@ -39,7 +39,7 @@ const LinkFolio: React.FC<LinkFolioProps> = ({
 
   return (
     <div
-      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto font-roboto sm:m-4 m-2 ${className || ""}`}
+      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto sm:m-4 m-2 ${className || ""}`}
       style={{
         backgroundColor: "var(--lf-card-bg)",
         borderRadius: "var(--lf-card-radius)",

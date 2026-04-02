@@ -20,7 +20,7 @@
   /* Card container */
   --lf-card-bg: #f5f5f5;
   --lf-card-radius: 0.75rem;
-  --lf-card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --lf-card-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.08);
   --lf-card-border: none;
   --lf-card-padding-x: 2.5rem;
   --lf-card-padding-y: 2.5rem;
@@ -28,7 +28,7 @@
   --lf-card-backdrop: none;
 
   /* Profile section */
-  --lf-profile-margin-bottom: 3rem;
+  --lf-profile-margin-bottom: 2.5rem;
   --lf-name-font-size: 1.5rem;
   --lf-name-font-weight: 600;
   --lf-name-color: inherit;
@@ -41,6 +41,12 @@
   --lf-links-gap-x: 1rem;
   --lf-links-gap-y: 0.5rem;
   --lf-links-padding-x: 1rem;
+
+  /* Network hover */
+  --lf-network-hover-bg: rgba(0, 0, 0, 0.03);
+
+  /* Footer */
+  --lf-footer-opacity: 0.5;
 }
 
 /* Utility classes */
@@ -54,19 +60,19 @@
 }
 
 @utility fade-in-up-bounce {
-  animation: fade-in-up-bounce 0.7s var(--ease-out-expo) forwards;
+  animation: fade-in-up 0.6s var(--ease-out-expo) forwards;
 }
 
 @utility subtle-bounce {
-  animation: soft-bounce 0.4s var(--ease-out-expo);
+  animation: soft-lift 0.35s var(--ease-out-expo);
 }
 
 @utility fade-in {
-  animation: fade-in 0.6s var(--ease-out-expo) both;
+  animation: fade-in 0.5s var(--ease-out-expo) both;
 }
 
 @utility reveal-line {
-  animation: reveal-line 0.8s var(--ease-out-expo) both;
+  animation: reveal-line 0.6s var(--ease-out-expo) both;
 }
 
 @utility alias-typing {
@@ -118,40 +124,44 @@
   }
 
   .lf-avatar:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 
   /* Footer */
-  footer a {
-    opacity: 0.6;
+  .lf-footer {
+    opacity: var(--lf-footer-opacity);
     transition: opacity 0.3s var(--ease-out-expo);
   }
 
-  footer a:hover {
+  .lf-footer:hover {
     opacity: 1;
   }
 
-  /* Network card hover effects */
+  /* Network card */
+  .network {
+    transition: background-color 0.35s var(--ease-out-expo);
+    border-radius: 0.5rem;
+  }
+
+  .network:hover {
+    background-color: var(--lf-network-hover-bg);
+  }
+
   .network img {
     transition: transform 0.5s var(--ease-out-expo);
   }
 
-  .network .group:hover img {
-    transform: scale(1.03);
+  .network:hover img {
+    transform: scale(1.02);
   }
 
   .network .lf-icon-container {
-    transition: box-shadow 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo);
+    transition: box-shadow 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
   }
 
-  .network:hover .lf-icon-container {
-    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
-  }
-
-  /* ── Group separator — subtle line between sections ── */
   .lf-group + .lf-group {
     position: relative;
-    padding-top: 0.5rem;
+    padding-top: 0.75rem;
   }
 
   .lf-group + .lf-group::before {
@@ -160,13 +170,12 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 3rem;
+    width: 4rem;
     height: 1px;
     background: linear-gradient(90deg, transparent, currentColor, transparent);
-    opacity: 0.15;
+    opacity: 0.12;
   }
 
-  /* ── Group: socialnetwork — compact pills ── */
   [data-group="socialnetwork"] .network {
     width: 16%;
   }
@@ -174,14 +183,18 @@
   [data-group="socialnetwork"] .lf-icon-container {
     height: 3rem;
     box-shadow: none;
-    border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 0.75rem;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  [data-group="socialnetwork"] .network:hover .lf-icon-container {
+    background: rgba(0, 0, 0, 0.04);
   }
 
   [data-group="socialnetwork"] .lf-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     font-weight: 600;
     margin-bottom: 0;
   }
@@ -194,14 +207,13 @@
     padding: 0.3rem 0.25rem;
   }
 
-  /* ── Group: project — showcase cards ── */
   [data-group="project"] .network {
     width: 30%;
   }
 
   [data-group="project"] .lf-icon-container {
     height: 6rem;
-    box-shadow: 0 2px 12px -3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 12px -3px rgba(0, 0, 0, 0.1);
     border-radius: 0.875rem;
   }
 
@@ -210,39 +222,42 @@
     font-weight: 600;
   }
 
-  [data-group="project"]:hover .lf-icon-container {
-    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.18);
+  [data-group="project"] .network:hover .lf-icon-container {
+    box-shadow: 0 8px 28px -6px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
   }
 
-  /* ── Group: website — medium treatment ── */
   [data-group="website"] .network {
     width: 30%;
   }
 
   [data-group="website"] .lf-icon-container {
     height: 5rem;
-    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.08);
     border-radius: 0.75rem;
   }
 
-  /* ── Mobile responsive ── */
+  [data-group="website"] .network:hover .lf-icon-container {
+    box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
   @media (max-width: 767px) {
     [data-group="socialnetwork"] .network {
-      width: 42%;
+      width: 28%;
     }
 
     [data-group="project"] .network,
     [data-group="website"] .network {
-      width: 90%;
+      width: 85%;
     }
   }
 
   /* Animations */
-  @keyframes fade-in-up-bounce {
+  @keyframes fade-in-up {
     from {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(16px);
     }
     to {
       opacity: 1;
@@ -250,10 +265,10 @@
     }
   }
 
-  @keyframes soft-bounce {
-    from { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    to { transform: scale(1); }
+  @keyframes soft-lift {
+    from { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+    to { transform: translateY(0); }
   }
 
   @keyframes fade-in {
