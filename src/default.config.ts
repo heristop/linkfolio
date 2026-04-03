@@ -12,7 +12,7 @@ import {
   xIcon,
   youtubeIcon,
 } from "./assets";
-import { UserConfigType } from "./types";
+import type { UserConfigType } from "./types";
 
 const defaultConfig: UserConfigType = {
   socialNetworks: [

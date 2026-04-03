@@ -1,4 +1,4 @@
-import { UserConfigType } from "@/types";
+import type { UserConfigType } from "@/types";
 import {
   blueSkyIcon,
   facebookIcon,

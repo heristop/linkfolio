@@ -7,7 +7,7 @@ export const alt = userConfig.fullName ?? "Linkfolio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const description = userConfig.metaDescription?.replace(/\p{Emoji_Presentation}/gu, "").trim();
+const description = userConfig.metaDescription?.replaceAll(/\p{Emoji_Presentation}/gu, "").trim();
 
 export default function OGImage() {
   const avatarBuffer = readFileSync(
@@ -42,8 +42,10 @@ export default function OGImage() {
             boxShadow: "0 4px 24px -6px rgba(0,0,0,0.08)",
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={avatarSrc}
+            alt=""
             width={120}
             height={120}
             style={{ borderRadius: "50%", marginBottom: 24 }}
