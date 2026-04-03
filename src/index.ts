@@ -8,4 +8,5 @@ import ThemeToggle from "./components/ThemeToggle";
 import ShareButton from "./components/ShareButton";
 import QrCodeButton from "./components/QrCodeButton";
 
+export type { ThemeColors } from "./types";
 export { LinkFolio, UserProfile, SocialLinks, Footer, Analytics, ThemeProvider, ThemeToggle, ShareButton, QrCodeButton };

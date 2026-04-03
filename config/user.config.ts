@@ -22,6 +22,19 @@ const userConfig: UserConfigType = {
   metaTitle: "Linkfolio",
   metaDescription: "A Hub for all your online links 🔗",
   enableTypingAlias: false,
+  darkTheme: {
+    "color-primary": "oklch(0.82 0.04 160)",
+    "color-secondary": "oklch(0.72 0.06 160)",
+    "color-background-start": "oklch(0.17 0.02 160)",
+    "color-background-end": "oklch(0.19 0.02 155)",
+    "lf-card-bg": "oklch(0.23 0.03 160)",
+    "lf-card-shadow": "0 4px 24px -6px oklch(0 0 0 / 0.3)",
+    "lf-card-border": "1px solid oklch(0.82 0.04 160 / 0.06)",
+    "lf-name-color": "oklch(0.90 0.03 160)",
+    "lf-alias-color": "oklch(0.72 0.06 160)",
+    "lf-network-hover-bg": "oklch(0.82 0.04 160 / 0.05)",
+    "lf-description-color": "oklch(0.70 0.04 160)",
+  },
   socialNetworks: [
     {
       url: "#1",

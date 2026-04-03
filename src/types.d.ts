@@ -1,3 +1,17 @@
+export type ThemeColors = {
+  "color-primary"?: string;
+  "color-secondary"?: string;
+  "color-background-start"?: string;
+  "color-background-end"?: string;
+  "lf-card-bg"?: string;
+  "lf-card-shadow"?: string;
+  "lf-card-border"?: string;
+  "lf-name-color"?: string;
+  "lf-alias-color"?: string;
+  "lf-network-hover-bg"?: string;
+  "lf-description-color"?: string;
+};
+
 type UserConfigType = {
   avatarSrc?: string | StaticImageData;
   avatarAlt?: string;
@@ -7,6 +21,8 @@ type UserConfigType = {
   metaTitle?: string;
   metaDescription?: string;
   themeColor?: string;
+  theme?: ThemeColors;
+  darkTheme?: ThemeColors;
   enableTypingAlias?: boolean;
   socialNetworks?: SocialNetwork[];
 };
