@@ -67,7 +67,7 @@ export default function QrCodeButton() {
         ref={btnRef}
         onClick={() => setOpen(true)}
         aria-label="Show QR code"
-        className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full cursor-pointer opacity-60 transition-[opacity,transform] duration-250 ease-[var(--ease-out-expo)] hover:opacity-100 hover:scale-115 active:scale-92 [&_svg]:w-[20px] [&_svg]:h-[20px] sm:[&_svg]:w-[18px] sm:[&_svg]:h-[18px]"
+        className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full cursor-pointer opacity-[var(--lf-button-opacity)] transition-[opacity,transform] duration-250 ease-[var(--ease-out-expo)] hover:opacity-100 hover:scale-115 active:scale-92 [&_svg]:w-[20px] [&_svg]:h-[20px] sm:[&_svg]:w-[18px] sm:[&_svg]:h-[18px]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ export default function QrCodeButton() {
             <canvas ref={canvasRef} />
           </div>
 
-          <button onClick={copyUrl} className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-md cursor-pointer opacity-60 transition-[opacity,transform] duration-200 ease-[var(--ease-out-expo)] hover:opacity-100 active:scale-96">
+          <button onClick={copyUrl} className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-md cursor-pointer opacity-[var(--lf-button-opacity)] transition-[opacity,transform] duration-200 ease-[var(--ease-out-expo)] hover:opacity-100 active:scale-96">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               {copied ? (
                 <path d="M20 6 9 17l-5-5" />

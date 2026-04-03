@@ -68,7 +68,7 @@ const LinkFolio: React.FC<LinkFolioProps> = ({
 
   return (
     <div
-      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto sm:m-4 m-2 transition-colors duration-300 bg-[var(--lf-card-bg)] rounded-[var(--lf-card-radius)] shadow-[var(--lf-card-shadow)] border-[length:0] border-[var(--lf-card-border)] p-[var(--lf-card-padding-y)_var(--lf-card-padding-x)] min-h-[var(--lf-card-min-height)] backdrop-blur-[var(--lf-card-backdrop)] ${className || ""}`}
+      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto sm:m-4 m-2 transition-colors duration-300 text-[var(--color-primary)] bg-[var(--lf-card-bg)] rounded-[var(--lf-card-radius)] shadow-[var(--lf-card-shadow)] border-[length:0] border-[var(--lf-card-border)] p-[var(--lf-card-padding-y)_var(--lf-card-padding-x)] min-h-[var(--lf-card-min-height)] backdrop-blur-[var(--lf-card-backdrop)] ${className || ""}`}
       style={Object.keys(lightStyle).length ? lightStyle as React.CSSProperties : undefined}
     >
       {darkCss && (

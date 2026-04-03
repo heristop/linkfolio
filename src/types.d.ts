@@ -10,6 +10,9 @@ export type ThemeColors = {
   "lf-alias-color"?: string;
   "lf-network-hover-bg"?: string;
   "lf-description-color"?: string;
+  "lf-accent-line-color"?: string;
+  "lf-accent-line-opacity"?: string;
+  "lf-button-opacity"?: string;
 };
 
 type UserConfigType = {

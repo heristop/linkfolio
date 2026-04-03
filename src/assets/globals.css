@@ -44,6 +44,9 @@
   --lf-network-hover-bg: oklch(0 0 0 / 0.03);
   --lf-description-color: oklch(0.40 0 0);
 
+  /* Buttons */
+  --lf-button-opacity: 0.6;
+
   /* Footer */
   --lf-footer-opacity: 0.8;
 }
