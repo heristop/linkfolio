@@ -5,7 +5,7 @@
   --color-secondary: oklch(0.56 0.06 170);
 
   --color-background-start: oklch(0.90 0.01 180);
-  --color-background-end: oklch(0.96 0.01 170);
+  --color-background-end: oklch(0.93 0.01 170);
 
   --background-image-gradient-background: linear-gradient(
     to bottom,
@@ -16,7 +16,7 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Card container */
-  --lf-card-bg: oklch(0.97 0.005 170);
+  --lf-card-bg: oklch(0.98 0.005 170);
   --lf-card-radius: 0.75rem;
   --lf-card-shadow: 0 4px 24px -6px oklch(0 0 0 / 0.12);
   --lf-card-border: none;
@@ -45,7 +45,7 @@
   --lf-description-color: oklch(0.40 0 0);
 
   /* Footer */
-  --lf-footer-opacity: 0.65;
+  --lf-footer-opacity: 0.8;
 }
 
 /* View Transition for theme toggle */
