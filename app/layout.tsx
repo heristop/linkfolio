@@ -22,13 +22,11 @@ export const metadata: Metadata = {
     title: userConfig.metaTitle ?? "Linkfolio",
     description: userConfig.metaDescription ?? "Linkfolio",
     url: appUrl,
-    images: [{ url: "/assets/linkfolio.webp" }],
   },
   twitter: {
     card: "summary_large_image",
     title: userConfig.metaTitle ?? "Linkfolio",
     description: userConfig.metaDescription ?? "Linkfolio",
-    images: ["/assets/linkfolio.webp"],
   },
   icons: {
     icon: [
