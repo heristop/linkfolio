@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "@/assets/globals.css";
-import { Analytics } from "@/index";
+import { Analytics, ThemeProvider } from "@/index";
 import userConfig from "../config/user.config";
 
 const font = Raleway({
@@ -53,7 +53,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="format-detection" content="telephone=no" />
         <meta
@@ -69,7 +69,9 @@ export default function RootLayout({
         <Analytics />
       </head>
 
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

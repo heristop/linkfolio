@@ -36,6 +36,8 @@
     "fmt:check": "oxfmt --check ."
   },
   "dependencies": {
+    "next-themes": "^0.4.6",
+    "qrcode": "^1.5.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
@@ -45,6 +47,7 @@
     "@swc/core": "^1.15.21",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^25.5.0",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "husky": "^9.1.7",
