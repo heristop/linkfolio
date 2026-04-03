@@ -53,7 +53,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
         href={config.url}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${config.title} (opens in a new tab)`}
+        aria-label={config.title}
         className="group w-full"
       >
         <div className="group-hover:subtle-bounce flex justify-center">

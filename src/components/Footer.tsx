@@ -12,7 +12,7 @@ const Footer: React.FC<FooterProps> = ({ children }) => {
         href="https://github.com/heristop/linkfolio"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Linkfolio on GitHub (opens in a new tab)"
+        aria-label="Linkfolio on GitHub"
       >
         <div className="relative w-10 h-10">
           <Image

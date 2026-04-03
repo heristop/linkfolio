@@ -16,9 +16,9 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Card container */
-  --lf-card-bg: oklch(0.96 0 0);
+  --lf-card-bg: oklch(0.97 0.005 170);
   --lf-card-radius: 0.75rem;
-  --lf-card-shadow: 0 4px 24px -6px oklch(0 0 0 / 0.08);
+  --lf-card-shadow: 0 4px 24px -6px oklch(0 0 0 / 0.12);
   --lf-card-border: none;
   --lf-card-padding-x: 2.5rem;
   --lf-card-padding-y: 2.5rem;
@@ -45,7 +45,7 @@
   --lf-description-color: oklch(0.40 0 0);
 
   /* Footer */
-  --lf-footer-opacity: 0.5;
+  --lf-footer-opacity: 0.65;
 }
 
 /* View Transition for theme toggle */
