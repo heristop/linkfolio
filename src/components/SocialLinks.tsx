@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import SocialNetwork from "./SocialNetwork";
-import { SocialLinksProps, SocialNetworkType } from "../types";
+import type { SocialLinksProps, SocialNetworkType } from "../types";
 
 const SocialLinks: React.FC<SocialLinksProps> = ({ userConfig }) => {
   const filteredNetworks = useMemo(
@@ -32,15 +32,11 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ userConfig }) => {
       aria-label="Social links"
       className="lf-links flex flex-col gap-8 w-full max-w-(--breakpoint-xl) mx-auto"
     >
-      {Array.from(groups.entries()).map(([groupName, networks]) => (
+      {[...groups.entries()].map(([groupName, networks]) => (
         <section
           key={groupName}
           data-group={groupName}
-          className="lf-group flex flex-wrap justify-center"
-          style={{
-            gap: "var(--lf-links-gap-y) var(--lf-links-gap-x)",
-            paddingInline: "var(--lf-links-padding-x)",
-          }}
+          className="lf-group flex flex-wrap justify-center gap-[var(--lf-links-gap-y)_var(--lf-links-gap-x)] px-[var(--lf-links-padding-x)]"
           aria-label={`${groupName} links`}
         >
           {networks.map((config) => {

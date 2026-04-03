@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { UserProfileProps } from "../types";
+import type { UserProfileProps } from "../types";
 import { defaultAvatarIcon } from "../assets";
 
 const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
@@ -43,10 +43,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
   }, [isMounted, userConfig.enableTypingAlias]);
 
   return (
-    <header
-      className="profile mt-2 text-center"
-      style={{ marginBottom: "var(--lf-profile-margin-bottom)" }}
-    >
+    <header className="profile mt-2 text-center mb-[var(--lf-profile-margin-bottom)]">
       <Image
         src={userConfig.avatarSrc ?? defaultAvatarIcon}
         alt={userConfig.avatarAlt ?? "Avatar"}
@@ -58,23 +55,15 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
       />
 
       <h1
-        className="lf-name fullname fade-in"
-        style={{
-          fontSize: "var(--lf-name-font-size)",
-          fontWeight: "var(--lf-name-font-weight)" as React.CSSProperties["fontWeight"],
-          color: "var(--lf-name-color)",
-          animationDelay: "0.15s",
-        }}
+        className="lf-name fullname fade-in text-[length:var(--lf-name-font-size)] font-[var(--lf-name-font-weight)] text-[var(--lf-name-color)]"
+        style={{ animationDelay: "0.15s" }}
       >
         {userConfig.fullName ?? "Your Name"}
       </h1>
 
       <p
-        className="lf-alias alias mt-2 text-base font-semibold fade-in"
-        style={{
-          color: "var(--lf-alias-color)",
-          animationDelay: "0.25s",
-        }}
+        className="lf-alias alias mt-2 text-base font-semibold fade-in text-[var(--lf-alias-color)]"
+        style={{ animationDelay: "0.25s" }}
       >
         {userConfig.enableTypingAlias ? (
           <>
@@ -87,16 +76,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ userConfig }) => {
       </p>
 
       <div
-        className="lf-accent-line origin-left reveal-line"
-        style={{
-          width: "var(--lf-accent-line-width)",
-          height: "2px",
-          background: "var(--lf-accent-line-color)",
-          opacity: "var(--lf-accent-line-opacity)",
-          marginTop: "1rem",
-          marginInline: "auto",
-          animationDelay: "0.35s",
-        }}
+        className="lf-accent-line origin-left reveal-line w-[var(--lf-accent-line-width)] h-0.5 bg-[var(--lf-accent-line-color)] opacity-[var(--lf-accent-line-opacity)] mt-4 mx-auto"
+        style={{ animationDelay: "0.35s" }}
         role="presentation"
       />
     </header>

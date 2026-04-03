@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { SocialNetworkProps } from "../types";
+import type { SocialNetworkProps } from "../types";
 
 const SocialNetwork: React.FC<SocialNetworkProps> = ({
   config,
@@ -46,8 +46,8 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
     <div
       ref={ref}
       data-group={config.group || "socialnetwork"}
-      className="network flex flex-col items-center p-2 opacity-0"
-      style={{ animationDelay: `${delay}ms`, transitionTimingFunction: "var(--ease-out-expo)" }}
+      className="network flex flex-col items-center p-2 opacity-0 ease-[var(--ease-out-expo)]"
+      style={{ animationDelay: `${delay}ms` }}
     >
       <Link
         href={config.url}
@@ -72,7 +72,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
 
         <div className="lf-data px-2 py-4 text-center">
           <h2 className="lf-title text-xl font-bold mb-2">{config.title}</h2>
-          <p className="lf-description description text-neutral-600 text-sm truncate">
+          <p className="lf-description description text-sm truncate text-[var(--lf-description-color)]">
             {config.description}
           </p>
         </div>

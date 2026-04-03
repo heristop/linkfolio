@@ -1,6 +1,11 @@
 import React from "react";
-import { UserProfile, SocialLinks, Footer } from "..";
-import { LinkFolioProps } from "../types";
+import UserProfile from "./UserProfile";
+import SocialLinks from "./SocialLinks";
+import Footer from "./Footer";
+import ThemeToggle from "./ThemeToggle";
+import ShareButton from "./ShareButton";
+import QrCodeButton from "./QrCodeButton";
+import type { LinkFolioProps } from "../types";
 import defaultConfig from "../default.config";
 
 const LinkFolio: React.FC<LinkFolioProps> = ({
@@ -39,19 +44,14 @@ const LinkFolio: React.FC<LinkFolioProps> = ({
 
   return (
     <div
-      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto sm:m-4 m-2 ${className || ""}`}
-      style={{
-        backgroundColor: "var(--lf-card-bg)",
-        borderRadius: "var(--lf-card-radius)",
-        boxShadow: "var(--lf-card-shadow)",
-        border: "var(--lf-card-border)",
-        padding: "var(--lf-card-padding-y) var(--lf-card-padding-x)",
-        minHeight: "var(--lf-card-min-height)",
-        backdropFilter: "var(--lf-card-backdrop)",
-        WebkitBackdropFilter: "var(--lf-card-backdrop)",
-        ...(config.themeColor && { "--color-primary": config.themeColor } as React.CSSProperties),
-      }}
+      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto sm:m-4 m-2 transition-colors duration-300 bg-[var(--lf-card-bg)] rounded-[var(--lf-card-radius)] shadow-[var(--lf-card-shadow)] border-[length:0] border-[var(--lf-card-border)] p-[var(--lf-card-padding-y)_var(--lf-card-padding-x)] min-h-[var(--lf-card-min-height)] backdrop-blur-[var(--lf-card-backdrop)] ${className || ""}`}
+      style={config.themeColor ? { "--color-primary": config.themeColor } as React.CSSProperties : undefined}
     >
+      <div className="self-end flex gap-3">
+        <QrCodeButton />
+        <ShareButton />
+        <ThemeToggle />
+      </div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString }}

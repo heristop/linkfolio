@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FooterProps } from "../types";
+import type { FooterProps } from "../types";
 import { linkfolioIcon } from "../assets";
 
 const Footer: React.FC<FooterProps> = ({ children }) => {
   return (
-    <footer className="lf-footer mx-auto mt-8 px-6 py-2 text-xs">
+    <footer className="lf-footer mx-auto mt-10 px-6 py-2 text-xs">
       <Link
         className="flex flex-col items-center justify-center"
         href="https://github.com/heristop/linkfolio"
