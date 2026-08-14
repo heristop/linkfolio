@@ -1,5 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
+/* Overridable so a run can be pinned to its own server. The default port is
+   shared with `pnpm dev`, and `reuseExistingServer` will happily test whatever
+   is already listening there — including a different build. */
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 3000);
+const baseURL = `http://127.0.0.1:${port}`;
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -11,6 +17,12 @@ import { defineConfig, devices } from "@playwright/test";
  */
 export default defineConfig({
   testDir: "./tests",
+  /* `*.test.mjs` files belong to the node:test runner (`pnpm test:package`).
+     Playwright's default testMatch also claims them, and it would import them
+     during collection — running their assertions once per project with their
+     results reported nowhere. `tests/profile/` belongs to
+     playwright.profile.config.ts, which builds WITHOUT the showcase flag. */
+  testIgnore: ["**/*.test.mjs", "**/profile/**"],
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -24,7 +36,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://127.0.0.1:3000",
+    baseURL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
@@ -68,10 +80,14 @@ export default defineConfig({
     },
   ],
 
-  /* Run your local dev server before starting the tests */
+  /* Run your local dev server before starting the tests.
+     LINKFOLIO_SHOWCASE is baked in at build time: these suites exercise the
+     project's showcase site (landing page, /docs, /demo). The clean personal
+     deployment — the default build — is covered by
+     playwright.profile.config.ts. */
   webServer: {
-    command: "pnpm build && pnpm run start",
-    url: "http://127.0.0.1:3000",
+    command: `LINKFOLIO_SHOWCASE=1 pnpm build && LINKFOLIO_SHOWCASE=1 pnpm exec next start -p ${port}`,
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
   },
 });
