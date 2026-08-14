@@ -1,0 +1,51 @@
+name: Update Visual Baselines
+
+# Screenshot baselines are per-platform: Playwright suffixes them with the OS
+# it captured on, because text rasterises differently on macOS and Linux. A
+# baseline recorded on a developer's Mac therefore cannot satisfy a Linux
+# runner, and the runner is the only place a Linux baseline can be made.
+#
+# Run this by hand (Actions -> Update Visual Baselines -> Run workflow) after
+# any deliberate visual change, or when adding a project or layout. It commits
+# the regenerated PNGs straight to the branch it ran on.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+      # Both arrangements, since the layout is baked in at build time and each
+      # one carries its own baselines. A missing snapshot is still reported as
+      # a failure while being written, so neither step gates the commit.
+      - name: Capture classic baselines
+        continue-on-error: true
+        run: pnpm exec playwright test -c playwright.profile.config.ts --update-snapshots
+      - name: Capture bento baselines
+        continue-on-error: true
+        run: LINKFOLIO_LAYOUT=bento pnpm exec playwright test -c playwright.profile.config.ts --update-snapshots
+      - name: Commit baselines
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A tests/profile/visual.spec.ts-snapshots
+          if git diff --cached --quiet; then
+            echo "baselines already current"
+          else
+            git commit -m "test: update linux visual baselines"
+            git push
+          fi
