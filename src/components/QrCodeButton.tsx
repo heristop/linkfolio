@@ -1,6 +1,35 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import QRCode from "qrcode";
+
+const FALLBACK_COLOR = "#000000";
+
+/** Read a CSS custom property as a computed color, scoped to the card it belongs to. */
+function readCssColor(anchor: HTMLElement, variable: string): string {
+  const card = anchor.closest(".lf-card") ?? document.body;
+  const probe = document.createElement("span");
+  probe.style.display = "none";
+  probe.style.color = `var(${variable})`;
+  card.append(probe);
+  const resolved = getComputedStyle(probe).color;
+  probe.remove();
+
+  return resolved;
+}
+
+/** Convert any CSS color notation to hex by painting it on a 1x1 canvas. */
+function toHexColor(color: string): string {
+  const cvs = document.createElement("canvas");
+  cvs.width = 1;
+  cvs.height = 1;
+  const ctx = cvs.getContext("2d");
+  if (!ctx) return FALLBACK_COLOR;
+
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, 1, 1);
+  const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+
+  return `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
+}
 
 export default function QrCodeButton() {
   const [open, setOpen] = useState(false);
@@ -8,66 +37,99 @@ export default function QrCodeButton() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
+  const copyTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const generate = useCallback(() => {
-    if (!canvasRef.current || !btnRef.current) return;
+  useEffect(() => {
+    return () => {
+      if (copyTimeout.current) clearTimeout(copyTimeout.current);
+    };
+  }, []);
 
-    // Resolve --color-primary to hex using a 1x1 canvas (works with any CSS color format)
-    const card = btnRef.current?.closest(".lf-card") ?? document.body;
-    const probe = document.createElement("span");
-    probe.style.display = "none";
-    probe.style.color = "var(--color-primary)";
-    card.appendChild(probe);
-    const resolved = getComputedStyle(probe).color;
-    card.removeChild(probe);
+  // Loaded on open, not on import: the encoder is ~20 kB of the client bundle
+  // for a dialog most visitors never open, and every page that renders the
+  // card would otherwise pay for it before first paint.
+  const generate = useCallback(async () => {
+    const canvas = canvasRef.current;
+    const button = btnRef.current;
+    if (!canvas || !button) return;
 
-    const cvs = document.createElement("canvas");
-    cvs.width = 1;
-    cvs.height = 1;
-    const ctx = cvs.getContext("2d")!;
-    ctx.fillStyle = resolved;
-    ctx.fillRect(0, 0, 1, 1);
-    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-    const hex = `#${((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1)}`;
+    const dark = toHexColor(readCssColor(button, "--color-primary"));
+    const { toCanvas } = await import("qrcode");
 
-    QRCode.toCanvas(canvasRef.current, globalThis.location.href, {
+    await toCanvas(canvas, globalThis.location.href, {
       width: 180,
       margin: 2,
-      color: { dark: hex, light: "#ffffff" },
+      color: { dark, light: "#ffffff" },
     });
   }, []);
 
   useEffect(() => {
-    if (open) {
-      dialogRef.current?.showModal();
-      generate();
-      setCopied(false);
-    } else {
+    if (!open) {
       dialogRef.current?.close();
+      return;
     }
+
+    dialogRef.current?.showModal();
+    setCopied(false);
+
+    // The encoder chunk can fail to load (offline, blocked). The dialog itself
+    // still works, so that must not surface as an unhandled rejection.
+    async function draw() {
+      try {
+        await generate();
+      } catch {
+        // No QR code; the Copy link button still gives the visitor the URL.
+      }
+    }
+
+    void draw();
   }, [open, generate]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
+
+    // Native <dialog> already closes on Escape, which fires "close".
     const handleClose = () => setOpen(false);
+    // Light dismiss: a click on the backdrop targets the dialog element itself.
+    const handleClick = (event: MouseEvent) => {
+      if (event.target === dialog) setOpen(false);
+    };
+
     dialog.addEventListener("close", handleClose);
-    return () => dialog.removeEventListener("close", handleClose);
+    dialog.addEventListener("click", handleClick);
+
+    return () => {
+      dialog.removeEventListener("close", handleClose);
+      dialog.removeEventListener("click", handleClick);
+    };
   }, []);
 
   async function copyUrl() {
-    await navigator.clipboard.writeText(globalThis.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    // `navigator.clipboard` is undefined outside a secure context, and the
+    // write itself can be denied — a self-hosted page on plain http is the
+    // ordinary case here, not an edge one.
+    if (typeof navigator === "undefined" || !navigator.clipboard) return;
+
+    try {
+      await navigator.clipboard.writeText(globalThis.location.href);
+      setCopied(true);
+
+      if (copyTimeout.current) clearTimeout(copyTimeout.current);
+      copyTimeout.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Degrade silently: the URL is still on screen to copy by hand.
+    }
   }
 
   return (
     <>
       <button
         ref={btnRef}
+        type="button"
         onClick={() => setOpen(true)}
         aria-label="Show QR code"
-        className="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full cursor-pointer opacity-[var(--lf-button-opacity)] transition-[opacity,transform] duration-250 ease-[var(--ease-out-expo)] hover:opacity-100 hover:scale-115 active:scale-92 [&_svg]:w-[20px] [&_svg]:h-[20px] sm:[&_svg]:w-[18px] sm:[&_svg]:h-[18px]"
+        className="lf-icon-button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -93,21 +155,32 @@ export default function QrCodeButton() {
 
       <dialog
         ref={dialogRef}
+        aria-label="QR code for this page"
         className="qr-dialog fixed inset-0 m-auto max-w-fit max-h-fit bg-transparent border-none p-0"
-        onClick={(e) => {
-          if (e.target === dialogRef.current) setOpen(false);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") setOpen(false);
-        }}
       >
-        <div className="flex flex-col items-center gap-3 rounded-2xl p-5 bg-[var(--lf-card-bg)] text-[var(--color-primary)] shadow-[0_16px_48px_-8px_oklch(0_0_0/0.25)] border border-[oklch(0_0_0/0.06)] dark:border-[oklch(1_0_0/0.08)] animate-[dialog-slide-in_0.25s_var(--ease-out-expo)_both]">
+        <div className="qr-panel flex flex-col items-center gap-3 rounded-2xl p-5 bg-(--lf-card-bg) text-primary shadow-[0_16px_48px_-8px_oklch(0_0_0/0.25)] border border-[oklch(0_0_0/0.06)] dark:border-[oklch(1_0_0/0.08)]">
           <div className="bg-white rounded-[0.625rem] p-2.5">
-            <canvas ref={canvasRef} />
+            {/* The dialog itself is already named "QR code for this page",
+                and the URL is available through Copy link, so the canvas adds
+                nothing a screen reader can use. */}
+            <canvas ref={canvasRef} aria-hidden="true" />
           </div>
 
-          <button onClick={copyUrl} className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-md cursor-pointer opacity-[var(--lf-button-opacity)] transition-[opacity,transform] duration-200 ease-[var(--ease-out-expo)] hover:opacity-100 active:scale-96">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <button
+            type="button"
+            onClick={copyUrl}
+            className="lf-qr-copy lf-cta-ghost flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium rounded-md opacity-(--lf-button-opacity)"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               {copied ? (
                 <path d="M20 6 9 17l-5-5" />
               ) : (
@@ -119,6 +192,11 @@ export default function QrCodeButton() {
             </svg>
             {copied ? "Copied!" : "Copy link"}
           </button>
+
+          {/* The button's own label change is not announced on its own. */}
+          <output className="sr-only">
+            {copied ? "Link copied to clipboard" : ""}
+          </output>
         </div>
       </dialog>
     </>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import UserProfile from "./UserProfile";
 import SocialLinks from "./SocialLinks";
 import Footer from "./Footer";
@@ -7,6 +7,68 @@ import ShareButton from "./ShareButton";
 import QrCodeButton from "./QrCodeButton";
 import type { LinkFolioProps } from "../types";
 import defaultConfig from "../default.config";
+import { buildJsonLd } from "../seo/jsonLd";
+import { buildLightStyle, buildThemeCss, resolveTheme } from "../lib/themeCss";
+
+/** Keeps the slot's vertical rhythm while a consumer component streams in. */
+function SlotFallback() {
+  return <div aria-hidden="true" className="h-8 w-full" />;
+}
+
+const FALLBACK_TILES = ["a", "b", "c", "d", "e", "f"];
+
+/** The rhythm the bento arrangement produces: a big tile, then smaller ones. */
+const BENTO_FALLBACK_TILES = [
+  { key: "a", span: "2x2" },
+  { key: "b", span: "1x1" },
+  { key: "c", span: "1x1" },
+  { key: "d", span: "2x1" },
+  { key: "e", span: "1x1" },
+  { key: "f", span: "1x1" },
+];
+
+/**
+ * Placeholder grid rendered while the links section streams in. It mirrors the
+ * configured layout so the section does not reshuffle as the real cards land.
+ *
+ * It carries none of the section's semantic classes — `lf-links` here, and
+ * `network` on the tiles below. Those are the handles stylesheets and tests
+ * reach for, and a placeholder answering to them makes every such selector
+ * match two elements, one of which is a stand-in.
+ */
+function LinksFallback({ bento }: Readonly<{ bento: boolean }>) {
+  if (bento) {
+    return (
+      <div aria-hidden="true" className="w-full animate-pulse">
+        <div className="lf-bento px-(--lf-links-padding-x)">
+          {BENTO_FALLBACK_TILES.map((tile) => (
+            <div
+              key={tile.key}
+              // No `network` class: that one is hidden until the reveal
+              // observer marks it, and nothing observes a placeholder.
+              data-span={tile.span}
+              className="rounded-lg bg-current opacity-10"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      aria-hidden="true"
+      className="flex flex-wrap justify-center w-full gap-[var(--lf-links-gap-y)_var(--lf-links-gap-x)] px-(--lf-links-padding-x) animate-pulse"
+    >
+      {FALLBACK_TILES.map((tile) => (
+        <div
+          key={tile}
+          className="w-40 h-24 m-2 rounded-lg bg-current opacity-10"
+        />
+      ))}
+    </div>
+  );
+}
 
 const LinkFolio: React.FC<LinkFolioProps> = ({
   userConfig,
@@ -16,80 +78,57 @@ const LinkFolio: React.FC<LinkFolioProps> = ({
   SocialLinksComponent,
   AfterSocialLinksComponent,
   FooterComponent,
+  renderJsonLd = true,
+  renderChrome = true,
+  headingLevel = "h1",
+  onLinkClick,
 }) => {
   const config = userConfig || defaultConfig;
   const UserProfileToRender = UserProfileComponent || UserProfile;
   const SocialLinksToRender = SocialLinksComponent || SocialLinks;
   const FooterToRender = FooterComponent || Footer;
 
-  const socialUrls =
-    config.socialNetworks
-      ?.filter((n) => !n.hidden && n.url)
-      .map((n) => n.url) ?? [];
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    mainEntity: {
-      "@type": "Person",
-      name: config.fullName,
-      ...(config.alias && { alternateName: config.alias }),
-      ...(config.avatarSrc &&
-        typeof config.avatarSrc === "string" && { image: config.avatarSrc }),
-      ...(socialUrls.length > 0 && { sameAs: socialUrls }),
-    },
-  };
-
-  const jsonLdString = JSON.stringify(jsonLd);
-
-  const lightStyle: Record<string, string> = {};
-  if (config.themeColor) lightStyle["--color-primary"] = config.themeColor;
-  if (config.theme) {
-    for (const [key, value] of Object.entries(config.theme)) {
-      lightStyle[`--${key}`] = value;
-    }
-  }
-
-  let darkCss = "";
-  if (config.darkTheme) {
-    const bgVars = ["color-background-start", "color-background-end"];
-    const cardDecls: string[] = [];
-    const rootDecls: string[] = [];
-
-    for (const [key, val] of Object.entries(config.darkTheme)) {
-      const decl = `--${key}: ${val};`;
-      cardDecls.push(decl);
-      if (bgVars.includes(key)) rootDecls.push(decl);
-    }
-
-    darkCss = `.dark .lf-card { ${cardDecls.join(" ")} }`;
-    if (rootDecls.length) darkCss += ` .dark { ${rootDecls.join(" ")} }`;
-  }
+  const jsonLdString = renderJsonLd ? buildJsonLd(config) : undefined;
+  const { theme, darkTheme } = resolveTheme(config);
+  const lightStyle = buildLightStyle(config, theme);
+  const themeCss = buildThemeCss(theme, darkTheme);
 
   return (
     <div
-      className={`lf-card flex flex-col items-center max-w-screen-lg lg:mx-auto sm:m-4 m-2 transition-colors duration-300 text-[var(--color-primary)] bg-[var(--lf-card-bg)] rounded-[var(--lf-card-radius)] shadow-[var(--lf-card-shadow)] border-[length:0] border-[var(--lf-card-border)] p-[var(--lf-card-padding-y)_var(--lf-card-padding-x)] min-h-[var(--lf-card-min-height)] backdrop-blur-[var(--lf-card-backdrop)] ${className || ""}`}
-      style={Object.keys(lightStyle).length ? lightStyle as React.CSSProperties : undefined}
+      className={`lf-card flex flex-col items-center max-w-[min(var(--breakpoint-lg),100%-1rem)] sm:max-w-[min(var(--breakpoint-lg),100%-2rem)] mx-auto my-2 sm:my-4 transition-colors duration-(--lf-motion-slow) text-primary bg-(--lf-card-bg) rounded-(--lf-card-radius) shadow-(--lf-card-shadow) min-h-(--lf-card-min-height) ${className || ""}`}
+      style={lightStyle}
     >
-      {darkCss && (
-        <style>{darkCss}</style>
+      {themeCss && <style>{themeCss}</style>}
+      {renderChrome && (
+        <div className="self-end flex gap-3">
+          <QrCodeButton />
+          <ShareButton />
+          <ThemeToggle />
+        </div>
       )}
-      <div className="self-end flex gap-3">
-        <QrCodeButton />
-        <ShareButton />
-        <ThemeToggle />
-      </div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdString }}
-      />
-      <UserProfileToRender userConfig={config} />
+      {renderJsonLd && jsonLdString && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdString }}
+        />
+      )}
+      <UserProfileToRender userConfig={config} headingLevel={headingLevel} />
 
-      {BeforeSocialLinksComponent && <BeforeSocialLinksComponent />}
+      {BeforeSocialLinksComponent && (
+        <Suspense fallback={<SlotFallback />}>
+          <BeforeSocialLinksComponent />
+        </Suspense>
+      )}
 
-      <SocialLinksToRender userConfig={config} />
+      <Suspense fallback={<LinksFallback bento={config.layout === "bento"} />}>
+        <SocialLinksToRender userConfig={config} onLinkClick={onLinkClick} />
+      </Suspense>
 
-      {AfterSocialLinksComponent && <AfterSocialLinksComponent />}
+      {AfterSocialLinksComponent && (
+        <Suspense fallback={<SlotFallback />}>
+          <AfterSocialLinksComponent />
+        </Suspense>
+      )}
 
       <FooterToRender />
     </div>

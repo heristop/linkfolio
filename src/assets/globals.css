@@ -1,10 +1,10 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@theme {
-  --color-primary: oklch(0.40 0.06 185);
+@theme static {
+  --color-primary: oklch(0.4 0.06 185);
   --color-secondary: oklch(0.56 0.06 170);
 
-  --color-background-start: oklch(0.90 0.01 180);
+  --color-background-start: oklch(0.9 0.01 180);
   --color-background-end: oklch(0.93 0.01 170);
 
   --background-image-gradient-background: linear-gradient(
@@ -13,6 +13,40 @@
     var(--color-background-end)
   );
 
+  /* Motion — duration */
+  --lf-motion-fast: 140ms;
+  --lf-motion-base: 220ms;
+  --lf-motion-slow: 380ms;
+  /* Card entrance: longer than the interaction scale, since it travels. */
+  --lf-motion-reveal: 500ms;
+
+  /* Motion — easing */
+  --lf-ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+  --lf-ease-spring: linear(
+    0,
+    0.083 6%,
+    0.256 13%,
+    0.444 19%,
+    0.611 25%,
+    0.744 31%,
+    0.842 38%,
+    0.91 44%,
+    0.954 50%,
+    0.98 56%,
+    0.995 63%,
+    1.003 69%,
+    1.006 81%,
+    1.002 94%,
+    1
+  );
+
+  /* Motion — amplitude */
+  --lf-press-scale: 0.972;
+  --lf-press-scale-sm: 0.94;
+  --lf-hover-lift: -2px;
+  --lf-hover-scale: 1.08;
+
+  /* Retained for backward compatibility; no longer the default */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Card container */
@@ -20,17 +54,17 @@
   --lf-card-radius: 0.75rem;
   --lf-card-shadow: 0 4px 24px -6px oklch(0 0 0 / 0.12);
   --lf-card-border: none;
-  --lf-card-padding-x: 2.5rem;
-  --lf-card-padding-y: 2.5rem;
+  --lf-card-padding-x: clamp(1.25rem, 5vw, 2.5rem);
+  --lf-card-padding-y: clamp(1.25rem, 5vw, 2.5rem);
   --lf-card-min-height: auto;
   --lf-card-backdrop: none;
 
   /* Profile section */
   --lf-profile-margin-bottom: 2.5rem;
-  --lf-name-font-size: 1.5rem;
+  --lf-name-font-size: clamp(1.375rem, 1.1rem + 1.4vw, 1.875rem);
   --lf-name-font-weight: 600;
   --lf-name-color: inherit;
-  --lf-alias-color: oklch(0.40 0 0);
+  --lf-alias-color: oklch(0.4 0 0);
   --lf-accent-line-width: 3rem;
   --lf-accent-line-color: currentColor;
   --lf-accent-line-opacity: 0.3;
@@ -40,9 +74,13 @@
   --lf-links-gap-y: 0.5rem;
   --lf-links-padding-x: 1rem;
 
+  /* Bento grid (`layout: "bento"`); one row unit is a small tile's height */
+  --lf-bento-columns: 4;
+  --lf-bento-row: 8rem;
+
   /* Network */
   --lf-network-hover-bg: oklch(0 0 0 / 0.03);
-  --lf-description-color: oklch(0.40 0 0);
+  --lf-description-color: oklch(0.4 0 0);
 
   /* Buttons */
   --lf-button-opacity: 0.6;
@@ -70,54 +108,72 @@
 /* Dark mode overrides */
 
 @layer base {
+  /*
+   * Surfaces carry a whisper of hue (chroma <= 0.008), not a wash: at these
+   * lightnesses anything past ~0.015 stops reading as "dark charcoal" and
+   * starts reading as a colour. The hue identity lives in the accents, which
+   * sit on a dark ground. Accents stay muted too (chroma ~0.05) — enough to
+   * tell the themes apart, not enough to shout. Surface and accent hues
+   * stay in one family so the two do not look borrowed from different themes.
+   */
   .dark {
-    --color-primary: oklch(0.82 0.05 180);
-    --color-secondary: oklch(0.72 0.06 170);
-    --color-background-start: oklch(0.18 0.03 280);
-    --color-background-end: oklch(0.20 0.04 260);
-    --lf-card-bg: oklch(0.24 0.03 270);
+    --color-primary: oklch(0.88 0.022 200);
+    --color-secondary: oklch(0.76 0.05 195);
+    --color-background-start: oklch(0.165 0.006 220);
+    --color-background-end: oklch(0.19 0.008 220);
+    --lf-card-bg: oklch(0.225 0.008 215);
     --lf-card-shadow: 0 4px 24px -6px oklch(0 0 0 / 0.4);
     --lf-card-border: 1px solid oklch(1 0 0 / 0.08);
-    --lf-alias-color: oklch(0.78 0 0);
+    --lf-alias-color: oklch(0.78 0.008 215);
     --lf-network-hover-bg: oklch(1 0 0 / 0.05);
-    --lf-description-color: oklch(0.80 0.01 220);
+    --lf-description-color: oklch(0.8 0.01 215);
   }
 
   .dark ::selection {
     background-color: var(--color-secondary);
-    color: oklch(0.18 0.03 280);
+    color: oklch(0.165 0.006 220);
   }
 
   .dark [data-group="socialnetwork"] .lf-icon-container {
     background: oklch(1 0 0 / 0.05);
   }
 
-  .dark [data-group="socialnetwork"] .network:hover .lf-icon-container {
-    background: oklch(1 0 0 / 0.08);
-  }
-
   .dark [data-group="project"] .lf-icon-container {
     box-shadow: 0 2px 12px -3px oklch(0 0 0 / 0.3);
-  }
-
-  .dark [data-group="project"] .network:hover .lf-icon-container {
-    box-shadow: 0 8px 28px -6px oklch(0 0 0 / 0.4);
   }
 
   .dark [data-group="website"] .lf-icon-container {
     box-shadow: 0 2px 8px -2px oklch(0 0 0 / 0.25);
   }
 
-  .dark [data-group="website"] .network:hover .lf-icon-container {
+  /* Elevated shadows sit on the ::after overlay — see the light-mode rules. */
+  .dark [data-group="project"] .lf-icon-container::after {
+    box-shadow: 0 8px 28px -6px oklch(0 0 0 / 0.4);
+  }
+
+  .dark [data-group="website"] .lf-icon-container::after {
     box-shadow: 0 6px 20px -4px oklch(0 0 0 / 0.35);
   }
 
+  /*
+   * Matched on the card's own `data-group` rather than an ancestor's. Bento
+   * merges every group into one section and so has no group ancestor to
+   * descend from; the card always carries the attribute, in both layouts.
+   * Same specificity either way — one attribute traded for one class.
+   */
+  @media (hover: hover) and (pointer: fine) {
+    .dark .network[data-group="socialnetwork"]:hover .lf-icon-container {
+      background: oklch(1 0 0 / 0.08);
+    }
+  }
+
   .dark .lf-group + .lf-group::before {
-    opacity: 0.2;
+    opacity: 0.32;
   }
 
   .dark .lf-footer img {
-    filter: brightness(0) invert(0.85) sepia(0.15) saturate(1.5) hue-rotate(130deg);
+    filter: brightness(0) invert(0.85) sepia(0.15) saturate(1.5)
+      hue-rotate(130deg);
   }
 }
 
@@ -131,29 +187,24 @@
   white-space: break-spaces;
 }
 
-@utility fade-in-up-bounce {
-  animation: fade-in-up 0.6s var(--ease-out-expo) forwards;
-}
-
-@utility subtle-bounce {
-  animation: soft-lift 0.35s var(--ease-out-expo);
-}
-
 @utility fade-in {
-  animation: fade-in 0.5s var(--ease-out-expo) both;
+  animation: fade-in var(--lf-motion-reveal) var(--lf-ease-out) both;
 }
 
 @utility reveal-line {
-  animation: reveal-line 0.6s var(--ease-out-expo) both;
+  animation: reveal-line var(--lf-motion-slow) var(--lf-ease-out) both;
 }
 
 @utility alias-typing {
   overflow: hidden;
   border-right: 0.2em solid;
   white-space: nowrap;
-  animation:
-    typing 2s steps(30, end),
-    blink 1s step-end infinite;
+  animation: blink 1s step-end infinite;
+}
+
+@utility alias-typed {
+  border-right-color: transparent;
+  animation: none;
 }
 
 @layer utilities {
@@ -174,11 +225,7 @@
   }
 
   a {
-    transition: color 0.3s var(--ease-out-expo);
-  }
-
-  a:hover {
-    color: var(--color-secondary);
+    transition: color var(--lf-motion-base) var(--lf-ease-out);
   }
 
   a:focus-visible,
@@ -188,67 +235,293 @@
     border-radius: 4px;
   }
 
+  /*
+   * A card's link fills the card, so ringing the <a> draws a rectangle that
+   * clips against the card's rounded corner. Ring the card instead, matching
+   * its radius.
+   */
+  .network:has(a:focus-visible) {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  .network a:focus-visible {
+    outline: none;
+  }
+
   /* QR Dialog backdrop (pseudo-element — must stay in CSS) */
   .qr-dialog::backdrop {
     background: oklch(0 0 0 / 0.4);
-    animation: backdrop-fade-in 0.2s var(--ease-out-expo) both;
+    animation: backdrop-fade-in var(--lf-motion-base) var(--lf-ease-out) both;
   }
 
   @keyframes backdrop-fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes dialog-slide-in {
     from {
       opacity: 0;
-      transform: scale(0.95) translateY(8px);
     }
     to {
       opacity: 1;
-      transform: scale(1) translateY(0);
     }
   }
 
-  /* Avatar */
-  .lf-avatar {
-    transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
+  /*
+   * The dialog grows from the action row in the card's top-right rather than
+   * from its own centre, so the panel reads as coming from the button that
+   * opened it. `allow-discrete` lets the native <dialog> animate on the way
+   * out too — it otherwise vanishes the instant close() runs.
+   *
+   * Exit runs at --lf-motion-fast against an enter of --lf-motion-base: a
+   * dismissal should feel immediate, an arrival should not.
+   */
+  .qr-dialog {
+    opacity: 1;
+    transition:
+      opacity var(--lf-motion-fast) var(--lf-ease-out),
+      overlay var(--lf-motion-fast) allow-discrete,
+      display var(--lf-motion-fast) allow-discrete;
   }
 
-  .lf-avatar:hover {
-    transform: scale(1.04);
+  .qr-dialog:not([open]) {
+    opacity: 0;
+  }
+
+  @starting-style {
+    .qr-dialog[open] {
+      opacity: 0;
+    }
+  }
+
+  .qr-panel {
+    transform-origin: 85% 15%;
+    transition:
+      opacity var(--lf-motion-base) var(--lf-ease-out),
+      transform var(--lf-motion-base) var(--lf-ease-out);
+  }
+
+  .qr-dialog:not([open]) .qr-panel {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+    transition-duration: var(--lf-motion-fast);
+  }
+
+  @starting-style {
+    .qr-dialog[open] .qr-panel {
+      opacity: 0;
+      transform: scale(0.96) translateY(6px);
+    }
+  }
+
+  /*
+   * Avatar. No elevation overlay here: .lf-avatar is the <img> itself, and
+   * replaced elements do not render ::before/::after, so the pseudo-element
+   * trick used for the cards cannot work without adding a wrapper element.
+   * Scale alone carries the hover.
+   */
+  .lf-avatar {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform var(--lf-motion-base) var(--lf-ease-out);
+  }
+
+  .lf-avatar:active {
+    transform: scale(0.985);
+    transition: transform var(--lf-motion-fast) var(--lf-ease-out);
   }
 
   /* Footer */
   .lf-footer {
     opacity: var(--lf-footer-opacity);
-    transition: opacity 0.3s var(--ease-out-expo);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: opacity var(--lf-motion-base) var(--lf-ease-out);
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   }
 
-  .lf-footer:hover {
+  .lf-footer:active {
     opacity: 1;
+  }
+
+  /*
+   * Border and backdrop moved out of the Tailwind className: `border-[0]`
+   * plus `border-(--lf-card-border)` resolved to width 0 with an invalid
+   * colour, so the dark-mode border was never painted, and
+   * `backdrop-blur-[none]` is not valid CSS.
+   */
+  .lf-card {
+    border: var(--lf-card-border, none);
+    backdrop-filter: var(--lf-card-backdrop, none);
+  }
+
+  /* Card safe-area insets */
+  .lf-card {
+    padding-top: max(var(--lf-card-padding-y), env(safe-area-inset-top));
+    padding-bottom: var(--lf-card-padding-y);
+    padding-left: max(var(--lf-card-padding-x), env(safe-area-inset-left));
+    padding-right: max(var(--lf-card-padding-x), env(safe-area-inset-right));
   }
 
   /* Network card */
   .network {
-    transition: background-color 0.35s var(--ease-out-expo);
     border-radius: 0.5rem;
+    opacity: 1;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition:
+      background-color var(--lf-motion-base) var(--lf-ease-out),
+      transform var(--lf-motion-slow) var(--lf-ease-spring);
   }
 
-  .network:hover {
-    background-color: var(--lf-network-hover-bg);
+  .network:has(a:active) {
+    transform: scale(var(--lf-press-scale));
+    transition: transform var(--lf-motion-fast) var(--lf-ease-out);
+  }
+
+  /*
+   * Pressing pushes the card into the surface, so its elevation drops with it.
+   * Scaling down while the shadow stays lifted reads as a picture shrinking
+   * rather than an object being pressed.
+   */
+  .network:has(a:active) .lf-icon-container::after {
+    opacity: 0;
+    transition: opacity var(--lf-motion-fast) var(--lf-ease-out);
+  }
+
+  /* Entrance, driven by the intersection observer as each card scrolls into
+     range. Gated on scripting so that without JavaScript the resting state
+     applies and every card is simply visible. */
+  @media (scripting: enabled) {
+    .network {
+      transition:
+        background-color var(--lf-motion-base) var(--lf-ease-out),
+        opacity var(--lf-motion-reveal) var(--lf-ease-out)
+          var(--lf-stagger, 0ms);
+    }
+
+    .lf-js .network:not(.is-revealed) {
+      opacity: 0;
+    }
+  }
+
+  /*
+   * Same entrance for content that is not a link card — status pages, page
+   * sections. The resting state stays visible so the rule is inert until an
+   * observer starts driving it.
+   */
+  .lf-reveal {
+    opacity: 1;
+  }
+
+  @media (scripting: enabled) {
+    .lf-reveal {
+      transition: opacity var(--lf-motion-reveal) var(--lf-ease-out)
+        var(--lf-stagger, 0ms);
+    }
+
+    .lf-js .lf-reveal:not(.is-revealed) {
+      opacity: 0;
+    }
+  }
+
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .lf-reveal {
+      transition:
+        opacity var(--lf-motion-reveal) var(--lf-ease-out)
+          var(--lf-stagger, 0ms),
+        transform var(--lf-motion-reveal) var(--lf-ease-spring)
+          var(--lf-stagger, 0ms);
+    }
+
+    .lf-js .lf-reveal:not(.is-revealed) {
+      transform: translateY(14px);
+    }
+  }
+
+  /* Reduced motion withholds the travel, not the reveal: the card still
+     arrives as it scrolls into view, it just does not move to get there.
+     The global reduce block below collapses the fade to an instant swap. */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .network {
+      transition:
+        background-color var(--lf-motion-base) var(--lf-ease-out),
+        opacity var(--lf-motion-reveal) var(--lf-ease-out)
+          var(--lf-stagger, 0ms),
+        transform var(--lf-motion-reveal) var(--lf-ease-spring)
+          var(--lf-stagger, 0ms);
+    }
+
+    .lf-js .network:not(.is-revealed) {
+      transform: translateY(14px);
+    }
   }
 
   .network img {
-    transition: transform 0.5s var(--ease-out-expo);
-  }
-
-  .network:hover img {
-    transform: scale(1.02);
+    transition: transform var(--lf-motion-slow) var(--lf-ease-out);
   }
 
   .network .lf-icon-container {
-    transition: box-shadow 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+    position: relative;
+    height: 6rem;
+    transition: transform var(--lf-motion-slow) var(--lf-ease-spring);
+  }
+
+  /*
+   * Elevation lives on a pseudo-element. box-shadow is a paint-bound property,
+   * so transitioning it repaints the card every frame; fading an overlay's
+   * opacity is compositor-only and looks identical.
+   */
+  .network .lf-icon-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--lf-motion-base) var(--lf-ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      color: var(--color-secondary);
+    }
+
+    .lf-avatar:hover {
+      transform: scale(1.03);
+    }
+
+    .lf-footer:hover {
+      opacity: 1;
+    }
+
+    .network:hover {
+      background-color: var(--lf-network-hover-bg);
+      transform: translateY(var(--lf-hover-lift));
+    }
+
+    .network:hover img {
+      transform: scale(1.02);
+    }
+
+    /* On the card's own `data-group` — see the dark-mode rule above. */
+    .network[data-group="socialnetwork"]:hover .lf-icon-container {
+      background: oklch(0 0 0 / 0.04);
+    }
+
+    .network[data-group="project"]:hover .lf-icon-container {
+      transform: translateY(-3px);
+    }
+
+    .network[data-group="website"]:hover .lf-icon-container {
+      transform: translateY(-2px);
+    }
+
+    .network:hover .lf-icon-container::after {
+      opacity: 1;
+    }
+
+    .lf-qr-copy:hover {
+      opacity: 1;
+    }
   }
 
   .lf-group + .lf-group {
@@ -257,40 +530,82 @@
     padding-top: 0.75rem;
   }
 
+  /*
+   * A hairline that fades out at both ends rather than stopping hard. It is
+   * wider and thinner than a solid bar would be — a gradient needs length to
+   * read — with the opacity raised to keep the perceived weight the same.
+   */
   .lf-group + .lf-group::before {
     content: "";
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 2rem;
-    height: 2px;
-    border-radius: 1px;
-    background: currentColor;
-    opacity: 0.08;
+    width: 4rem;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      currentColor 50%,
+      transparent
+    );
+    opacity: 0.18;
+    transition: opacity var(--lf-motion-base) var(--lf-ease-out);
+  }
+
+  /*
+   * A divider announces a group. While that group's cards are still waiting to
+   * be revealed, the rule would otherwise hang in empty space with nothing
+   * under it, so it waits for its own group. Default is visible, so a
+   * scripting-free render still gets the separator.
+   */
+  @media (scripting: enabled) {
+    .lf-group + .lf-group:not(:has(.is-revealed))::before {
+      opacity: 0;
+    }
   }
 
   [data-group="socialnetwork"] .network {
     width: 16%;
   }
 
+  /*
+   * The tile takes the artwork's own 16:9 rather than a fixed height. A fixed
+   * height makes the tile's ratio a function of however wide the column
+   * happens to be, and every ratio that is not the artwork's crops it. Match
+   * the source and the picture fills the tile edge to edge at every width —
+   * nothing cropped, nothing letterboxed.
+   */
   [data-group="socialnetwork"] .lf-icon-container {
-    height: 3rem;
+    /* `height: auto` is what lets the ratio decide the height — with an
+       explicit height set above, both axes are already determined and
+       `aspect-ratio` is ignored. */
+    aspect-ratio: 16 / 9;
+    height: auto;
     box-shadow: none;
     border-radius: 0.75rem;
     background: oklch(0 0 0 / 0.02);
   }
 
-  [data-group="socialnetwork"] .network:hover .lf-icon-container {
-    background: oklch(0 0 0 / 0.04);
-  }
-
   [data-group="socialnetwork"] .lf-title {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     font-weight: 600;
     margin-bottom: 0;
+  }
+
+  .lf-name {
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .lf-title {
+    text-wrap: balance;
+  }
+
+  .lf-description {
+    text-wrap: pretty;
   }
 
   [data-group="socialnetwork"] .lf-description {
@@ -311,14 +626,13 @@
     border-radius: 0.875rem;
   }
 
+  [data-group="project"] .lf-icon-container::after {
+    box-shadow: 0 8px 28px -6px oklch(0 0 0 / 0.15);
+  }
+
   [data-group="project"] .lf-title {
     font-size: 1.125rem;
     font-weight: 600;
-  }
-
-  [data-group="project"] .network:hover .lf-icon-container {
-    box-shadow: 0 8px 28px -6px oklch(0 0 0 / 0.15);
-    transform: translateY(-3px);
   }
 
   [data-group="website"] .network {
@@ -331,14 +645,16 @@
     border-radius: 0.75rem;
   }
 
-  [data-group="website"] .network:hover .lf-icon-container {
+  [data-group="website"] .lf-icon-container::after {
     box-shadow: 0 6px 20px -4px oklch(0 0 0 / 0.12);
-    transform: translateY(-2px);
   }
 
   @media (max-width: 767px) {
+    /* Two columns, matching the bento grid on the same screens. Three 16:9
+       tiles across a phone leaves each about 100px wide, which is under what
+       a wordmark needs to stay readable. */
     [data-group="socialnetwork"] .network {
-      width: 28%;
+      width: 46%;
     }
 
     [data-group="project"] .network,
@@ -347,53 +663,475 @@
     }
   }
 
+  /*
+   * Bento layout — `layout: "bento"`.
+   *
+   * SocialLinks merges every group into this one grid and orders the cards so
+   * the sizes alternate; each card resolves its own footprint (`data-span`,
+   * from the link's `span` or its group's default) and how it arranges its
+   * contents (`data-direction`). The group styling above — icon treatments,
+   * title sizes, dark-mode tweaks — keeps applying unchanged.
+   *
+   * `dense` closes the holes a mixed-size mosaic leaves behind. It can place a
+   * later small tile in an earlier gap, so it is only safe because these are
+   * self-describing links in no meaningful sequence.
+   */
+  .lf-bento {
+    display: grid;
+    grid-template-columns: repeat(var(--lf-bento-columns), minmax(0, 1fr));
+    grid-auto-rows: var(--lf-bento-row);
+    grid-auto-flow: dense;
+    gap: var(--lf-links-gap-y) var(--lf-links-gap-x);
+  }
+
+  /* The percentage widths above belong to the wrapping flex rows; in a grid
+     the track owns the width. Every card renders a `data-group`, so this
+     out-specifies the group rules whatever the source order. */
+  .lf-bento .network[data-group] {
+    width: auto;
+  }
+
+  /* Read as columns x rows. Keyed on the child rather than the card class so
+     the streaming placeholder tiles take the same shapes as the cards that
+     replace them. */
+  .lf-bento > [data-span="1x1"] {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .lf-bento > [data-span="2x1"] {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .lf-bento > [data-span="1x2"] {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  .lf-bento > [data-span="2x2"] {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .lf-bento > [data-span="2x3"] {
+    grid-column: span 2;
+    grid-row: span 3;
+  }
+
+  /*
+   * The tile is the cell. Without this the image keeps the fixed height set by
+   * the group rules and a large tile is a 6rem picture floating in a 16rem
+   * box; here the anchor becomes a full-height column, the image takes the
+   * slack, and the title block keeps its intrinsic height.
+   */
+  .lf-bento .network > a {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .lf-bento .network > a > div:first-child {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .lf-bento .network .lf-icon-container {
+    height: 100%;
+  }
+
+  /*
+   * Banners take the cell's shape, but a logo tile keeps the artwork's 16:9
+   * here too — a mosaic cell is whatever the grid makes it, and stretching a
+   * logo to fill one crops the wordmark off the wide marks. The picture fills
+   * its own box edge to edge; the slack a taller cell leaves over is card,
+   * not a band around the image, so it centres in the space.
+   */
+  .lf-bento .network[data-group="socialnetwork"] .lf-icon-container {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  /*
+   * The picture and its caption are one block, centred in the cell together.
+   * Letting the picture's wrapper take the slack instead pushes the caption
+   * to the cell's bottom edge, and a label that far from its tile reads as
+   * belonging to the tile below it.
+   */
+  .lf-bento .network[data-group="socialnetwork"] > a {
+    justify-content: center;
+  }
+
+  .lf-bento .network[data-group="socialnetwork"] > a > div:first-child {
+    flex: 0 0 auto;
+  }
+
+  /*
+   * ...but only where the tile is the default small square. A span the author
+   * wrote by hand is a request for a bigger tile, and honouring it means
+   * filling the cell — a 16:9 picture centred in a two-row cell leaves a void
+   * the mosaic has no way to close. These marks are centred glyphs rather
+   * than wordmarks, so filling costs nothing at the edges.
+   */
+  .lf-bento
+    > .network[data-group="socialnetwork"]:not([data-span="1x1"])
+    .lf-icon-container {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+
+  .lf-bento
+    > .network[data-group="socialnetwork"]:not([data-span="1x1"])
+    > a
+    > div:first-child {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* In a fixed cell the caption and the image compete for the same pixels, so
+     the bigger tiles give some of the caption's breathing room back to the
+     picture. Social tiles keep their own tighter padding. */
+  .lf-bento > .network:not([data-span="1x1"]) .lf-data {
+    padding-top: 0.5rem;
+    padding-bottom: 0.75rem;
+  }
+
+  /*
+   * `direction: "horizontal"` — image beside the text instead of above it.
+   * A one-row-tall wide tile has no vertical budget for both, and reversing
+   * the row (rather than reordering the DOM) keeps the title first for a
+   * screen reader while the picture sits on the right.
+   */
+  .lf-bento .network[data-direction="horizontal"] > a {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .lf-bento .network[data-direction="horizontal"] > a > div:first-child {
+    flex: 0 0 45%;
+    height: 100%;
+  }
+
+  .lf-bento .network[data-direction="horizontal"] .lf-data {
+    flex: 1 1 auto;
+    padding-left: 0.75rem;
+    text-align: left;
+  }
+
+  .lf-bento .network[data-direction="horizontal"] .lf-description {
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    /* Two columns rather than four scaled down: a quarter-width tile on a
+       phone lands well under a tappable size and clips its title. */
+    .lf-bento {
+      --lf-bento-columns: 2;
+      /* A small tile holds a 16:9 picture plus one line of caption. At the
+         desktop row height that pair floats in ~30px of slack, and the slack
+         is what makes the mosaic read as ragged rather than as a grid. */
+      --lf-bento-row: 6.5rem;
+    }
+
+    /* Two of two columns is the whole row — a wide tile squeezed into half a
+       phone screen is neither wide nor legible. */
+    .lf-bento > [data-span="2x1"],
+    .lf-bento > [data-span="2x2"],
+    .lf-bento > [data-span="2x3"] {
+      grid-column: span 2;
+    }
+  }
+
   /* Animations */
-  @keyframes fade-in-up {
+  @keyframes fade-in {
     from {
       opacity: 0;
-      transform: translateY(16px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 
-  @keyframes soft-lift {
-    from { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
-    to { transform: translateY(0); }
-  }
-
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
   @keyframes reveal-line {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-
-  @keyframes typing {
-    from { width: 0; }
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
 
   @keyframes blink {
-    50% { border-color: transparent; }
+    50% {
+      border-color: transparent;
+    }
   }
 
+  /*
+   * Reduced motion substitutes a gentler equivalent rather than removing
+   * feedback. Movement is what triggers vestibular symptoms; opacity and
+   * colour changes do not. Flattening everything to 0.01ms would also cost
+   * these visitors the ability to tell whether their tap registered, so
+   * fades are kept — just short. (WCAG 2.3.3)
+   */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
 
+    /*
+     * Movement is flattened through the motion tokens the interaction styles
+     * read, plus the handful of rules below that move by a literal amount —
+     * deliberately not `transform: none` on `*`. `transform` is not only a
+     * motion property: it also centres, offsets and positions. A universal
+     * reset shoves any `translate(-50%, -50%)` dialog into the corner, and
+     * this stylesheet is published, so it would do that to the consumer's
+     * own layout as readily as to its own. (One such casualty here — the
+     * group divider centred with `translateX(-50%)` — already needed a
+     * hand-written exception.)
+     *
+     * The tokens carry `!important` because a config's `theme` sets them from
+     * an unlayered rule, which would otherwise outrank this block.
+     */
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+      transition-property:
+        opacity, color, background-color, border-color !important;
+      transition-duration: 120ms !important;
+      transition-delay: 0ms !important;
+      animation: none !important;
+      --lf-hover-lift: 0px !important;
+      --lf-hover-scale: 1 !important;
+      --lf-press-scale: 1 !important;
+      --lf-press-scale-sm: 1 !important;
     }
+
+    /* The rest: transforms written as literals rather than through a token. */
+    .lf-avatar,
+    .qr-panel,
+    .network img,
+    .lf-icon-container,
+    .lf-nudge,
+    .lf-theme-icons > svg {
+      transform: none !important;
+    }
+  }
+
+  /*
+   * Floating chrome material. Anything that hovers over the page — a toolbar,
+   * a popover, a pinned control — is a translucent layer the content passes
+   * beneath, not an opaque slab punched into it. The bright top edge is the
+   * light catching the surface, which is what separates it from the content
+   * behind without needing a hard border.
+   */
+  .lf-glass {
+    background: color-mix(in oklch, var(--lf-card-bg) 72%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid color-mix(in oklch, var(--color-primary) 12%, transparent);
+    border-top-color: color-mix(in oklch, white 45%, transparent);
+  }
+
+  /*
+   * A larger surface reads as a thicker piece of glass: more blur, and less
+   * of the content behind it coming through. A chip and a panel sharing one
+   * blur radius makes the panel look like an oversized chip.
+   */
+  .lf-glass-lg {
+    background: color-mix(in oklch, var(--lf-card-bg) 80%, transparent);
+    backdrop-filter: blur(30px) saturate(180%);
+  }
+
+  /*
+   * Both of these make the material solid rather than merely less blurred:
+   * a half-transparent surface is exactly what these visitors asked not to
+   * get, and a faint one is what fails them on contrast.
+   */
+  @media (prefers-reduced-transparency: reduce) {
+    .lf-glass,
+    .lf-glass-lg {
+      background: var(--lf-card-bg);
+      backdrop-filter: none;
+    }
+  }
+
+  /*
+   * Increased contrast: the resting design leans on low-opacity hairlines,
+   * which are the first thing to disappear for these visitors.
+   */
+  @media (prefers-contrast: more) {
+    .lf-glass {
+      background: var(--lf-card-bg);
+      backdrop-filter: none;
+      border-color: currentColor;
+    }
+
+    .lf-card {
+      border: 1px solid currentColor;
+    }
+
+    .lf-accent-line {
+      opacity: 0.6;
+    }
+
+    .lf-group + .lf-group::before {
+      opacity: 0.45;
+    }
+
+    .lf-icon-button,
+    .lf-footer {
+      opacity: 1;
+    }
+  }
+
+  .lf-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    opacity: var(--lf-button-opacity);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    transition:
+      opacity var(--lf-motion-base) var(--lf-ease-out),
+      transform var(--lf-motion-slow) var(--lf-ease-spring);
+  }
+
+  .lf-icon-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /*
+   * Call-to-action buttons on the marketing and docs pages. Same motion
+   * contract as the card controls so the whole site presses alike: fast in,
+   * spring out, hover only where there is a real pointer to hover with.
+   */
+  .lf-cta,
+  .lf-cta-ghost {
+    /* <button> defaults to the arrow cursor where <a> does not; setting it
+       here keeps the two reading as one control. */
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition:
+      transform var(--lf-motion-slow) var(--lf-ease-spring),
+      background-color var(--lf-motion-base) var(--lf-ease-out),
+      border-color var(--lf-motion-base) var(--lf-ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lf-cta:hover,
+    .lf-cta-ghost:hover {
+      transform: translateY(var(--lf-hover-lift));
+    }
+
+    .lf-cta-ghost:hover {
+      border-color: color-mix(in oklch, var(--color-primary) 45%, transparent);
+    }
+
+    /* Nav links lean toward where they lead. */
+    .lf-nudge:hover {
+      transform: translateX(2px);
+    }
+  }
+
+  .lf-nudge {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition:
+      color var(--lf-motion-base) var(--lf-ease-out),
+      transform var(--lf-motion-slow) var(--lf-ease-spring);
+  }
+
+  .lf-nudge:active {
+    transform: translateX(1px) scale(0.99);
+    transition: transform var(--lf-motion-fast) var(--lf-ease-out);
+  }
+
+  /*
+   * Declared after the hover block on purpose. A pointer is still hovering
+   * while it presses, and these selectors carry the same specificity, so the
+   * press only wins if it comes last.
+   */
+  .lf-cta:active,
+  .lf-cta-ghost:active {
+    transform: scale(var(--lf-press-scale));
+    transition: transform var(--lf-motion-fast) var(--lf-ease-out);
+  }
+
+  /*
+   * Theme icons are stacked in one grid cell and cross-faded. Each rotates
+   * toward the other as it goes, so the swap reads as a single turn rather
+   * than two separate fades. The outgoing icon also shrinks slightly, which
+   * is what keeps the pair from looking like a dissolve.
+   */
+  .lf-theme-icons {
+    display: grid;
+    place-items: center;
+  }
+
+  .lf-theme-icons > svg {
+    grid-area: 1 / 1;
+    transition:
+      opacity var(--lf-motion-base) var(--lf-ease-out),
+      transform var(--lf-motion-slow) var(--lf-ease-spring);
+  }
+
+  .lf-theme-icons:not([data-dark]) > .lf-icon-sun,
+  .lf-theme-icons[data-dark] > .lf-icon-moon {
+    opacity: 0;
+  }
+
+  .lf-theme-icons:not([data-dark]) > .lf-icon-sun {
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  .lf-theme-icons[data-dark] > .lf-icon-moon {
+    transform: rotate(-90deg) scale(0.6);
+  }
+
+  .lf-icon-button:active {
+    transform: scale(var(--lf-press-scale-sm));
+    transition:
+      opacity var(--lf-motion-fast) var(--lf-ease-out),
+      transform var(--lf-motion-fast) var(--lf-ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lf-icon-button {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    .lf-icon-button svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .lf-icon-button:hover {
+      opacity: 1;
+      transform: scale(var(--lf-hover-scale));
+    }
+  }
+
+  /* Opt-in wrapper for a card whose theme changes at runtime — used by the
+     demo's tweak panel (app/demo/TweakPanel.tsx), so a palette switch settles
+     instead of snapping. Scoped to the wrapper so it never touches an
+     ordinary card. Reuses --lf-motion-reveal / --lf-ease-out rather than
+     introducing a curve, and widens the transition-property list past the
+     package's `transition-colors` so box-shadow settles too. Two class
+     selectors (0,2,0) beat the single-class Tailwind utilities already on
+     .lf-card. prefers-reduced-motion is covered by the catch-all above. */
+  .lf-retheme .lf-card {
+    transition-property: color, background-color, border-color, box-shadow;
+    transition-duration: var(--lf-motion-reveal);
+    transition-timing-function: var(--lf-ease-out);
   }
 }
