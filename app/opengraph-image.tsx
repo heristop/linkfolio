@@ -1,89 +1,82 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import userConfig from "../config/user.config";
+import { OG_SIZE, avatarCard, avatarCardAlt } from "./lib/ogCards";
+import { isShowcase } from "./lib/siteMeta";
 
-export const alt = userConfig.fullName ?? "Linkfolio";
-export const size = { width: 1200, height: 630 };
+/**
+ * Showcase mode advertises the project; a personal deployment advertises the
+ * person, with the same avatar card /demo uses in showcase mode.
+ */
+export const alt = isShowcase
+  ? "Linkfolio — open-source, self-hosted link-in-bio page"
+  : avatarCardAlt;
+export const size = OG_SIZE;
 export const contentType = "image/png";
 
-const description = userConfig.metaDescription?.replaceAll(/\p{Emoji_Presentation}/gu, "").trim();
-
 export default function OGImage() {
-  const avatarBuffer = readFileSync(
-    join(process.cwd(), "public/assets/avatar-og.png"),
-  );
-  const avatarSrc = `data:image/png;base64,${avatarBuffer.toString("base64")}`;
+  if (!isShowcase) return avatarCard();
 
   const primary = userConfig.themeColor ?? "#2f5d62";
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(to bottom, #d9e2e1, #f2f7f6)",
+        fontFamily: "sans-serif",
+      }}
+    >
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          background: "linear-gradient(to bottom, #d9e2e1, #f2f7f6)",
-          fontFamily: "sans-serif",
+          background: "#f5f5f5",
+          borderRadius: 12,
+          padding: "56px 80px",
+          boxShadow: "0 4px 24px -6px rgba(0,0,0,0.08)",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            background: "#f5f5f5",
-            borderRadius: 12,
-            padding: "48px 64px",
-            boxShadow: "0 4px 24px -6px rgba(0,0,0,0.08)",
+            fontSize: 64,
+            fontWeight: 700,
+            color: primary,
+            letterSpacing: -1,
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={avatarSrc}
-            alt=""
-            width={120}
-            height={120}
-            style={{ borderRadius: "50%", marginBottom: 24 }}
-          />
-          <div style={{ display: "flex", fontSize: 48, fontWeight: 600, color: primary }}>
-            {userConfig.fullName}
-          </div>
-          {userConfig.alias && (
-            <div style={{ display: "flex", fontSize: 24, color: "#525252", marginTop: 8 }}>
-              {`@${userConfig.alias}`}
-            </div>
-          )}
-          <div
-            style={{
-              display: "flex",
-              width: 48,
-              height: 2,
-              background: primary,
-              opacity: 0.3,
-              marginTop: 20,
-              borderRadius: 1,
-            }}
-          />
-          {description && (
-            <div
-              style={{
-                display: "flex",
-                fontSize: 22,
-                color: "#525252",
-                marginTop: 16,
-              }}
-            >
-              {description}
-            </div>
-          )}
+          Linkfolio
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: 64,
+            height: 3,
+            background: primary,
+            opacity: 0.3,
+            marginTop: 24,
+            borderRadius: 1.5,
+          }}
+        />
+        <div
+          style={{
+            display: "flex",
+            fontSize: 28,
+            color: "#525252",
+            marginTop: 24,
+            textAlign: "center",
+          }}
+        >
+          Open-source, self-hosted link-in-bio page
         </div>
       </div>
-    ),
-    { ...size },
+    </div>,
+    { ...OG_SIZE },
   );
 }

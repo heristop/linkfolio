@@ -15,6 +15,7 @@ import {
 } from "@/assets";
 
 const userConfig: UserConfigType = {
+  siteUrl: "https://linkfolio-demo.vercel.app",
   avatarSrc: "/assets/avatar.webp",
   avatarAlt: "Avatar",
   fullName: "Linkfolio",
@@ -22,19 +23,6 @@ const userConfig: UserConfigType = {
   metaTitle: "Linkfolio",
   metaDescription: "A Hub for all your online links 🔗",
   enableTypingAlias: false,
-  darkTheme: {
-    "color-primary": "oklch(0.82 0.04 160)",
-    "color-secondary": "oklch(0.72 0.06 160)",
-    "color-background-start": "oklch(0.17 0.02 160)",
-    "color-background-end": "oklch(0.19 0.02 155)",
-    "lf-card-bg": "oklch(0.23 0.03 160)",
-    "lf-card-shadow": "0 4px 24px -6px oklch(0 0 0 / 0.3)",
-    "lf-card-border": "1px solid oklch(0.82 0.04 160 / 0.06)",
-    "lf-name-color": "oklch(0.90 0.03 160)",
-    "lf-alias-color": "oklch(0.72 0.06 160)",
-    "lf-network-hover-bg": "oklch(0.82 0.04 160 / 0.05)",
-    "lf-description-color": "oklch(0.70 0.04 160)",
-  },
   socialNetworks: [
     {
       url: "#1",
@@ -47,6 +35,9 @@ const userConfig: UserConfigType = {
       iconSrc: githubIcon,
       title: "GitHub",
       description: "💻 Code & Collaborate",
+      // `span`/`direction` shape the bento layout only; the classic layout
+      // ignores both.
+      span: "1x2",
     },
     {
       url: "#3",
@@ -89,6 +80,8 @@ const userConfig: UserConfigType = {
       iconSrc: youtubeIcon,
       title: "YouTube",
       description: "🎥 Watch & Create",
+      span: "2x1",
+      direction: "horizontal",
     },
     {
       url: "#10",
@@ -115,6 +108,7 @@ const userConfig: UserConfigType = {
       title: "Portfolio",
       description: "Design work and case studies",
       group: "website",
+      span: "2x2",
     },
     {
       url: "#14",
@@ -143,6 +137,7 @@ const userConfig: UserConfigType = {
       title: "Split Bill",
       description: "Expense splitting for groups and roommates",
       group: "project",
+      span: "2x1",
     },
   ],
 };
