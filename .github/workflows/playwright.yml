@@ -19,8 +19,23 @@ jobs:
         run: pnpm install
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
+      - name: Typecheck
+        run: pnpm run typecheck
+      # Builds dist/ first, which the packaging assertions read.
+      - name: Run package tests
+        run: pnpm run test:package
       - name: Run Playwright tests
-        run: pnpm exec playwright test --update-snapshots
+        run: pnpm exec playwright test
+      # Rebuilds without LINKFOLIO_SHOWCASE: asserts a fork's default deploy
+      # is the clean profile page (no landing, /docs and /demo 404), and holds
+      # the rendered-output baseline for the card.
+      - name: Run profile-mode tests
+        run: pnpm exec playwright test -c playwright.profile.config.ts
+      # Same suite against a bento build. The layout is baked in at build
+      # time, so covering both arrangements means building twice; the
+      # baselines are named per layout and do not collide.
+      - name: Run profile-mode tests (bento)
+        run: LINKFOLIO_LAYOUT=bento pnpm exec playwright test -c playwright.profile.config.ts
       - uses: actions/upload-artifact@v5
         if: always()
         with:
