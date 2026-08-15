@@ -263,10 +263,9 @@ export default function TweakPanel() {
               aria-labelledby="tweak-panel-heading"
               inert={!open}
               // Elevation shadow lives in `.tweak-panel-surface` (see the
-              // `<style>` block above), not inline: an inline shadow
-              // cannot follow the theme, and the fixed 0.4-alpha halo that
-              // used to sit here was itself a large part of why the panel
-              // photographed "too dark" in light mode.
+              // `<style>` block above), not inline: an inline shadow cannot
+              // follow the theme, so a fixed dark halo would sit over the
+              // light palette as heavily as over the dark one.
               className={`lf-glass lf-glass-lg tweak-panel-surface w-full max-h-[min(70vh,34rem)] origin-top-right overflow-y-auto rounded-(--lf-card-radius) transition-[opacity,transform,backdrop-filter] ease-(--lf-ease-out) ${
                 open
                   ? "pointer-events-auto scale-100 opacity-100 duration-(--lf-motion-base)"
@@ -556,15 +555,16 @@ export default function TweakPanel() {
         {/* No headingLevel override: this page has no heading of its own, so
             the profile name is its h1. */}
         {/*
-          Structured data left on: /demo is the only render of this profile
-          reachable from crawlers on this route, so it is what makes /demo
-          publish its own ProfilePage + Person graph rather than none at
-          all. It does get rebuilt on every keystroke in the panel, same as
-          the rest of this live preview, but that is inherent to a page
-          whose whole point is showing the config change in real time.
+          Structured data off. The profile rendered here is a fixture — a
+          person named "Linkfolio" whose seventeen links all point at "#1".."#17"
+          — so a ProfilePage + Person graph would assert to search engines that
+          someone exists who does not. Publishing no entity is honest; the same
+          reasoning is spelled out for the landing page in lib/landingJsonLd.ts.
+          The page's own metadata (title, description, canonical) is unaffected.
         */}
         <LinkFolio
           userConfig={tweak.previewConfig}
+          renderJsonLd={false}
           BeforeSocialLinksComponent={tweak.showText ? Intro : undefined}
           AfterSocialLinksComponent={tweak.showText ? Outro : undefined}
           FooterComponent={tweak.showFooter ? undefined : NoFooter}
