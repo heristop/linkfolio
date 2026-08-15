@@ -499,6 +499,60 @@ The presets are exported too, if you want to read their values or build a picker
 import { THEME_PRESETS, THEME_PRESET_KEYS } from "linkfolio";
 ```
 
+### Theme tokens
+
+Every colour, size and typeface the component uses is a CSS custom property.
+Set them from the config, where they apply to the light and dark palettes
+independently:
+
+```ts
+const userConfig: UserConfig = {
+  theme: {
+    "color-primary": "oklch(0.4 0.06 280)",
+    "lf-card-bg": "oklch(0.99 0.005 280)",
+    "lf-name-font-family": "Georgia, serif",
+  },
+  darkTheme: { "lf-card-bg": "oklch(0.22 0.01 280)" },
+};
+```
+
+…or as plain CSS, which is the easier route when the value refers to something
+the config cannot see, such as a `next/font` variable:
+
+```css
+@theme {
+  --lf-name-font-family: var(--font-display), Georgia, serif;
+  --lf-title-font-family: var(--font-display), Georgia, serif;
+}
+```
+
+| Token group | Tokens                                                                                                                                                                                                     |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Palette     | `color-primary`, `color-secondary`, `color-background-start`, `color-background-end`                                                                                                                       |
+| Card        | `lf-card-bg`, `lf-card-radius`, `lf-card-shadow`, `lf-card-border`, `lf-card-padding-x`, `lf-card-padding-y`, `lf-card-min-height`, `lf-card-backdrop`                                                     |
+| Profile     | `lf-name-color`, `lf-name-font-size`, `lf-name-font-weight`, `lf-name-font-family`, `lf-alias-color`, `lf-profile-margin-bottom`, `lf-accent-line-color`, `lf-accent-line-width`, `lf-accent-line-opacity` |
+| Cards       | `lf-title-font-family`, `lf-description-color`, `lf-network-hover-bg`                                                                                                                                      |
+| Layout      | `lf-links-gap-x`, `lf-links-gap-y`, `lf-links-padding-x`, `lf-bento-columns`, `lf-bento-row`                                                                                                               |
+| Motion      | `lf-motion-fast`, `lf-motion-base`, `lf-motion-slow`, `lf-motion-reveal`, `lf-ease-out`, `lf-ease-spring`, `lf-press-scale`, `lf-press-scale-sm`, `lf-hover-lift`, `lf-hover-scale`                        |
+| Chrome      | `lf-button-opacity`, `lf-footer-opacity`                                                                                                                                                                   |
+
+`lf-name-font-family` and `lf-title-font-family` default to `inherit`, so the
+body face applies until you name another. They exist because a typeface was
+the one thing the theme could not express — a display font previously required
+writing CSS against `.lf-name` and `.lf-title` directly.
+
+### Importing the bundled assets
+
+The package ships the default icon set and the stylesheet:
+
+```ts
+import { githubIcon, defaultAvatarIcon } from "linkfolio/assets";
+```
+
+```css
+@import "linkfolio/assets/globals.css";
+```
+
 Linkfolio uses TailwindCSS for styling. If you wish to customize styles, you can use the default Tailwind configuration `tailwind.config.ts` provided with the package.
 
 Linkfolio uses the `Raleway` font by default. If you wish to change the font, you can update the `font-family` in `layout.tsx`:

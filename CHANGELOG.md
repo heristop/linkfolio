@@ -14,10 +14,20 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [3.1.0] - 2026-08-15
 
-Additive: nothing here changes behaviour for an existing config.
+No config change is required and nothing is removed. One visible difference
+without any action on your part: cards now enter at a pace set by how many
+of them there are, so a short list cascades where it used to appear at once.
+A visual-regression suite that captures the reveal mid-flight will notice.
 
 ### Added
 
+- **The card reveal paces itself to the number of cards.** The stagger between
+  arriving cards is derived from how many arrived rather than fixed, so a group
+  of four cascades as visibly as a group of twelve. A fixed step read as a ramp
+  across a long list and as nothing at all across a short one: five cards at
+  45ms finished inside 180ms, well within the 500ms each card spends fading, so
+  they effectively appeared together. Clamped at both ends — a ceiling so a
+  two-card group is not held apart, a floor so a long list does not crawl.
 - **`--lf-name-font-family` and `--lf-title-font-family`.** The profile heading
   and the card titles were the only text in the component with no way to set a
   typeface, so every site wanting a display face reached past the theme and
@@ -29,6 +39,12 @@ Additive: nothing here changes behaviour for an existing config.
 
 ### Fixed
 
+- **The reveal failsafe cascades instead of dumping every card at once.** Two
+  paths can reveal a card: the intersection observer, which assigns each one a
+  delay, and a sweep that runs if the observer never fires. The sweep revealed
+  without assigning anything, so every card it caught landed on the same frame
+  with no stagger — the same page animating differently from one load to the
+  next depending on which path won. Both now share one implementation.
 - **`linkfolio/dist/assets` resolves again.** 3.0.0 introduced an `exports` map,
   and a package with one no longer does directory resolution: `./dist/*` maps
   paths literally, so `linkfolio/dist/assets` stopped finding
