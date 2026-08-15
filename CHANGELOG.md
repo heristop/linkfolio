@@ -12,6 +12,17 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 > from the versions actually published, so headings below follow the npm
 > versions. See [Release tagging](#release-tagging).
 
+## [3.0.1] - 2026-08-15
+
+### Fixed
+
+- **`linkfolio/dist/assets` resolves again.** 3.0.0 introduced an `exports` map,
+  and a package with one no longer does directory resolution: `./dist/*` maps
+  paths literally, so `linkfolio/dist/assets` stopped finding
+  `dist/assets/index.ts` and every template fork importing its icons failed to
+  typecheck. The old path is mapped explicitly again, and `linkfolio/assets`
+  and `linkfolio/assets/globals.css` are added as the names to prefer.
+
 ## [3.0.0] - 2026-08-15
 
 A major release: three changes below alter what the package accepts, so an
@@ -200,6 +211,7 @@ above can be trusted:
 Tagging `3.0.0` on the release commit, with `package.json` matching, brings the
 two back into step.
 
+[3.0.1]: https://github.com/heristop/linkfolio/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/heristop/linkfolio/compare/2.2.3...3.0.0
 [2.3.0]: https://github.com/heristop/linkfolio/compare/2.2.2...2.2.3
 [2.3.2]: https://github.com/heristop/linkfolio/releases/tag/2.2.3
