@@ -166,7 +166,12 @@ test.describe("bento layout", () => {
 
   test("the grid collapses to two columns on a phone", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 780 });
-    await page.goto("/demo");
+    // `domcontentloaded`, not the default `load`: this is the only test that
+    // asks for a 375px-wide page, so every image is requested at a width the
+    // optimiser has not produced before. Waiting for all of them to arrive
+    // makes a layout assertion hostage to image work it never looks at, and
+    // on a single-worker runner that has timed out the navigation.
+    await page.goto("/demo", { waitUntil: "domcontentloaded" });
     await selectLayout(page, "bento");
 
     const columns = await page
