@@ -157,6 +157,12 @@ export interface UserProfileProps {
 export interface SocialLinksProps {
   userConfig: UserConfigType;
   onLinkClick?: (link: SocialNetworkType) => void;
+  /**
+   * Heading level `UserProfile` rendered the full name at. Card titles sit one
+   * level below it, so they nest under the profile name instead of becoming
+   * its siblings. Defaults to `"h1"`, which puts card titles at `h2`.
+   */
+  headingLevel?: "h1" | "h2";
 }
 
 export type SocialNetworkType = {
@@ -222,12 +228,7 @@ export type AnalyticsAdapter = {
 };
 
 /** The adapters that ship built in. Consumers may register any other name. */
-export type AnalyticsProviderName =
-  | "ga"
-  | "gtm"
-  | "plausible"
-  | "umami"
-  | "beam";
+export type AnalyticsProviderName = "ga" | "gtm" | "plausible" | "umami";
 
 export type AnalyticsConfig = {
   /**
@@ -253,6 +254,8 @@ export interface SocialNetworkProps {
   delay?: number;
   priority?: boolean;
   onLinkClick?: (link: SocialNetworkType) => void;
+  /** Heading level for the card title. Defaults to `"h2"`. */
+  titleLevel?: "h2" | "h3";
 }
 
 export interface FooterProps {

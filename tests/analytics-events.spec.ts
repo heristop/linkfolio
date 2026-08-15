@@ -25,7 +25,7 @@ test("no analytics config means no third-party script and no tracker global", as
   // Any tracker script here would make that copy false.
   expect(
     thirdPartyRequests.filter((url) =>
-      /googletagmanager|plausible|umami|beamanalytics/.test(url),
+      /googletagmanager|plausible|umami/.test(url),
     ),
   ).toEqual([]);
 

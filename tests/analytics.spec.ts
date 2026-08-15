@@ -154,7 +154,7 @@ test("a hostile id is refused instead of being escaped into a script", () => {
 });
 
 test("every built-in provider is registered under its documented name", () => {
-  for (const name of ["ga", "gtm", "plausible", "umami", "beam"]) {
+  for (const name of ["ga", "gtm", "plausible", "umami"]) {
     expect(resolveAnalyticsAdapter(name)).toBeDefined();
   }
 });
@@ -190,12 +190,9 @@ test("a self-hosted origin overrides the vendor default", () => {
   expect(script.src).toBe("https://stats.example.com/js/script.js");
 });
 
-test("umami and beam key off their own attributes", () => {
+test("umami keys off its own attribute", () => {
   const [umami] = analyticsScriptsFor({ provider: "umami", id: "abc-123" });
   expect(umami.attrs?.["data-website-id"]).toBe("abc-123");
-
-  const [beam] = analyticsScriptsFor({ provider: "beam", id: "tok_123" });
-  expect(beam.attrs?.["data-token"]).toBe("tok_123");
 });
 
 test("config attrs are merged onto every script the adapter returns", () => {

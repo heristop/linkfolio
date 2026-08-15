@@ -14,8 +14,10 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [2.4.0] - unreleased
 
-The public API is additive against 2.3.2 — nothing was removed or renamed — so
-existing configs keep working. Rendered output does change: see _Changed_.
+Rendered output changes (see _Changed_), and one provider is gone (see
+_Removed_) — together with the narrowed `next` peer range and the `engines`
+floor, that makes this release breaking for some consumers despite the minor
+version. See [Release tagging](#release-tagging).
 
 ### Added
 
@@ -74,6 +76,14 @@ existing configs keep working. Rendered output does change: see _Changed_.
   idioms.
 - **The card gutter is enforced by `max-width`** rather than a margin, so
   centring can no longer cancel it.
+
+### Removed
+
+- **The `beam` analytics provider.** Beam's only browser event API takes a path
+  rather than a named event with parameters, so it could never report which
+  link a visitor clicked — it recorded page views and nothing else, while
+  sitting in the provider union as though it were equivalent to the others.
+  `registerAnalyticsAdapter("beam", …)` still works if you want it back.
 
 ### Fixed
 

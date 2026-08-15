@@ -392,13 +392,6 @@ the note at the end of this section.
 | `"gtm"`       | GTM container ID (`GTM-…`) | Yes, via `dataLayer` |
 | `"plausible"` | Site domain                | Yes, as props        |
 | `"umami"`     | Website ID                 | Yes                  |
-| `"beam"`      | Beam token                 | No — see below       |
-
-Beam is the exception. Its only browser event API takes a _path_, not a named
-event with parameters, so there is no honest mapping for a `link_click` and
-Linkfolio does not invent one. Beam's tag still records page views, and the
-`linkfolio:analytics` event above still fires — link clicks are not forwarded
-for you.
 
 Two provider quirks worth knowing before you read your dashboard. Plausible's
 default script is `script.outbound-links.js`, which already records outbound
@@ -480,13 +473,6 @@ shorter path:
 Functions cannot cross a server-component boundary, so from a server component
 listen for the `linkfolio:analytics` DOM event instead — it carries the same
 data.
-
-> [!IMPORTANT]
->
-> Earlier versions injected Beam Analytics from a `NEXT_BEAM_TOKEN`
-> environment variable. That never reached the browser — the name lacks the
-> `NEXT_PUBLIC_` prefix required for client bundles — so the tag was silently
-> inert. Move to `analytics: { provider: "beam", id: "<your token>" }`.
 
 </details>
 

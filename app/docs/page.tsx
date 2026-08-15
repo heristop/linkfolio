@@ -7,8 +7,10 @@ import CodeBlock from "../lib/CodeBlock";
 import { appUrl, isShowcase, pageMetadata } from "../lib/siteMeta";
 import OnThisPage from "./OnThisPage";
 
-const PAGE_TITLE =
-  "Documentation — Linkfolio, the open-source Linktree alternative";
+// Under ~60 characters so the whole title survives in results. "Linktree
+// alternative" is dropped here rather than repeated: the landing page owns
+// that query, this one answers "how do I deploy it".
+const PAGE_TITLE = "Linkfolio Documentation — Deploy your link-in-bio page";
 const PAGE_DESCRIPTION =
   "How to deploy Linkfolio, a self-hosted link-in-bio page built with Next.js and Tailwind CSS. Deploy to Vercel or install the package into an existing project.";
 
@@ -45,7 +47,7 @@ const FAQ = [
   },
   {
     q: "Can I use Google Analytics with Linkfolio?",
-    a: 'Yes, and it is not the only option. Set analytics: { provider: "ga", id: "G-…" } in your config and Linkfolio loads the tag and reports which link each visitor clicked. Google Tag Manager, Plausible, Umami and Beam ship as built-in providers too, you can register your own, and every link card emits a linkfolio:analytics DOM event you can listen to without configuring any provider at all.',
+    a: 'Yes, and it is not the only option. Set analytics: { provider: "ga", id: "G-…" } in your config and Linkfolio loads the tag and reports which link each visitor clicked. Google Tag Manager, Plausible and Umami ship as built-in providers too, you can register your own, and every link card emits a linkfolio:analytics DOM event you can listen to without configuring any provider at all.',
   },
 ];
 
@@ -229,11 +231,9 @@ export default function Page() {
             >
               Linkfolio loads no analytics by default. Name a provider and it
               loads that tag — <code>ga</code>, <code>gtm</code>,{" "}
-              <code>plausible</code>, <code>umami</code> and <code>beam</code>{" "}
-              ship built in, and <code>registerAnalyticsAdapter</code> takes any
-              other. All but <code>beam</code> also report which link each
-              visitor clicked; Beam&apos;s event API takes a path rather than a
-              named event, so it records page views only.
+              <code>plausible</code> and <code>umami</code> ship built in, and{" "}
+              <code>registerAnalyticsAdapter</code> takes any other. Each also
+              reports which link the visitor clicked.
             </p>
             <CodeBlock
               tabs={[

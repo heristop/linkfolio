@@ -101,7 +101,6 @@ export const providers: AnalyticsProviderName[] = [
   "gtm",
   "plausible",
   "umami",
-  "beam",
 ];
 
 /**

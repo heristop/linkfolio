@@ -133,21 +133,6 @@ function publicSrc(config: AnalyticsConfig, fallback: string): string {
   return config.src && isPublicUrl(config.src) ? config.src : fallback;
 }
 
-registerAnalyticsAdapter("beam", {
-  scripts: (config) => [
-    {
-      id: "lf-beam",
-      src: publicSrc(config, "https://beamanalytics.b-cdn.net/beam.min.js"),
-      attrs: { "data-token": config.id ?? "" },
-    },
-  ],
-  // Beam's only event API (`window.beam("/some/path")`) takes a path, not a
-  // named event with params, so this layer's `{ name, params }` shape does
-  // not map onto it. Rather than guess at a mapping, link clicks are not
-  // forwarded to Beam.
-  send: () => {},
-});
-
 registerAnalyticsAdapter("ga", {
   scripts: (config) => {
     // `resolveAnalyticsAdapter` hands this adapter to any caller, not just
