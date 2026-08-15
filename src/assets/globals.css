@@ -822,6 +822,20 @@
     height: 100%;
   }
 
+  /*
+   * Centre the picture-and-caption pair rather than pinning it to the cell's
+   * edges. A wide tile is wider than the pair needs, and stretching them apart
+   * leaves a gap in the middle that reads as two unrelated things sharing a
+   * box instead of one card.
+   */
+  .lf-bento .network[data-direction="horizontal"] > a {
+    justify-content: center;
+  }
+
+  .lf-bento .network[data-direction="horizontal"] .lf-data {
+    flex: 0 1 auto;
+  }
+
   .lf-bento .network[data-direction="horizontal"] .lf-data {
     flex: 1 1 auto;
     padding-left: 0.75rem;
