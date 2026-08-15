@@ -14,8 +14,22 @@ import {
   youtubeIcon,
 } from "@/assets";
 
+/**
+ * GA4 measurement id, from the environment rather than hardcoded here.
+ *
+ * This file ships with the template, so an id committed to it would send
+ * every fork's traffic to our property. `NEXT_PUBLIC_` is required: the value
+ * has to reach the browser, and this module is imported by client components
+ * (`app/demo/TweakPanel.tsx`) as well as by the server.
+ *
+ * Unset — every fork, and every local `pnpm dev` — leaves `analytics` off, and
+ * `<Analytics>` then loads no third-party script at all.
+ */
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
 const userConfig: UserConfigType = {
   siteUrl: "https://linkfolio-demo.vercel.app",
+  ...(gaId && { analytics: { provider: "ga", id: gaId } }),
   avatarSrc: "/assets/avatar.webp",
   avatarAlt: "Avatar",
   fullName: "Linkfolio",
