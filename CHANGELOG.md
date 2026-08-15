@@ -5,19 +5,31 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-> Entries before 2.4.0 were reconstructed from git history, so they summarise
+> Entries before 3.0.0 were reconstructed from git history, so they summarise
 > each release rather than list every change. Two caveats worth knowing when
 > reading them: the `0.x` and `1.0.0` tags point into a history that was later
 > rewritten and are no longer ancestors of `main`; and the tag names drifted
 > from the versions actually published, so headings below follow the npm
 > versions. See [Release tagging](#release-tagging).
 
-## [2.4.0] - unreleased
+## [3.0.0] - 2026-08-15
 
-Rendered output changes (see _Changed_), and one provider is gone (see
-_Removed_) — together with the narrowed `next` peer range and the `engines`
-floor, that makes this release breaking for some consumers despite the minor
-version. See [Release tagging](#release-tagging).
+A major release: three changes below alter what the package accepts, so an
+install that resolves `^2.x` will not pick this up on its own.
+
+### Breaking changes
+
+- **`next` peer range narrows to `^16.0.0`** (was `^15.0.0 || ^16.0.0`). Next 15
+  is no longer supported; upgrade the host app first.
+- **`engines` now requires Node `>=20.0.0`.** Node 18 is out — it is also past
+  its own end of life, and Next 16 itself requires 20.9+.
+- **The `beam` analytics provider is gone.** `provider: "beam"` no longer
+  typechecks. See _Removed_ for why, and for how to restore it in your own app
+  in three lines.
+
+Rendered output changes too — the dark palette, the social tile aspect ratio and
+the mobile column count all move. Nothing about that is a code change on your
+side, but a visual-regression suite will notice. See _Changed_.
 
 ### Added
 
@@ -104,7 +116,7 @@ version. See [Release tagging](#release-tagging).
 ## [2.3.0] – [2.3.2] - 2026-04-03
 
 - Added `theme` and `darkTheme` config objects for programmatic colour
-  overrides, shipping with a zen green dark palette (retuned in 2.4.0).
+  overrides, shipping with a zen green dark palette (retuned in 3.0.0).
 - Made the button opacity and the accent line colour configurable for the dark
   theme.
 
@@ -185,10 +197,10 @@ above can be trusted:
 - **The `0.x` and `1.0.0` tags predate a history rewrite** and are not ancestors
   of `main`. Their contents are summarised above from the pre-rewrite chain.
 
-Tagging `2.4.0` on the release commit, with `package.json` matching, brings the
+Tagging `3.0.0` on the release commit, with `package.json` matching, brings the
 two back into step.
 
-[2.4.0]: https://github.com/heristop/linkfolio/compare/2.2.3...HEAD
+[3.0.0]: https://github.com/heristop/linkfolio/compare/2.2.3...3.0.0
 [2.3.0]: https://github.com/heristop/linkfolio/compare/2.2.2...2.2.3
 [2.3.2]: https://github.com/heristop/linkfolio/releases/tag/2.2.3
 [2.2.0]: https://github.com/heristop/linkfolio/compare/2.0.0...2.2.2
