@@ -8,8 +8,10 @@ import { appUrl } from "./siteMeta";
 
 export const PAGE_TITLE =
   "Linkfolio — Open-source, self-hosted link-in-bio page";
+// Kept under ~160 characters: past that Google truncates the snippet mid-word
+// in results, and the tail of this one carried the differentiator.
 export const PAGE_DESCRIPTION =
-  "Linkfolio is a free, open-source Linktree alternative built with Next.js and Tailwind CSS. Self-host your link-in-bio page on your own domain — full source access, no subscription, no third party.";
+  "A free, open-source Linktree alternative built with Next.js and Tailwind CSS. Self-host your link-in-bio page on your own domain — no account, no subscription.";
 
 // Escaped because the result is embedded verbatim in a <script> element —
 // matches how src/seo/jsonLd.ts hardens its own JSON-LD sink.
