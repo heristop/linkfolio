@@ -1,0 +1,7 @@
+# pnpm 11 requires each dependency with an install script to be allowed
+# explicitly. Both of these compile or download a native binary, and both are
+# needed: sharp backs `next/image` optimisation in production, @swc/core backs
+# the React Compiler's Babel step.
+allowBuilds:
+  "@swc/core": true
+  sharp: true
