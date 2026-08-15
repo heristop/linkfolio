@@ -1,10 +1,11 @@
 # Linkfolio — Open-Source Link-in-Bio Page for Next.js
 
-[![npm version](https://img.shields.io/npm/v/linkfolio?color=0b7285&label=npm)](https://www.npmjs.com/package/linkfolio)
-[![npm downloads](https://img.shields.io/npm/dm/linkfolio?color=0b7285)](https://www.npmjs.com/package/linkfolio)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![React 19](https://img.shields.io/badge/React-19-087ea4?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4-06b6d4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![CI](https://github.com/heristop/linkfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/heristop/linkfolio/actions/workflows/playwright.yml)
 [![License: MIT](https://img.shields.io/npm/l/linkfolio?color=0b7285)](./LICENSE)
-[![Stars](https://img.shields.io/github/stars/heristop/linkfolio?style=flat&color=0b7285)](https://github.com/heristop/linkfolio/stargazers)
 
 A self-hosted, open-source **Linktree alternative** built with Next.js and Tailwind CSS. One fast, accessible link-in-bio page that connects your audience to everything you publish — on your own domain, with no account, no subscription and no third party in between.
 
