@@ -12,7 +12,20 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 > from the versions actually published, so headings below follow the npm
 > versions. See [Release tagging](#release-tagging).
 
-## [3.0.1] - 2026-08-15
+## [3.1.0] - 2026-08-15
+
+Additive: nothing here changes behaviour for an existing config.
+
+### Added
+
+- **`--lf-name-font-family` and `--lf-title-font-family`.** The profile heading
+  and the card titles were the only text in the component with no way to set a
+  typeface, so every site wanting a display face reached past the theme and
+  wrote CSS. Both default to `inherit`, so an existing deployment renders
+  identically, and both are settable from `theme`/`darkTheme` as well as from a
+  stylesheet. One family covers every card title: a site that wants a display
+  face on project cards but not on the small uppercase social labels still
+  needs a rule of its own.
 
 ### Fixed
 
@@ -22,6 +35,10 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   `dist/assets/index.ts` and every template fork importing its icons failed to
   typecheck. The old path is mapped explicitly again, and `linkfolio/assets`
   and `linkfolio/assets/globals.css` are added as the names to prefer.
+  (Carried from 3.0.1, which was prepared but never published.)
+- **A horizontal bento tile centres its picture and caption** instead of
+  pinning them to opposite edges of a cell wider than the pair needs, where the
+  gap between them read as two unrelated things sharing a box.
 
 ## [3.0.0] - 2026-08-15
 
@@ -211,7 +228,7 @@ above can be trusted:
 Tagging `3.0.0` on the release commit, with `package.json` matching, brings the
 two back into step.
 
-[3.0.1]: https://github.com/heristop/linkfolio/compare/3.0.0...3.0.1
+[3.1.0]: https://github.com/heristop/linkfolio/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/heristop/linkfolio/compare/2.2.3...3.0.0
 [2.3.0]: https://github.com/heristop/linkfolio/compare/2.2.2...2.2.3
 [2.3.2]: https://github.com/heristop/linkfolio/releases/tag/2.2.3
