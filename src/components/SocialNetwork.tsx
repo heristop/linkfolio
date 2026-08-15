@@ -74,7 +74,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
               fill
               className="object-cover"
               sizes="(max-width: 767px) 45vw, (max-width: 1200px) 33vw, 20vw"
-              quality={100}
+              quality={90}
               priority={priority}
               loading={priority ? "eager" : "lazy"}
             />

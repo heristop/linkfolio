@@ -69,7 +69,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "build:package": "sh ./scripts/build.sh",
     "prepublishOnly": "pnpm run build:package",
