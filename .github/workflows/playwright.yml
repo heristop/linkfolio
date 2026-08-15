@@ -4,6 +4,11 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  # A baseline refresh is committed by Update Visual Baselines using
+  # GITHUB_TOKEN, and GitHub does not start workflows from those pushes. This
+  # is how the suite gets re-run against fresh baselines without an empty
+  # commit.
+  workflow_dispatch:
 jobs:
   test:
     timeout-minutes: 60
