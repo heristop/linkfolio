@@ -77,7 +77,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       />
 
       <HeadingTag
-        className="lf-name fullname fade-in text-(length:--lf-name-font-size) font-(--lf-name-font-weight) text-(--lf-name-color)"
+        className="lf-name fullname fade-in font-(family-name:--lf-name-font-family) text-(length:--lf-name-font-size) font-(--lf-name-font-weight) text-(--lf-name-color)"
         style={{ animationDelay: "0.15s" }}
       >
         {userConfig.fullName ?? "Your Name"}

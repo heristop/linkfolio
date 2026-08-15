@@ -9,6 +9,8 @@ export type ThemeColors = {
   "lf-card-shadow"?: string;
   "lf-card-border"?: string;
   "lf-name-color"?: string;
+  "lf-name-font-family"?: string;
+  "lf-title-font-family"?: string;
   "lf-alias-color"?: string;
   "lf-network-hover-bg"?: string;
   "lf-description-color"?: string;

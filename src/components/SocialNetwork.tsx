@@ -83,7 +83,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
         </div>
 
         <div className="lf-data px-2 py-4 text-center">
-          <Title className="lf-title text-xl font-bold mb-2">
+          <Title className="lf-title font-(family-name:--lf-title-font-family) text-xl font-bold mb-2">
             {config.title}
           </Title>
           <p className="lf-description description text-sm truncate text-(--lf-description-color)">

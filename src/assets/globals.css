@@ -64,6 +64,14 @@
   --lf-name-font-size: clamp(1.375rem, 1.1rem + 1.4vw, 1.875rem);
   --lf-name-font-weight: 600;
   --lf-name-color: inherit;
+  /* `inherit` keeps the body face unless a consumer names another: a display
+     font is the one part of the profile heading that had no token, so it was
+     the last thing forcing a raw CSS override. */
+  --lf-name-font-family: inherit;
+  /* Card titles, same contract as the profile name above. One family for
+     every group: a site wanting a display face on project cards but not on
+     the small uppercase social labels still needs a rule of its own. */
+  --lf-title-font-family: inherit;
   --lf-alias-color: oklch(0.4 0 0);
   --lf-accent-line-width: 3rem;
   --lf-accent-line-color: currentColor;
