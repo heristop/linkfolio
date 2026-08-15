@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live demo
+    url: https://linkfolio-demo.vercel.app/demo
+    about: Try the layouts, palettes and dark mode before filing.
+  - name: Documentation
+    url: https://linkfolio-demo.vercel.app/docs
+    about: Configuration reference and deployment guide.

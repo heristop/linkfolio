@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest a capability or an option
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do that Linkfolio makes hard today?
+      description: Describe the goal rather than the solution — it often has a simpler answer.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What did you have in mind?
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Checks
+      options:
+        - label: I checked the configuration reference in the README and the existing issues.

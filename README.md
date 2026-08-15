@@ -1,24 +1,58 @@
 # Linkfolio — Open-Source Link-in-Bio Page for Next.js
 
-Linkfolio is a self-hosted, open-source **Linktree alternative** built with Next.js and Tailwind CSS. It gives you a single fast, accessible link-in-bio page that connects your audience to every one of your online presences — with no account, no subscription, and no third party between you and your visitors.
+[![npm version](https://img.shields.io/npm/v/linkfolio?color=0b7285&label=npm)](https://www.npmjs.com/package/linkfolio)
+[![npm downloads](https://img.shields.io/npm/dm/linkfolio?color=0b7285)](https://www.npmjs.com/package/linkfolio)
+[![CI](https://github.com/heristop/linkfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/heristop/linkfolio/actions/workflows/playwright.yml)
+[![License: MIT](https://img.shields.io/npm/l/linkfolio?color=0b7285)](./LICENSE)
+[![Stars](https://img.shields.io/github/stars/heristop/linkfolio?style=flat&color=0b7285)](https://github.com/heristop/linkfolio/stargazers)
 
-![Linkfolio](https://github.com/heristop/linkfolio/blob/main/docs/linkfolio.png?raw=true)
+A self-hosted, open-source **Linktree alternative** built with Next.js and Tailwind CSS. One fast, accessible link-in-bio page that connects your audience to everything you publish — on your own domain, with no account, no subscription and no third party in between.
+
+[**Live demo**](https://linkfolio-demo.vercel.app/demo) · [**Documentation**](https://linkfolio-demo.vercel.app/docs) · [**Deploy your own**](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fheristop%2Flinkfolio&env=NEXT_APP_URL&envDescription=Your%20site%27s%20public%20URL&install-command=npm%20install%20%20--legacy-peer-deps)
+
+![Linkfolio — a self-hosted link-in-bio page built with Next.js and Tailwind CSS](https://github.com/heristop/linkfolio/blob/main/docs/preview-light.png?raw=true)
+
+## Quick start
+
+Deploy the template and edit one file:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fheristop%2Flinkfolio&env=NEXT_APP_URL&envDescription=Your%20site%27s%20public%20URL&install-command=npm%20install%20%20--legacy-peer-deps)
+
+Everything about your page — name, avatar, links, layout, palette — lives in `config/user.config.ts`. Your deployment is your profile page and nothing else: `/` renders your links.
+
+Already have a Next.js app? Install the package instead:
+
+```bash
+npm install linkfolio    # or: pnpm add linkfolio · yarn add linkfolio
+```
+
+```tsx
+import { LinkFolio } from "linkfolio";
+import userConfig from "./user.config";
+
+export default function Page() {
+  return <LinkFolio userConfig={userConfig} />;
+}
+```
 
 ## Preview
 
-![Preview](https://github.com/heristop/linkfolio/blob/main/docs/preview.jpg?raw=true)
+|                                                       Light                                                       |                                                   Dark                                                    |
+| :---------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+|    ![Linkfolio in light mode](https://github.com/heristop/linkfolio/blob/main/docs/preview-light.png?raw=true)    | ![Linkfolio in dark mode](https://github.com/heristop/linkfolio/blob/main/docs/preview-dark.png?raw=true) |
+|                                                 **Bento layout**                                                  |                                                **Mobile**                                                 |
+| ![Linkfolio bento mosaic layout](https://github.com/heristop/linkfolio/blob/main/docs/preview-bento.png?raw=true) | ![Linkfolio on mobile](https://github.com/heristop/linkfolio/blob/main/docs/preview-mobile.png?raw=true)  |
 
 ## Features
 
-🚀 Built with Next.js for optimal performance
-
-💅 Styled using TailwindCSS for a modern look
-
-🛠️ Easy configuration to add or remove links
-
-📱 Responsive design for all devices
-
-🔧 Customizable components for maximum flexibility
+- **Two layouts** — a classic wrapping list, or a `bento` mosaic that sizes each tile from the group a link already belongs to.
+- **Five theme presets** — teal, ocean, forest, sunset and mauve, each generated from one lightness recipe so they share contrast rather than being eyeballed.
+- **Dark mode** — a genuine dark palette, not an inversion, transitioned with the View Transition API.
+- **Analytics, optional and pluggable** — a DOM event that works with any tracker, plus adapters you can register for your own.
+- **SEO built in** — `linkfolio/seo` exports `buildMetadata` and `buildJsonLd` so server components emit correct metadata and `ProfilePage` structured data.
+- **Accessible by default** — keyboard reachable, screen-reader labelled, and honouring `prefers-reduced-motion`, `prefers-reduced-transparency` and `prefers-contrast`.
+- **Fast** — a static Next.js page with the React Compiler enabled and images served through `next/image`.
+- **Yours to change** — full source access, injectable React components, and every colour and motion value exposed as a CSS custom property.
 
 ## Why self-host instead of using Linktree?
 
@@ -34,7 +68,8 @@ Linkfolio is a self-hosted, open-source **Linktree alternative** built with Next
 
 Developers, designers, writers and makers who want a personal link hub they fully control — a single page linking a portfolio, a blog, social profiles and side projects, deployable in minutes to Vercel.
 
-## Installation
+<details>
+<summary><b>Installation — template or existing project</b></summary>
 
 There are two methods to get started with Linkfolio:
 
@@ -68,7 +103,10 @@ yarn add linkfolio
 pnpm add linkfolio
 ```
 
-## Usage
+</details>
+
+<details>
+<summary><b>Usage and customization</b></summary>
 
 ### Basic Usage
 
@@ -144,7 +182,10 @@ theme toggle:
 | `headingLevel` | `"h1"` \| `"h2"` | `"h1"`  | Heading level rendered for the full name in `UserProfile`. Set to `"h2"` when embedding `LinkFolio` on a page that already has its own `<h1>`.                                                                             |
 | `onLinkClick`  | `(link) => void` | —       | Called when a visitor clicks a link card. Client components only — see [Analytics](#analytics) for the server-safe equivalent.                                                                                             |
 
-## Configuration
+</details>
+
+<details>
+<summary><b>Configuration reference</b></summary>
 
 The `config/user.config.ts` file (or the `userConfig` object you pass to
 `<LinkFolio />` directly) accepts the following options:
@@ -287,7 +328,10 @@ fetch("https://your-linkfolio-site.com/api/config")
 >
 > Since this API is public, ensure that you don't include any sensitive information in your Linkfolio configuration that you wouldn't want to be publicly accessible.
 
-## Analytics
+</details>
+
+<details>
+<summary><b>Analytics</b></summary>
 
 Linkfolio ships no analytics and phones nobody home by default. When you do
 want measurement, there are two layers and you can use either or both.
@@ -335,6 +379,13 @@ const userConfig = {
 Then render `<Analytics config={userConfig.analytics} />` once, at the end of
 your `<body>` — the template already does this in `app/layout.tsx`.
 
+The shipped `config/user.config.ts` reads its GA id from `NEXT_PUBLIC_GA_ID`
+rather than hardcoding one, so cloning the template does not point your traffic
+at somebody else's property. Set it in your host's environment (Vercel →
+Settings → Environment Variables) to switch analytics on; leave it unset and no
+third-party script is loaded at all. The `NEXT_PUBLIC_` prefix is required — see
+the note at the end of this section.
+
 | Provider      | `id` is your…              | Custom events        |
 | ------------- | -------------------------- | -------------------- |
 | `"ga"`        | GA4 measurement ID (`G-…`) | Yes, via `gtag`      |
@@ -346,8 +397,8 @@ your `<body>` — the template already does this in `app/layout.tsx`.
 Beam is the exception. Its only browser event API takes a _path_, not a named
 event with parameters, so there is no honest mapping for a `link_click` and
 Linkfolio does not invent one. Beam's tag still records page views, and the
-`linkfolio:analytics` event above still fires — link clicks simply are not
-forwarded for you.
+`linkfolio:analytics` event above still fires — link clicks are not forwarded
+for you.
 
 Two provider quirks worth knowing before you read your dashboard. Plausible's
 default script is `script.outbound-links.js`, which already records outbound
@@ -437,11 +488,31 @@ data.
 > `NEXT_PUBLIC_` prefix required for client bundles — so the tag was silently
 > inert. Move to `analytics: { provider: "beam", id: "<your token>" }`.
 
-## Customizing Styles with TailwindCSS
+</details>
+
+<details>
+<summary><b>Styling, fonts and theming</b></summary>
+
+### Theme presets
+
+`themePreset` picks one of five bundled palettes — `teal`, `ocean`, `forest`, `sunset` and `mauve`. Each is generated from a single lightness recipe with a different hue, so they land at the same contrast instead of being tuned by eye, and each ships a light and a dark palette.
+
+```ts
+const userConfig: UserConfig = {
+  themePreset: "sunset",
+  // `theme` and `darkTheme` still win per key, so a preset can be
+  // adopted and then adjusted rather than replaced wholesale.
+  darkTheme: { "color-secondary": "oklch(0.78 0.05 30)" },
+};
+```
+
+The presets are exported too, if you want to read their values or build a picker:
+
+```ts
+import { THEME_PRESETS, THEME_PRESET_KEYS } from "linkfolio";
+```
 
 Linkfolio uses TailwindCSS for styling. If you wish to customize styles, you can use the default Tailwind configuration `tailwind.config.ts` provided with the package.
-
-## Customizing Fonts
 
 Linkfolio uses the `Raleway` font by default. If you wish to change the font, you can update the `font-family` in `layout.tsx`:
 
@@ -454,8 +525,6 @@ const font = Roboto({
   display: "swap",
 });
 ```
-
-## Theme Customization
 
 To customize the theme, you can override the default CSS variables in your own CSS file. If you have installed `linkfolio` as a package, you can import the default styles and override the variables like this:
 
@@ -519,7 +588,10 @@ Visitors who set "reduce motion" in their OS already get a gentler treatment
 automatically: transforms and entrance animations are dropped, while opacity
 and colour transitions are kept short so a tap still visibly registers.
 
-## Testing with Playwright
+</details>
+
+<details>
+<summary><b>Testing with Playwright</b></summary>
 
 Playwright is used for end-to-end testing to ensure the integrity and functionality of the project.
 
@@ -543,15 +615,17 @@ npx playwright test --update-snapshots
 
 This will run the tests and update any snapshots that don't match the current render of your page.
 
+</details>
+
 ## Example Usage
 
 For a practical implementation of Linkfolio, check out my example repository: [My Linkfolio Page](https://github.com/heristop/my-linkfolio).
 
 This repository demonstrates how to integrate and customize Linkfolio in a Next.js project.
 
-## Contribution
+## Contributing
 
-If you have ideas to improve or found a bug, do not hesitate to create an issue or submit a pull request.
+If you have ideas to improve Linkfolio or found a bug, do not hesitate to open an issue or a pull request. [`CONTRIBUTING.md`](./CONTRIBUTING.md) covers local setup, the checks CI runs, and how screenshot baselines are regenerated.
 
 ## Brand
 

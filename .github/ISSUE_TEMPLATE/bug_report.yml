@@ -1,0 +1,38 @@
+name: Bug report
+description: Something renders or behaves incorrectly
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: surface
+    attributes:
+      label: How are you using Linkfolio?
+      options:
+        - The template (forked / deployed this repo)
+        - The npm package in my own Next.js app
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Linkfolio version
+      placeholder: "2.4.0"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: A fork, a sandbox, or the relevant part of your user.config.ts.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Browser and OS
+      placeholder: "Safari 18 on iOS 18"
