@@ -78,6 +78,7 @@
     "fmt": "oxfmt --write .",
     "fmt:check": "oxfmt --check .",
     "test": "playwright test",
+    "test:unit": "vitest run",
     "test:package": "pnpm run build:package && node --test tests/package-assets.test.mjs",
     "test:update": "playwright test --update-snapshots",
     "typecheck": "tsc -p tsconfig.test.json --noEmit"
@@ -107,7 +108,8 @@
     "postcss": "^8.5.26",
     "tailwindcss": "^4.3.3",
     "tsdown": "^0.22.14",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   },
   "peerDependencies": {
     "next": "^15.0.0 || ^16.0.0",

@@ -1,15 +1,14 @@
-import { test, expect } from "@playwright/test";
-import { observeReveal } from "../src/lib/revealObserver";
+import { test, expect } from "vitest";
+import { observeReveal } from "../../src/lib/revealObserver";
 
 /**
  * The module keeps one shared observer and a pending set at module scope, so
  * these tests are order-dependent by design: the no-observer path must run
  * before a fake IntersectionObserver is installed, otherwise the memoised
- * observer from an earlier test would satisfy the later ones. Serial mode pins
- * both the order and the worker (module state is per-process).
+ * observer from an earlier test would satisfy the later ones. Vitest runs a
+ * file's tests in order in a single worker, which is what module state
+ * (per-process) needs — do not mark these concurrent.
  */
-test.describe.configure({ mode: "serial" });
-
 /**
  * The sweep's scroll net calls `globalThis.addEventListener`, which the test
  * process does not provide. Stubbed with a registry so the binding itself is

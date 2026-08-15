@@ -1,6 +1,10 @@
-import { test, expect } from "@playwright/test";
-import { arrangeBento, resolveDirection, resolveSpan } from "../src/lib/bento";
-import type { SocialNetworkType } from "../src/types";
+import { test, expect } from "vitest";
+import {
+  arrangeBento,
+  resolveDirection,
+  resolveSpan,
+} from "../../src/lib/bento";
+import type { SocialNetworkType } from "../../src/types";
 
 function link(overrides: Partial<SocialNetworkType> = {}): SocialNetworkType {
   return { url: "#", iconSrc: "i", title: "t", description: "d", ...overrides };

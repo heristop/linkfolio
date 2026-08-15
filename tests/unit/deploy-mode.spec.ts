@@ -1,9 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "vitest";
 import {
   buildSitemapEntries,
   resolveAppUrl,
   resolveShowcase,
-} from "../app/lib/deployMode";
+} from "../../app/lib/deployMode";
 
 test("showcase mode requires the exact value '1'", () => {
   expect(resolveShowcase({ LINKFOLIO_SHOWCASE: "1" })).toBe(true);

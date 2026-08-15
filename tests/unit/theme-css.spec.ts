@@ -1,10 +1,10 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "vitest";
 import {
   buildLightStyle,
   buildThemeCss,
   resolveTheme,
-} from "../src/lib/themeCss";
-import { THEME_PRESETS } from "../src/themes";
+} from "../../src/lib/themeCss";
+import { THEME_PRESETS } from "../../src/themes";
 
 test("resolveTheme: no preset passes the config palettes through untouched", () => {
   const theme = { "color-primary": "red" };

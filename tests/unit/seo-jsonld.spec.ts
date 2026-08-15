@@ -1,6 +1,6 @@
-import { test, expect } from "@playwright/test";
-import { buildJsonLd } from "../src/seo/jsonLd";
-import type { UserConfigType } from "../src/types";
+import { test, expect } from "vitest";
+import { buildJsonLd } from "../../src/seo/jsonLd";
+import type { UserConfigType } from "../../src/types";
 
 const config: UserConfigType = {
   fullName: "Ada Lovelace",

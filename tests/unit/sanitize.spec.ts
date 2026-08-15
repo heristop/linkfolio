@@ -1,13 +1,13 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "vitest";
 import {
   escapeJsonLd,
   isPublicUrl,
   isSafeCssIdentifier,
   isSafeCssValue,
   safeUrl,
-} from "../src/lib/sanitize";
-import { buildJsonLd } from "../src/seo/jsonLd";
-import type { UserConfigType } from "../src/types";
+} from "../../src/lib/sanitize";
+import { buildJsonLd } from "../../src/seo/jsonLd";
+import type { UserConfigType } from "../../src/types";
 
 test("escapeJsonLd neutralises a closing script tag", () => {
   const payload = JSON.stringify({

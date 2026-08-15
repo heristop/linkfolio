@@ -26,6 +26,10 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Typecheck
         run: pnpm run typecheck
+      # No browser, no server: the fastest signal in the pipeline, so it runs
+      # before anything that needs a build.
+      - name: Run unit tests
+        run: pnpm run test:unit
       # Builds dist/ first, which the packaging assertions read.
       - name: Run package tests
         run: pnpm run test:package

@@ -1,6 +1,6 @@
-import { test, expect } from "@playwright/test";
-import { THEME_PRESETS, THEME_PRESET_KEYS } from "../src/themes";
-import { isSafeCssIdentifier, isSafeCssValue } from "../src/lib/sanitize";
+import { test, expect } from "vitest";
+import { THEME_PRESETS, THEME_PRESET_KEYS } from "../../src/themes";
+import { isSafeCssIdentifier, isSafeCssValue } from "../../src/lib/sanitize";
 
 test("preset keys and the preset map agree", () => {
   expect(THEME_PRESET_KEYS).toEqual(

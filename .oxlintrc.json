@@ -70,6 +70,9 @@
     "use-isnan": "error",
     "valid-typeof": "error",
     "no-console": ["error", { "allow": ["warn", "error"] }],
+    // Vitest's `expect(value, message)` takes an optional assertion message —
+    // the rule's default of one argument is the Jest signature, not this one.
+    "vitest/valid-expect": ["error", { "maxArgs": 2 }],
     "max-depth": ["error", { "max": 4 }],
     "max-params": ["error", { "max": 5 }],
     "max-lines": [
