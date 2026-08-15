@@ -266,7 +266,7 @@ export default function TweakPanel() {
               // `<style>` block above), not inline: an inline shadow cannot
               // follow the theme, so a fixed dark halo would sit over the
               // light palette as heavily as over the dark one.
-              className={`lf-glass lf-glass-lg tweak-panel-surface w-full max-h-[min(70vh,34rem)] origin-top-right overflow-y-auto rounded-(--lf-card-radius) transition-[opacity,transform,backdrop-filter] ease-(--lf-ease-out) ${
+              className={`lf-glass lf-glass-lg tweak-panel-surface w-full max-h-[min(78vh,29rem)] origin-top-right overflow-y-auto rounded-(--lf-card-radius) transition-[opacity,transform,backdrop-filter] ease-(--lf-ease-out) ${
                 open
                   ? "pointer-events-auto scale-100 opacity-100 duration-(--lf-motion-base)"
                   : "scale-95 opacity-0 backdrop-blur-none duration-(--lf-motion-fast)"
