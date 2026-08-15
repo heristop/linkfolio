@@ -1,7 +1,13 @@
-# pnpm 11 requires each dependency with an install script to be allowed
-# explicitly. Both of these compile or download a native binary, and both are
-# needed: sharp backs `next/image` optimisation in production, @swc/core backs
-# the React Compiler's Babel step.
+# pnpm 11 requires every dependency with an install script to be allowed
+# explicitly, and reads that setting only from this file — not package.json or
+# .npmrc. Both of these fetch or compile a native binary and both are needed:
+# sharp backs next/image optimisation, @swc/core backs the React Compiler.
+#
+# `packages` is here for pnpm 9, which Vercel still selects: it treats the mere
+# presence of this file as a workspace declaration and fails the install with
+# "packages field missing or empty" when the key is absent.
+packages:
+  - .
 allowBuilds:
   "@swc/core": true
   sharp: true
