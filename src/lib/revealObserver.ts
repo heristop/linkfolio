@@ -28,8 +28,36 @@ const REVEAL_MARGIN = "10000px 0px -10% 0px";
  * the visitor scrolled past long ago; a per-batch ramp cascades whatever comes
  * into view, at any scroll position.
  */
-const STAGGER_STEP_MS = 45;
+const STAGGER_WINDOW_MS = 260;
+const MIN_STAGGER_STEP_MS = 50;
+const MAX_STAGGER_STEP_MS = 110;
 const MAX_STAGGERED = 10;
+
+/**
+ * The gap between cards is derived from how many arrived, not fixed, so the
+ * cascade lasts about as long whatever the group's size. A fixed step reads as
+ * a ramp across a dozen tiles and as nothing at all across four: five cards at
+ * 45ms finish in 180ms, well inside the 500ms each card spends fading, so they
+ * effectively appear together.
+ *
+ * The values are tuned against v2, which used a flat 60ms per card: a group
+ * of five lands at 65ms here, so the pace is the one this project has always
+ * had. What changes is that small groups no longer finish before the eye can
+ * follow them, and the floor keeps a long list from crawling — v2's flat step
+ * had neither guard.
+ *
+ * Clamped at both ends: without a ceiling a two-card group would hold the
+ * second card for the whole window, and without a floor a long list would
+ * crawl. `MAX_STAGGERED` still caps the accumulated delay so the last card of
+ * a long group is not left waiting on all the others.
+ */
+function staggerStep(count: number): number {
+  const spread = STAGGER_WINDOW_MS / Math.max(count - 1, 1);
+
+  return Math.round(
+    Math.min(MAX_STAGGER_STEP_MS, Math.max(MIN_STAGGER_STEP_MS, spread)),
+  );
+}
 
 /**
  * Safety net. The CSS hides a card until this module reveals it, so anything
@@ -68,6 +96,38 @@ function reveal(element: Element): void {
   pending.delete(element);
 }
 
+/**
+ * Assigns each element its delay: sorted top-down, cascading from zero per
+ * group, with a step derived from how many of that group are arriving.
+ *
+ * Every rect is read before any style is written. Setting a custom property
+ * dirties style, so interleaving the two forces a layout per element.
+ */
+function applyStagger(elements: readonly Element[]): void {
+  const sorted = (elements as readonly HTMLElement[]).toSorted(
+    (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top,
+  );
+
+  const total = new Map<string, number>();
+  for (const element of sorted) {
+    const group = element.dataset.group ?? "socialnetwork";
+    total.set(group, (total.get(group) ?? 0) + 1);
+  }
+
+  const seen = new Map<string, number>();
+  const delays = sorted.map((element) => {
+    const group = element.dataset.group ?? "socialnetwork";
+    const index = seen.get(group) ?? 0;
+    seen.set(group, index + 1);
+
+    return Math.min(index, MAX_STAGGERED) * staggerStep(total.get(group) ?? 1);
+  });
+
+  sorted.forEach((element, i) => {
+    element.style.setProperty("--lf-stagger", `${delays[i]}ms`);
+  });
+}
+
 function sweep(): void {
   sweepTimer = undefined;
 
@@ -77,6 +137,12 @@ function sweep(): void {
   const due = [...pending].filter(
     (element) => element.getBoundingClientRect().top < limit,
   );
+
+  // Staggered like the observer's own batches. Without this the failsafe
+  // reveals everything on the same frame, and a page that happens to fall
+  // through to it shows no cascade at all — the same content arriving in a
+  // visibly different way from one load to the next.
+  applyStagger(due);
 
   for (const element of due) {
     observer?.unobserve(element);
@@ -123,24 +189,13 @@ function getObserver(): IntersectionObserver | undefined {
           (a, b) => a.boundingClientRect.top - b.boundingClientRect.top,
         );
 
-      // Each group cascades from zero, so a batch spanning two sections does
-      // not carry the first section's ramp into the second.
-      const seen = new Map<string, number>();
+      // The stylesheet reads --lf-stagger as the transition-delay, so every
+      // delay is assigned before any card flips to its revealed state.
+      applyStagger(arriving.map((entry) => entry.target));
 
       arriving.forEach((entry) => {
-        const element = entry.target as HTMLElement;
-        const group = element.dataset.group ?? "socialnetwork";
-        const index = seen.get(group) ?? 0;
-        seen.set(group, index + 1);
-
-        const step = Math.min(index, MAX_STAGGERED) * STAGGER_STEP_MS;
-
-        // The stylesheet reads this as the transition-delay, so it has to be
-        // set before the class flips the card to its revealed state.
-        element.style.setProperty("--lf-stagger", `${step}ms`);
-
-        reveal(element);
-        self.unobserve(element);
+        reveal(entry.target as HTMLElement);
+        self.unobserve(entry.target);
       });
     },
     { rootMargin: REVEAL_MARGIN, threshold: 0 },

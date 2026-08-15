@@ -157,7 +157,9 @@ test("an intersecting batch reveals top-down with a per-group stagger", () => {
   }
 
   // Sorted by top and grouped: socialnetwork ramps 100→200→300, website
-  // ramps 150→250 — each group cascading from zero.
+  // ramps 150→250 — each group cascading from zero, and each with a step
+  // derived from its own size. Both groups are small enough that the window
+  // divided among them exceeds the ceiling, so both take the 110ms cap.
   const staggers = Object.fromEntries(
     Object.entries(elements).map(([name, element]) => [
       name,
@@ -167,10 +169,10 @@ test("an intersecting batch reveals top-down with a per-group stagger", () => {
 
   expect(staggers).toEqual({
     sn2: "0ms",
-    sn3: "45ms",
-    sn1: "90ms",
+    sn3: "110ms",
+    sn1: "220ms",
     web1: "0ms",
-    web2: "45ms",
+    web2: "110ms",
   });
 });
 
@@ -185,7 +187,8 @@ test("elements missing data-group ramp together with 'socialnetwork'", () => {
   observer.callback([entry(bare, 100), entry(grouped, 200)], observer);
 
   expect(bare.styles.get("--lf-stagger")).toBe("0ms");
-  expect(grouped.styles.get("--lf-stagger")).toBe("45ms");
+  // Two cards: the window would put the second at 260ms, so the ceiling wins.
+  expect(grouped.styles.get("--lf-stagger")).toBe("110ms");
 });
 
 test("the stagger ramp is capped so a long batch does not crawl", () => {
@@ -199,10 +202,11 @@ test("the stagger ramp is capped so a long batch does not crawl", () => {
     observer,
   );
 
-  // Index 10 onwards all sit at the cap: 10 * 45ms.
-  expect(batch[9].styles.get("--lf-stagger")).toBe("405ms");
-  expect(batch[10].styles.get("--lf-stagger")).toBe("450ms");
-  expect(batch[12].styles.get("--lf-stagger")).toBe("450ms");
+  // Thirteen cards would divide the window below the floor, so each takes the
+  // 50ms minimum, and index 10 onwards all sit at the cap: 10 * 50ms.
+  expect(batch[9].styles.get("--lf-stagger")).toBe("450ms");
+  expect(batch[10].styles.get("--lf-stagger")).toBe("500ms");
+  expect(batch[12].styles.get("--lf-stagger")).toBe("500ms");
 });
 
 test("a non-intersecting entry stays hidden and observed", () => {
@@ -229,6 +233,30 @@ test("cleanup unobserves a card that unmounts before revealing", () => {
 
   expect(observer.observed.has(element)).toBe(false);
   expect(revealed(element)).toBe(false);
+});
+
+test("the sweep cascades too, rather than revealing everything at once", async () => {
+  currentObserver();
+
+  (globalThis as { innerHeight?: number }).innerHeight = 800;
+
+  // Three on-screen cards the observer never fires for. The failsafe used to
+  // reveal them on one frame with no delay, so a load that fell through to it
+  // showed no cascade — the same page arriving differently run to run.
+  const cards = [
+    fakeElement(undefined, 100),
+    fakeElement(undefined, 200),
+    fakeElement(undefined, 300),
+  ];
+  for (const card of cards) observeReveal(card);
+
+  await expect.poll(() => revealed(cards[0]), { timeout: 3000 }).toBe(true);
+
+  expect(cards.map((c) => c.styles.get("--lf-stagger"))).toEqual([
+    "0ms",
+    "110ms",
+    "220ms",
+  ]);
 });
 
 test("the sweep reveals on-screen cards the observer never fired for", async () => {
