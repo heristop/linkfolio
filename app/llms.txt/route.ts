@@ -27,7 +27,7 @@ Linkfolio is a customizable link-in-bio page (similar to Linktree) that can be d
 - Typewriter effect on alias text (optional)
 - Animated card entrance with intersection observer
 - Accessible (WCAG AA): keyboard navigation, screen reader support, reduced motion support
-- SEO optimized: Open Graph, Twitter Cards, schema.org @graph structured data (ProfilePage, Person, ItemList, WebSite), canonical URLs, dynamic sitemap
+- SEO: Open Graph, Twitter Cards, schema.org @graph structured data (ProfilePage, Person, ItemList, WebSite), canonical URLs, dynamic sitemap
 - Deployable to Vercel with one click
 - Public configuration API at /api/config
 

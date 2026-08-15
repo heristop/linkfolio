@@ -389,7 +389,7 @@
 
   /* Entrance, driven by the intersection observer as each card scrolls into
      range. Gated on scripting so that without JavaScript the resting state
-     applies and every card is simply visible. */
+     applies and every card is visible. */
   @media (scripting: enabled) {
     .network {
       transition:

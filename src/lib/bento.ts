@@ -33,14 +33,6 @@ export function resolveDirection(config: SocialNetworkType): BentoDirection {
   );
 }
 
-/**
- * Orders links so tile sizes alternate.
- *
- * Config files list links group by group, so honouring that order produces
- * bands of identical tiles — a table, not a bento. This spreads the big cards
- * evenly through the small ones. Relative order within one size is preserved,
- * and DOM order stays the visual order, so tab order still follows the eye.
- */
 /** Splits the links by the area their resolved span covers. */
 function bucketByArea(networks: SocialNetworkType[]) {
   const big: SocialNetworkType[] = [];
