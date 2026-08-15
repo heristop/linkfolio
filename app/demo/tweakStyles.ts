@@ -43,7 +43,7 @@ export const TEXT_INPUT_CLASS =
 // same 44px minimum — there was no functional reason for this row alone to
 // be 4px taller, just drift.
 export const OPTION_ROW_CLASS =
-  "flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md border border-primary/20 bg-(--lf-card-bg) px-3 text-sm text-(--lf-description-color) hover:border-primary/40 active:scale-(--lf-press-scale) [transition:border-color_var(--lf-motion-fast)_var(--lf-ease-out),transform_var(--lf-motion-fast)_var(--lf-ease-out)] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary";
+  "flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md border border-primary/20 bg-(--lf-card-bg) px-3 text-sm text-(--lf-description-color) hover:border-primary/40 active:scale-(--lf-press-scale) [transition:border-color_var(--lf-motion-fast)_var(--lf-ease-out),transform_var(--lf-motion-fast)_var(--lf-ease-out)] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary";
 // Two-layer ring (a gap matching the surface, then the accent) around a
 // selected swatch — the same treatment system colour pickers use, and the
 // only thing that changes between selected and unselected.
@@ -59,7 +59,7 @@ export const ringStyle = (selected: boolean) =>
 export const SEGMENT_LABEL_CLASS =
   "flex-1 cursor-pointer transition-transform duration-(--lf-motion-fast) ease-(--lf-ease-out) active:scale-(--lf-press-scale)";
 export const SEGMENT_TEXT_CLASS =
-  "flex min-h-10 items-center justify-center rounded-[0.3rem] text-sm text-(--lf-description-color) transition-[background-color,color] duration-(--lf-motion-fast) peer-checked:bg-primary peer-checked:text-background-start peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary";
+  "flex min-h-10 items-center justify-center rounded-[0.3rem] text-sm text-(--lf-description-color) transition-[background-color,color] duration-(--lf-motion-fast) peer-checked:bg-primary peer-checked:text-background-start peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary";
 // No `shadow-(--lf-card-shadow)` here: on a small pill, the card
 // shadow plus a glass border reads heavier than the control is — bigger
 // surfaces (the panel itself) earn a deeper shadow, a chip does not.

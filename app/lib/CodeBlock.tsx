@@ -165,11 +165,17 @@ export default function CodeBlock({
             className="min-w-0 flex-1 overflow-x-auto -webkit-mask-[linear-gradient(to_right,black_calc(100%-1.5rem),transparent)] mask-[linear-gradient(to_right,black_calc(100%-1.5rem),transparent)]"
             // This is the element that scrolls, so this is the element that
             // has to be focusable — a command wider than the box is otherwise
-            // unreachable with a keyboard (WCAG 2.1.1), tabs or no tabs. The
-            // generic rule below does not know about scroll containers, which
-            // axe's own `scrollable-region-focusable` requires be focusable.
+            // unreachable with a keyboard (WCAG 2.1.1), tabs or no tabs, and
+            // axe's `scrollable-region-focusable` requires exactly this.
+            //
+            // Both linters object to tabIndex on a non-interactive element,
+            // and neither has an exception for scroll containers; the rule
+            // they apply is right in general and wrong here, so it is
+            // suppressed rather than worked around. aria-label names the
+            // region a keyboard user lands in.
+            aria-label={`${tab.label} code`}
             // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
+            tabIndex={0} // NOSONAR S6845 - focusable scroll container, see above
           >
             <code className="font-mono text-sm leading-relaxed text-primary">
               {tab.code}
