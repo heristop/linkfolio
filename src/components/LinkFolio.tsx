@@ -121,7 +121,11 @@ const LinkFolio: React.FC<LinkFolioProps> = ({
       )}
 
       <Suspense fallback={<LinksFallback bento={config.layout === "bento"} />}>
-        <SocialLinksToRender userConfig={config} onLinkClick={onLinkClick} />
+        <SocialLinksToRender
+          userConfig={config}
+          onLinkClick={onLinkClick}
+          headingLevel={headingLevel}
+        />
       </Suspense>
 
       {AfterSocialLinksComponent && (

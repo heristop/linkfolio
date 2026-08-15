@@ -16,7 +16,13 @@ const BENTO_GROUP_CLASS = "lf-group lf-bento px-(--lf-links-padding-x)";
 const SocialLinks: React.FC<SocialLinksProps> = ({
   userConfig,
   onLinkClick,
+  headingLevel = "h1",
 }) => {
+  // One level below the profile name. Embedded in a host page that owns the
+  // h1, the profile name drops to h2 — and card titles have to follow, or a
+  // dozen of them become siblings of the host page's own sections.
+  const titleLevel = headingLevel === "h2" ? "h3" : "h2";
+
   const filteredNetworks = useMemo(
     () =>
       userConfig.socialNetworks?.filter(
@@ -79,6 +85,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
                 config={config}
                 priority={globalIndex < 4}
                 onLinkClick={onLinkClick}
+                titleLevel={titleLevel}
               />
             );
           })}

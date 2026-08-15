@@ -13,6 +13,7 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
   delay = 0,
   priority = false,
   onLinkClick,
+  titleLevel: Title = "h2",
 }: Readonly<SocialNetworkProps>) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -82,7 +83,9 @@ const SocialNetwork: React.FC<SocialNetworkProps> = ({
         </div>
 
         <div className="lf-data px-2 py-4 text-center">
-          <h2 className="lf-title text-xl font-bold mb-2">{config.title}</h2>
+          <Title className="lf-title text-xl font-bold mb-2">
+            {config.title}
+          </Title>
           <p className="lf-description description text-sm truncate text-(--lf-description-color)">
             {config.description}
           </p>
