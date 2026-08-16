@@ -85,6 +85,15 @@
   /* Bento grid (`layout: "bento"`); one row unit is a small tile's height */
   --lf-bento-columns: 4;
   --lf-bento-row: 8rem;
+  /* Surface behind a horizontal card, which needs one to read as a single
+     link. Mixed from the theme's own ink, so it follows every palette and
+     both modes instead of being a fixed grey. */
+  --lf-bento-tile-bg: color-mix(in oklch, var(--color-primary) 5%, transparent);
+  --lf-bento-tile-hover-bg: color-mix(
+    in oklch,
+    var(--color-primary) 10%,
+    transparent
+  );
 
   /* Network */
   --lf-network-hover-bg: oklch(0 0 0 / 0.03);
@@ -756,7 +765,9 @@
    * its own box edge to edge; the slack a taller cell leaves over is card,
    * not a band around the image, so it centres in the space.
    */
-  .lf-bento .network[data-group="socialnetwork"] .lf-icon-container {
+  .lf-bento
+    .network[data-group="socialnetwork"]:not([data-direction="horizontal"])
+    .lf-icon-container {
     aspect-ratio: 16 / 9;
     height: auto;
   }
@@ -767,11 +778,16 @@
    * to the cell's bottom edge, and a label that far from its tile reads as
    * belonging to the tile below it.
    */
-  .lf-bento .network[data-group="socialnetwork"] > a {
+  .lf-bento
+    .network[data-group="socialnetwork"]:not([data-direction="horizontal"])
+    > a {
     justify-content: center;
   }
 
-  .lf-bento .network[data-group="socialnetwork"] > a > div:first-child {
+  .lf-bento
+    .network[data-group="socialnetwork"]:not([data-direction="horizontal"])
+    > a
+    > div:first-child {
     flex: 0 0 auto;
   }
 
@@ -783,14 +799,18 @@
    * than wordmarks, so filling costs nothing at the edges.
    */
   .lf-bento
-    > .network[data-group="socialnetwork"]:not([data-span="1x1"])
+    > .network[data-group="socialnetwork"]:not([data-span="1x1"]):not(
+      [data-direction="horizontal"]
+    )
     .lf-icon-container {
     aspect-ratio: auto;
     height: 100%;
   }
 
   .lf-bento
-    > .network[data-group="socialnetwork"]:not([data-span="1x1"])
+    > .network[data-group="socialnetwork"]:not([data-span="1x1"]):not(
+      [data-direction="horizontal"]
+    )
     > a
     > div:first-child {
     flex: 1 1 auto;
@@ -811,39 +831,91 @@
    * the row (rather than reordering the DOM) keeps the title first for a
    * screen reader while the picture sits on the right.
    */
+  /*
+   * A stacked tile needs no surface: the caption sits directly under its
+   * picture, and proximity alone says they are one link. Side by side that
+   * breaks down — a short caption leaves a hand's width of page between the
+   * two halves, and the only thing grouping them was the hover tint, which
+   * is no help until the pointer is already on the card. So a horizontal card
+   * gets a resting surface, and hover deepens the same tint rather than
+   * introducing it.
+   */
+  .lf-bento .network[data-direction="horizontal"] {
+    border-radius: 0.75rem;
+    background-color: var(--lf-bento-tile-bg);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lf-bento .network[data-direction="horizontal"]:hover {
+      background-color: var(--lf-bento-tile-hover-bg);
+    }
+  }
+
   .lf-bento .network[data-direction="horizontal"] > a {
     flex-direction: row-reverse;
-    align-items: center;
+    align-items: stretch;
     gap: 0.75rem;
+    /* The cell is a fixed height and the text is the one part that can exceed
+       it. Without this a three-line description spills over the tiles above
+       and below, which is what it did on a phone. */
+    overflow: hidden;
   }
 
   .lf-bento .network[data-direction="horizontal"] > a > div:first-child {
-    flex: 0 0 45%;
+    flex: 0 0 40%;
+    min-width: 0;
     height: 100%;
   }
 
   /*
-   * Centre the picture-and-caption pair rather than pinning it to the cell's
-   * edges. A wide tile is wider than the pair needs, and stretching them apart
-   * leaves a gap in the middle that reads as two unrelated things sharing a
-   * box instead of one card.
+   * The picture fills its half of the card. The group rules above hand a
+   * social mark a 16:9 box and the stacked tile's `max-width`; beside text
+   * those leave it a 60px stamp in the corner of the space it was given.
    */
-  .lf-bento .network[data-direction="horizontal"] > a {
-    justify-content: center;
+  .lf-bento .network[data-direction="horizontal"] .lf-icon-container {
+    aspect-ratio: auto;
+    width: 100%;
+    max-width: none;
+    height: 100%;
   }
 
+  /*
+   * The caption takes the rest of the row and centres against the picture.
+   * `min-width: 0` is what lets a long title shrink here instead of pushing
+   * the picture past the card's edge.
+   */
   .lf-bento .network[data-direction="horizontal"] .lf-data {
-    flex: 0 1 auto;
-  }
-
-  .lf-bento .network[data-direction="horizontal"] .lf-data {
+    display: flex;
     flex: 1 1 auto;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 0.5rem;
     padding-left: 0.75rem;
     text-align: left;
   }
 
+  /* Beside a picture this size the small uppercase social label reads as a
+     caption that lost its tile, so a horizontal card titles like a card. */
+  .lf-bento .network[data-direction="horizontal"] .lf-title {
+    margin-bottom: 0.125rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  /* Shown even for the social group, which hides it when stacked — a wide
+     card has the width for it. Two lines then ellipsis: the cell cannot grow,
+     so the description is the part that gives. */
   .lf-bento .network[data-direction="horizontal"] .lf-description {
-    display: block;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    white-space: normal;
+    text-overflow: ellipsis;
   }
 
   @media (max-width: 767px) {
@@ -863,6 +935,24 @@
     .lf-bento > [data-span="2x2"],
     .lf-bento > [data-span="2x3"] {
       grid-column: span 2;
+    }
+
+    /* A wide tile is still only one row tall here, and a phone row is shorter
+       than a desktop one, so the type steps down to fit the title and two
+       lines of description inside the cell instead of over it. */
+    .lf-bento .network[data-direction="horizontal"] .lf-title {
+      font-size: 0.9375rem;
+    }
+
+    .lf-bento .network[data-direction="horizontal"] .lf-description {
+      font-size: 0.75rem;
+      line-height: 1.35;
+    }
+
+    /* The picture keeps a readable width on a narrow row without taking the
+       half a desktop card can afford. */
+    .lf-bento .network[data-direction="horizontal"] > a > div:first-child {
+      flex-basis: 38%;
     }
   }
 
