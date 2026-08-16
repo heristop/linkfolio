@@ -267,9 +267,12 @@ group, and honouring that order would produce bands of identical tiles rather
 than a mosaic. Relative order within one size is preserved. The grid drops to
 two columns under 768px, where every wide and large tile takes a full row.
 
-The grid is tunable through two CSS custom properties, `--lf-bento-columns`
-(default `4`) and `--lf-bento-row` (default `8rem`, the height of one small
-tile).
+A `horizontal` card carries a resting surface, since side by side a short
+caption can leave enough space between the two halves to read as two separate
+things. Four CSS custom properties tune all of this: `--lf-bento-columns`
+(default `4`), `--lf-bento-row` (default `8rem`, the height of one small
+tile), and `--lf-bento-tile-bg` / `--lf-bento-tile-hover-bg`, both mixed from
+`--color-primary` so they follow the palette in either mode.
 
 Example of adding the typewriter effect on the alias:
 
@@ -532,7 +535,7 @@ the config cannot see, such as a `next/font` variable:
 | Card        | `lf-card-bg`, `lf-card-radius`, `lf-card-shadow`, `lf-card-border`, `lf-card-padding-x`, `lf-card-padding-y`, `lf-card-min-height`, `lf-card-backdrop`                                                     |
 | Profile     | `lf-name-color`, `lf-name-font-size`, `lf-name-font-weight`, `lf-name-font-family`, `lf-alias-color`, `lf-profile-margin-bottom`, `lf-accent-line-color`, `lf-accent-line-width`, `lf-accent-line-opacity` |
 | Cards       | `lf-title-font-family`, `lf-description-color`, `lf-network-hover-bg`                                                                                                                                      |
-| Layout      | `lf-links-gap-x`, `lf-links-gap-y`, `lf-links-padding-x`, `lf-bento-columns`, `lf-bento-row`                                                                                                               |
+| Layout      | `lf-links-gap-x`, `lf-links-gap-y`, `lf-links-padding-x`, `lf-bento-columns`, `lf-bento-row`, `lf-bento-tile-bg`, `lf-bento-tile-hover-bg`                                                                 |
 | Motion      | `lf-motion-fast`, `lf-motion-base`, `lf-motion-slow`, `lf-motion-reveal`, `lf-ease-out`, `lf-ease-spring`, `lf-press-scale`, `lf-press-scale-sm`, `lf-hover-lift`, `lf-hover-scale`                        |
 | Chrome      | `lf-button-opacity`, `lf-footer-opacity`                                                                                                                                                                   |
 
