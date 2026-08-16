@@ -12,6 +12,43 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 > from the versions actually published, so headings below follow the npm
 > versions. See [Release tagging](#release-tagging).
 
+## [3.1.1] - 2026-08-16
+
+A rendering fix for `layout: "bento"`, scoped to cards carrying
+`direction: "horizontal"`. Nothing else moves: stacked tiles and the classic
+layout render identically, and no config change is required.
+
+### Added
+
+- **`--lf-bento-tile-bg` and `--lf-bento-tile-hover-bg`.** The surface behind a
+  horizontal card, and the tint it takes on hover. Both are mixed from
+  `--color-primary` rather than being a fixed grey, so they follow whichever
+  palette is set in either mode, and both are settable from `theme`/`darkTheme`
+  as well as from a stylesheet.
+
+### Fixed
+
+- **A horizontal card's picture no longer collapses.** The rules that give a
+  social mark its stacked shape — a 16:9 box, the stacked `max-width`, and a
+  wrapper that sizes to content — out-specified the horizontal ones, so beside
+  text the picture rendered about 60px wide inside the 40% of the row it had
+  been given. Those rules are now scoped to stacked cards explicitly instead of
+  being out-specified in turn, which also stops the next horizontal rule from
+  having to win a specificity race to be seen.
+- **A horizontal caption stays inside its cell.** A bento cell is a fixed
+  height and the caption is the one part of a card that can exceed it. On a
+  phone a description wrapping to three lines measured 144px inside a 104px
+  cell, and the overflow did not clip — it painted over the tiles above and
+  below it. The row now hides its overflow, the description clamps to two lines
+  with an ellipsis, and under 768px the title and description step down a size
+  so both fit the shorter row.
+- **A horizontal card reads as one link at rest.** 3.1.0 centred the picture
+  and caption to close the gap between them; with a short caption the gap
+  remained, and the only thing grouping the two halves was the hover tint,
+  which is no help until the pointer is already on the card. The card now
+  carries a resting surface and hover deepens that same tint rather than
+  introducing it.
+
 ## [3.1.0] - 2026-08-15
 
 No config change is required and nothing is removed. One visible difference
@@ -244,6 +281,7 @@ above can be trusted:
 Tagging `3.0.0` on the release commit, with `package.json` matching, brings the
 two back into step.
 
+[3.1.1]: https://github.com/heristop/linkfolio/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/heristop/linkfolio/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/heristop/linkfolio/compare/2.2.3...3.0.0
 [2.3.0]: https://github.com/heristop/linkfolio/compare/2.2.2...2.2.3
