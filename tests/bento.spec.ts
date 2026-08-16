@@ -144,6 +144,49 @@ test.describe("bento layout", () => {
     // Side by side, not stacked.
     expect(text.x).toBeLessThan(media.x);
     expect(Math.abs(text.y - media.y)).toBeLessThan(text.height);
+
+    // The picture takes a real share of the row. Left to the stacked social
+    // rules it kept a 16:9 box and the stacked tile's max-width, which beside
+    // text collapsed it to a stamp in the corner.
+    expect(media.width / (media.width + text.width)).toBeGreaterThan(0.3);
+    expect(media.height).toBeCloseTo(text.height, 0);
+  });
+
+  test("a horizontal card keeps its caption inside the cell", async ({
+    page,
+  }) => {
+    // A phone row is the tight case: two columns, a shorter row unit, and a
+    // description long enough to wrap. Overflow here does not clip — it paints
+    // over the tiles above and below.
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.goto("/demo");
+    await selectLayout(page, "bento");
+
+    const cards = page.locator('.network[data-direction="horizontal"]');
+    const count = await cards.count();
+    expect(count).toBeGreaterThan(0);
+
+    for (let i = 0; i < count; i++) {
+      const card = cards.nth(i);
+      const cell = await card.boundingBox();
+      const text = await card.locator(".lf-data").boundingBox();
+      if (!cell || !text) throw new Error("horizontal card is missing a half");
+
+      const title = await card.locator(".lf-title").textContent();
+
+      expect(
+        text.height,
+        `"${title}" caption is taller than its cell`,
+      ).toBeLessThanOrEqual(cell.height);
+      expect(
+        text.y,
+        `"${title}" caption starts above its cell`,
+      ).toBeGreaterThanOrEqual(cell.y - 1);
+      expect(
+        text.y + text.height,
+        `"${title}" caption runs past the bottom of its cell`,
+      ).toBeLessThanOrEqual(cell.y + cell.height + 1);
+    }
   });
 
   test("sizes alternate rather than rendering group by group", async ({
