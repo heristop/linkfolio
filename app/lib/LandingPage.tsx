@@ -5,6 +5,7 @@ import { buildLandingJsonLd } from "./landingJsonLd";
 import ComparisonTable from "./ComparisonTable";
 import CodeBlock from "./CodeBlock";
 import { appUrl } from "./siteMeta";
+import { COMPARISON_COLUMNS, COMPARISON_ROWS } from "./projectContent";
 
 export const PAGE_TITLE =
   "Linkfolio — Open-source, self-hosted link-in-bio page";
@@ -40,36 +41,6 @@ const heroConfig = {
     )
     .slice(0, 6),
 };
-
-// Every row below comes verbatim from README.md's "Why self-host instead of
-// using Linktree?" table — already independently verified against the code.
-const COMPARISON: { label: string; linkfolio: string; hosted: string }[] = [
-  {
-    label: "Cost",
-    linkfolio: "Free, MIT licensed",
-    hosted: "Free tier with paid upgrades",
-  },
-  {
-    label: "Hosting",
-    linkfolio: "Your own domain and infrastructure",
-    hosted: "Their domain, their infrastructure",
-  },
-  {
-    label: "Customisation",
-    linkfolio: "Full source access; inject your own React components",
-    hosted: "Limited to the options exposed",
-  },
-  {
-    label: "Data",
-    linkfolio: "No third-party analytics unless you add them",
-    hosted: "Visitor data flows through their platform",
-  },
-  {
-    label: "Performance",
-    linkfolio: "Static Next.js page you control",
-    hosted: "Depends on their platform",
-  },
-];
 
 const FEATURES = [
   {
@@ -298,7 +269,10 @@ export default function LandingPage() {
           <h2 id="why-self-host" className={HEADING_CLASS}>
             Why self-host instead of using Linktree?
           </h2>
-          <ComparisonTable rows={COMPARISON} />
+          <ComparisonTable
+            columns={COMPARISON_COLUMNS}
+            rows={COMPARISON_ROWS}
+          />
         </section>
 
         <section className={SECTION_CLASS} aria-labelledby="features">

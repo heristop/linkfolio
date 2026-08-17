@@ -44,3 +44,15 @@ test("the only Person on the landing page is the real author", async ({
   expect(people[0].sameAs).toContain("https://github.com/heristop");
   expect(people[0].name).not.toBe("Linkfolio");
 });
+
+test("the comparison table names the products it compares against", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const table = page.getByRole("table");
+
+  await expect(table.getByText("Linktree", { exact: true })).toBeVisible();
+  await expect(table.getByText("LinkStack", { exact: true })).toBeVisible();
+  await expect(table.getByText("Bio.link", { exact: true })).toBeVisible();
+});
