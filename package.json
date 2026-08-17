@@ -2,7 +2,6 @@
   "name": "linkfolio",
   "version": "3.1.1",
   "description": "Self-hosted, open-source Linktree alternative built with Next.js and Tailwind CSS — one fast, accessible link-in-bio page on your own domain.",
-  "homepage": "https://linkfolio-demo.vercel.app",
   "keywords": [
     "bento",
     "bio-link",
@@ -26,6 +25,7 @@
     "template",
     "typescript"
   ],
+  "homepage": "https://linkfolio-demo.vercel.app",
   "license": "MIT",
   "author": "Alexandre Mogère (heristop)",
   "repository": {
