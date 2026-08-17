@@ -20,7 +20,7 @@ const body = `# Linkfolio
 
 ## Documentation
 
-- [Full documentation](${appUrl}/llms-full.txt): every section below as one document
+- [Full documentation](${appUrl}/llms-full.txt): the comparison, FAQ and full corpus as one document
 - [Deploy guide](${appUrl}/docs): deploy to Vercel or install the package
 - [Live demo](${appUrl}/demo): the page with an example configuration
 - [Source](https://github.com/heristop/linkfolio): MIT licensed

@@ -9,6 +9,20 @@
  * Never fails a deploy: a submission endpoint being down is not a reason to
  * mark a release broken.
  *
+ * This script has no repository guard of its own — the one that keeps it
+ * from submitting the maintainer's URLs from a fork's own CI run lives in
+ * .github/workflows/indexnow.yml (`if: github.repository == ...`), not here.
+ * Running `pnpm indexnow` from any clone, including a fork, POSTs the
+ * maintainer's host and key as written above.
+ *
+ * The key file this reads from public/ ships in every fork's deploy, since
+ * public/ is served verbatim — so a fork ends up serving the maintainer's
+ * IndexNow key at its own origin. That is a known, accepted trade-off of
+ * keeping the key as a static public/ file rather than a surprise: the key
+ * only proves the fork controls whatever host it's served from, and the
+ * workflow guard above is what actually keeps a fork from submitting on the
+ * maintainer's behalf.
+ *
  * Run: pnpm indexnow
  */
 import { readdirSync } from "node:fs";
