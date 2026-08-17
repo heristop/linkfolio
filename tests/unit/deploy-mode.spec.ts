@@ -43,6 +43,8 @@ test("the sitemap advertises marketing routes only in showcase mode", () => {
     "https://x.dev",
     "https://x.dev/demo",
     "https://x.dev/docs",
+    "https://x.dev/llms.txt",
+    "https://x.dev/llms-full.txt",
   ]);
   expect(profile.map((e) => e.url)).toEqual(["https://x.dev"]);
 });
@@ -52,4 +54,13 @@ test("the root entry outranks the marketing pages", () => {
 
   expect(root.priority).toBe(1);
   for (const entry of rest) expect(entry.priority).toBeLessThan(1);
+});
+
+test("the machine-readable documents are advertised only in showcase mode", () => {
+  const showcase = buildSitemapEntries("https://x.dev", true).map((e) => e.url);
+  const profile = buildSitemapEntries("https://x.dev", false).map((e) => e.url);
+
+  expect(showcase).toContain("https://x.dev/llms.txt");
+  expect(showcase).toContain("https://x.dev/llms-full.txt");
+  expect(profile).toEqual(["https://x.dev"]);
 });
