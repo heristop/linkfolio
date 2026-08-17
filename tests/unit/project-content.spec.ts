@@ -41,7 +41,20 @@ test("every competitor column has a dated source", () => {
 });
 
 // D0. The one failure mode that would actively hurt us: naming the unrelated
-// products that share this project's name anywhere in published content.
+// products that share this project's name anywhere in published content. An
+// allowlist beats a blocklist here: a list of forbidden hosts is itself a
+// list of their names in a published file, which is the exact thing D0
+// forbids, and it only ever catches a vendor someone thought to enumerate.
+// This asserts every linked host is one we recognise, and separately that no
+// bare "linkfolio.<tld>" mention slips in unqualified by a scheme — so a
+// squatter nobody has heard of yet still fails the test.
+const PERMITTED_HOSTS = new Set([
+  "github.com",
+  "linktr.ee",
+  "linkstack.org",
+  "bio.link",
+]);
+
 test("no same-name product is named in any rendering", () => {
   const published = [
     renderComparisonMarkdown(),
@@ -49,8 +62,21 @@ test("no same-name product is named in any rendering", () => {
     renderContentPlainText(),
   ].join("\n");
 
-  expect(published).not.toMatch(/linkfolio\.(ai|io|net|cv|live|me|online)/i);
-  expect(published).not.toMatch(/link-folio\.com/i);
+  const linkedHosts = [...published.matchAll(/https?:\/\/([a-z0-9.-]+)/gi)].map(
+    (m) => m[1].toLowerCase(),
+  );
+
+  for (const host of linkedHosts) {
+    expect(PERMITTED_HOSTS.has(host), `unrecognised host: ${host}`).toBe(true);
+  }
+
+  const bareMentions = [...published.matchAll(/linkfolio\.[a-z]{2,}/gi)].map(
+    (m) => m[0].toLowerCase(),
+  );
+
+  for (const host of bareMentions) {
+    expect(PERMITTED_HOSTS.has(host), `unrecognised host: ${host}`).toBe(true);
+  }
 });
 
 test("the markdown table has a header, a separator and one row each", () => {
