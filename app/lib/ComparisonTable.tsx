@@ -106,10 +106,16 @@ export default function ComparisonTable({
               .join(", ")}
           </caption>
 
-          {/* `sr-only` rather than `hidden` below `sm`: the header still
-              needs to announce which competitor each stacked card's values
-              belong to for a screen-reader user, even though a sighted
-              mobile user gets that from MobileLabel instead. */}
+          {/* `sr-only` rather than `hidden` below `sm`: the header text stays
+              in the DOM and the accessibility tree instead of being removed
+              with `display:none`, which is strictly better even though we
+              can't confirm it restores true per-cell column association at
+              this breakpoint — the table's own `max-sm:block` already moves
+              rows/cells off native table display, and that's independently
+              known to affect table semantics in some browsers. Confirming
+              the actual screen-reader experience here needs manual
+              verification (VoiceOver on Mobile Safari, TalkBack on Mobile
+              Chrome), not axe or Playwright. */}
           <thead className="max-sm:sr-only">
             <tr className="border-b border-primary/10">
               <th scope="col" className="p-4">
