@@ -1,14 +1,17 @@
 {
   "name": "linkfolio",
   "version": "3.1.1",
-  "description": "Minimalist web page that acts as a hub for all your online presence",
+  "description": "Self-hosted, open-source Linktree alternative built with Next.js and Tailwind CSS — one fast, accessible link-in-bio page on your own domain.",
+  "homepage": "https://linkfolio-demo.vercel.app",
   "keywords": [
     "bento",
     "bio-link",
+    "bio-link-page",
     "dark-mode",
     "landing-page",
     "link-hub",
     "link-in-bio",
+    "link-in-bio-template",
     "linkfolio",
     "linktree",
     "linktree-alternative",
@@ -18,7 +21,7 @@
     "portfolio",
     "react",
     "self-hosted",
-    "ssr",
+    "self-hosted-linktree",
     "tailwind",
     "template",
     "typescript"
