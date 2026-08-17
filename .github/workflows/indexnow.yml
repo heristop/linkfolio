@@ -1,0 +1,26 @@
+name: IndexNow
+
+# Runs after a push to main has had time to deploy. Submitting URLs that
+# still serve the previous build is harmless — the point is to get the
+# crawler to come back at all.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Wait for the deployment to settle
+        run: sleep 120
+      - name: Submit URLs to IndexNow
+        # The script itself never exits non-zero, but continue-on-error is
+        # kept as a second guarantee: a dead third-party endpoint must never
+        # fail this job.
+        continue-on-error: true
+        run: node scripts/indexnow.ts

@@ -89,6 +89,7 @@
     "fmt": "oxfmt --write .",
     "fmt:check": "oxfmt --check .",
     "gen:readme": "node scripts/gen-readme.ts",
+    "indexnow": "node scripts/indexnow.ts",
     "test": "playwright test",
     "test:unit": "vitest run",
     "test:package": "pnpm run build:package && node --test tests/package-assets.test.mjs",
