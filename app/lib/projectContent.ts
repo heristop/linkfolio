@@ -167,13 +167,33 @@ export const FAQ: FaqEntry[] = [
   },
 ];
 
+/**
+ * This is written straight into README.md by scripts/gen-readme.ts, and
+ * README.md is also owned by the repo's formatter (oxfmt runs on `*.md` via
+ * lint-staged). oxfmt's markdown convention is a column-padded table, so an
+ * unpadded table here would get re-padded by the next commit that touches
+ * README.md — and that would break the byte-for-byte comparison in
+ * tests/unit/readme-sync.spec.ts on an otherwise unrelated change. Emitting
+ * the padded form directly means the generator's output already is the
+ * formatter's canonical form, so the two never fight over the file.
+ */
 export function renderComparisonMarkdown(): string {
-  const header = `| | ${COMPARISON_COLUMNS.map((c) => c.label).join(" | ")} |`;
-  const divider = `| --- |${COMPARISON_COLUMNS.map(() => " --- |").join("")}`;
-  const body = COMPARISON_ROWS.map(
-    (row) =>
-      `| ${row.label} | ${COMPARISON_COLUMNS.map((c) => row.cells[c.key]).join(" | ")} |`,
+  const headerCells = ["", ...COMPARISON_COLUMNS.map((c) => c.label)];
+  const rows = COMPARISON_ROWS.map((row) => [
+    row.label,
+    ...COMPARISON_COLUMNS.map((c) => row.cells[c.key]),
+  ]);
+
+  const widths = headerCells.map((cell, i) =>
+    Math.max(cell.length, 3, ...rows.map((row) => row[i].length)),
   );
+
+  const renderRow = (cells: string[]) =>
+    `| ${cells.map((cell, i) => cell.padEnd(widths[i], " ")).join(" | ")} |`;
+
+  const header = renderRow(headerCells);
+  const divider = `| ${widths.map((w) => "-".repeat(w)).join(" | ")} |`;
+  const body = rows.map((row) => renderRow(row));
 
   return [header, divider, ...body].join("\n");
 }

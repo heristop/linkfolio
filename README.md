@@ -58,14 +58,16 @@ export default function Page() {
 ## Why self-host instead of using Linktree?
 
 <!-- generated:comparison -->
-| | Linkfolio | Linktree | LinkStack | Bio.link |
-| --- | --- | --- | --- | --- |
-| Cost | Free, MIT licensed | Free tier; paid from €4.50/mo billed annually | Free and open source; hosted from $1/mo | One plan at $7.49/mo, 7-day free trial |
-| Account required | None | Yes, a Linktree account | Yes, an account on the instance | Yes, a Bio Link account |
-| Open source | Yes, MIT | — | Yes, AGPL-3.0 | — |
-| Your own domain | Yes, you deploy it | No, pages live at linktr.ee/username | Yes, self-hosted or on the $5/mo plan | Yes, on the paid plan |
-| Where your data lives | Your infrastructure | — | Your own web server when self-hosted | — |
-| Built with | Next.js and Tailwind CSS | — | PHP and Laravel | — |
+
+|                       | Linkfolio                | Linktree                                      | LinkStack                               | Bio.link                               |
+| --------------------- | ------------------------ | --------------------------------------------- | --------------------------------------- | -------------------------------------- |
+| Cost                  | Free, MIT licensed       | Free tier; paid from €4.50/mo billed annually | Free and open source; hosted from $1/mo | One plan at $7.49/mo, 7-day free trial |
+| Account required      | None                     | Yes, a Linktree account                       | Yes, an account on the instance         | Yes, a Bio Link account                |
+| Open source           | Yes, MIT                 | —                                             | Yes, AGPL-3.0                           | —                                      |
+| Your own domain       | Yes, you deploy it       | No, pages live at linktr.ee/username          | Yes, self-hosted or on the $5/mo plan   | Yes, on the paid plan                  |
+| Where your data lives | Your infrastructure      | —                                             | Your own web server when self-hosted    | —                                      |
+| Built with            | Next.js and Tailwind CSS | —                                             | PHP and Laravel                         | —                                      |
+
 <!-- /generated:comparison -->
 
 "—" means the vendor does not publish that information. Competitor details checked August 2026.
@@ -158,6 +160,7 @@ This repository demonstrates how to integrate and customize Linkfolio in a Next.
 ## Frequently asked questions
 
 <!-- generated:faq -->
+
 ### Is Linkfolio free?
 
 Yes. Linkfolio is open source under the MIT licence. You host it yourself, so there is no subscription and no usage limit.
@@ -177,6 +180,7 @@ Yes. Install the linkfolio package and render the LinkFolio component with your 
 ### Can I use Google Analytics with Linkfolio?
 
 Yes, and it is not the only option. Set analytics: { provider: "ga", id: "G-…" } in your config and Linkfolio loads the tag and reports which link each visitor clicked. Google Tag Manager, Plausible and Umami ship as built-in providers too, you can register your own, and every link card emits a linkfolio:analytics DOM event you can listen to without configuring any provider at all.
+
 <!-- /generated:faq -->
 
 ## Contributing

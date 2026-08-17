@@ -56,7 +56,14 @@ test("no same-name product is named in any rendering", () => {
 test("the markdown table has a header, a separator and one row each", () => {
   const lines = renderComparisonMarkdown().trim().split("\n");
 
-  expect(lines[0]).toContain("| Linkfolio |");
+  // Columns are padded to their widest cell (oxfmt's table convention, which
+  // the generator now matches — see renderComparisonMarkdown's doc comment),
+  // so the header row is no longer "| Linkfolio |" exactly; it still names
+  // every column and stays pipe-delimited.
+  expect(lines[0]).toMatch(/^\|.*\bLinkfolio\b.*\|$/);
+  for (const column of COMPARISON_COLUMNS) {
+    expect(lines[0]).toContain(column.label);
+  }
   expect(lines[1]).toMatch(/^\|[\s|:-]+\|$/);
   expect(lines).toHaveLength(2 + COMPARISON_ROWS.length);
 });
