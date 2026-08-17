@@ -57,13 +57,18 @@ export default function Page() {
 
 ## Why self-host instead of using Linktree?
 
-|               | Linkfolio                                            | Hosted link-in-bio services               |
-| ------------- | ---------------------------------------------------- | ----------------------------------------- |
-| Cost          | Free, MIT licensed                                   | Free tier with paid upgrades              |
-| Hosting       | Your own domain and infrastructure                   | Their domain, their infrastructure        |
-| Customisation | Full source access; inject your own React components | Limited to the options exposed            |
-| Data          | No third-party analytics unless you add them         | Visitor data flows through their platform |
-| Performance   | Static Next.js page you control                      | Depends on their platform                 |
+<!-- generated:comparison -->
+| | Linkfolio | Linktree | LinkStack | Bio.link |
+| --- | --- | --- | --- | --- |
+| Cost | Free, MIT licensed | Free tier; paid from €4.50/mo billed annually | Free and open source; hosted from $1/mo | One plan at $7.49/mo, 7-day free trial |
+| Account required | None | Yes, a Linktree account | Yes, an account on the instance | Yes, a Bio Link account |
+| Open source | Yes, MIT | — | Yes, AGPL-3.0 | — |
+| Your own domain | Yes, you deploy it | No, pages live at linktr.ee/username | Yes, self-hosted or on the $5/mo plan | Yes, on the paid plan |
+| Where your data lives | Your infrastructure | — | Your own web server when self-hosted | — |
+| Built with | Next.js and Tailwind CSS | — | PHP and Laravel | — |
+<!-- /generated:comparison -->
+
+"—" means the vendor does not publish that information. Competitor details checked August 2026.
 
 ## Who it's for
 
@@ -666,6 +671,30 @@ This will run the tests and update any snapshots that don't match the current re
 For a practical implementation of Linkfolio, check out my example repository: [My Linkfolio Page](https://github.com/heristop/my-linkfolio).
 
 This repository demonstrates how to integrate and customize Linkfolio in a Next.js project.
+
+## Frequently asked questions
+
+<!-- generated:faq -->
+### Is Linkfolio free?
+
+Yes. Linkfolio is open source under the MIT licence. You host it yourself, so there is no subscription and no usage limit.
+
+### How is it different from Linktree?
+
+Linkfolio runs on your own domain and infrastructure. You have full access to the source, can inject your own React components, and no third party sits between you and your visitors.
+
+### Do I need to know Next.js to use it?
+
+No. You can deploy the template to Vercel in one click and personalise it by editing a single configuration file. Knowing Next.js helps if you want to customise components.
+
+### Can I add it to an existing Next.js project?
+
+Yes. Install the linkfolio package and render the LinkFolio component with your own config object.
+
+### Can I use Google Analytics with Linkfolio?
+
+Yes, and it is not the only option. Set analytics: { provider: "ga", id: "G-…" } in your config and Linkfolio loads the tag and reports which link each visitor clicked. Google Tag Manager, Plausible and Umami ship as built-in providers too, you can register your own, and every link card emits a linkfolio:analytics DOM event you can listen to without configuring any provider at all.
+<!-- /generated:faq -->
 
 ## Contributing
 
