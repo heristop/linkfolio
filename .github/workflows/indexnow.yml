@@ -11,6 +11,12 @@ on:
 jobs:
   submit:
     runs-on: ubuntu-latest
+    # This spends the maintainer's IndexNow key against a third-party service,
+    # so it must only ever run from the canonical repository — the same
+    # showcase-only boundary llms.txt enforces at the route level with
+    # LINKFOLIO_SHOWCASE. Without this, every fork's push to its own main
+    # would submit the maintainer's host/key from CI it doesn't control.
+    if: github.repository == 'heristop/linkfolio'
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
