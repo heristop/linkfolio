@@ -2,7 +2,11 @@
 
 import React, { useRef } from "react";
 import { useRevealChildren } from "./useRevealChildren";
-import type { ComparisonColumn, ComparisonRow } from "./projectContent";
+import {
+  SOURCES_CHECKED,
+  type ComparisonColumn,
+  type ComparisonRow,
+} from "./projectContent";
 
 export type { ComparisonColumn, ComparisonRow };
 
@@ -87,7 +91,7 @@ export default function ComparisonTable({
         rather than the page body scrolling sideways.
       */}
       <div
-        className="-mx-4 overflow-x-auto px-4"
+        className="overflow-x-auto overflow-y-hidden"
         // This is the element that scrolls, so this is the element that has
         // to be focusable — a table wider than the viewport is otherwise
         // unreachable with a keyboard (WCAG 2.1.1), and axe's
@@ -191,7 +195,7 @@ export default function ComparisonTable({
 
       <p className="border-t border-primary/10 p-4 text-xs text-(--lf-description-color)">
         “—” means the vendor does not publish that information. Competitor
-        details checked August 2026.
+        details checked {SOURCES_CHECKED}.
       </p>
     </div>
   );

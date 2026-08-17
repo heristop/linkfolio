@@ -70,7 +70,17 @@ export default function Page() {
 
 <!-- /generated:comparison -->
 
-"—" means the vendor does not publish that information. Competitor details checked August 2026.
+<!-- generated:sources -->
+
+"—" means the vendor does not publish that information. Competitor details checked 2026-08-17.
+
+- Linktree: https://linktr.ee/s/pricing
+- Linktree: https://linktr.ee/help/en/articles/6571689-can-i-change-the-linktree-url-to-a-custom-domain
+- LinkStack: https://linkstack.org/
+- LinkStack: https://github.com/LinkStackOrg/LinkStack
+- Bio.link: https://bio.link/
+
+<!-- /generated:sources -->
 
 ## Who it's for
 

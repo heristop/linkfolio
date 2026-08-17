@@ -106,8 +106,6 @@ Full theming (colors and motion tokens) can also be set programmatically via the
 import { buildMetadata, buildJsonLd } from "linkfolio/seo";
 \`\`\`
 
-In the comparison below, "—" means the vendor does not publish that information — not that the feature is absent. Competitor details checked August 2026.
-
 ${renderContentPlainText()}
 
 ## Links

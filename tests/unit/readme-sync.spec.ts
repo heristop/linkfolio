@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import {
   renderComparisonMarkdown,
   renderFaqMarkdown,
+  renderLegendMarkdown,
 } from "../../app/lib/projectContent";
 
 const README = readFileSync(
@@ -25,6 +26,10 @@ function block(name: string) {
 // forgetting it a failure rather than a silent regression.
 test("the README comparison matches the content module", () => {
   expect(block("comparison")).toBe(renderComparisonMarkdown().trim());
+});
+
+test("the README sources/legend matches the content module", () => {
+  expect(block("sources")).toBe(renderLegendMarkdown().trim());
 });
 
 test("the README FAQ matches the content module", () => {

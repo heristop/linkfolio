@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import {
   renderComparisonMarkdown,
   renderFaqMarkdown,
+  renderLegendMarkdown,
 } from "../app/lib/projectContent.ts";
 
 const path = new URL("../README.md", import.meta.url);
@@ -43,6 +44,7 @@ function replaceBlock(source: string, name: string, body: string): string {
 
 let readme = readFileSync(path, "utf8");
 readme = replaceBlock(readme, "comparison", renderComparisonMarkdown());
+readme = replaceBlock(readme, "sources", renderLegendMarkdown());
 readme = replaceBlock(readme, "faq", renderFaqMarkdown());
 writeFileSync(path, readme);
 

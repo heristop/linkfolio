@@ -143,6 +143,16 @@ export const SOURCES = [
   { product: "Bio.link", url: "https://bio.link/", checked: "2026-08-17" },
 ];
 
+/**
+ * The earliest `checked` date across every SOURCES row, not the latest.
+ * "How stale might this be" is honestly answered by the oldest check, not
+ * the newest — and taking the minimum means this stays correct regardless
+ * of how many rows a product ends up with.
+ */
+export const SOURCES_CHECKED: string = SOURCES.map(
+  (s) => s.checked,
+).toSorted()[0];
+
 /** Seeded from the FAQ that shipped in app/docs/page.tsx. */
 export const FAQ: FaqEntry[] = [
   {
@@ -203,6 +213,21 @@ export function renderFaqMarkdown(): string {
 }
 
 /**
+ * The dash-explanation legend, derived from SOURCES rather than hand-written
+ * prose so it cannot drift when SOURCES changes and so it carries the day
+ * precision SOURCES actually records instead of rounding to a month. Every
+ * surface that shows the comparison table renders this: README.md's third
+ * generated block, llms-full.txt (as part of renderContentPlainText below),
+ * and the site (ComparisonTable.tsx renders only the date line, not this
+ * full source list — the rendered table stays quiet).
+ */
+export function renderLegendMarkdown(): string {
+  const sources = SOURCES.map((s) => `- ${s.product}: ${s.url}`).join("\n");
+
+  return `"—" means the vendor does not publish that information. Competitor details checked ${SOURCES_CHECKED}.\n\n${sources}`;
+}
+
+/**
  * The llms-full.txt rendering. Plain prose rather than a markdown table:
  * the consumer is a language model reading for facts, and a pipe-delimited
  * grid loses its column headings the moment it is chunked.
@@ -218,9 +243,5 @@ export function renderContentPlainText(): string {
 
   const faq = FAQ.map((entry) => `Q: ${entry.q}\nA: ${entry.a}`).join("\n\n");
 
-  const sources = SOURCES.map(
-    (s) => `- ${s.product}: ${s.url} (checked ${s.checked})`,
-  ).join("\n");
-
-  return `## How Linkfolio compares\n\n${comparison}\n\nComparison sources:\n${sources}\n\n## Frequently asked questions\n\n${faq}`;
+  return `## How Linkfolio compares\n\n${comparison}\n\n${renderLegendMarkdown()}\n\n## Frequently asked questions\n\n${faq}`;
 }
