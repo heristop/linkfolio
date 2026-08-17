@@ -14,8 +14,15 @@ pnpm install
 pnpm dev            # http://localhost:3000
 ```
 
-The repo requires Node 20.9+ and uses pnpm — the version is pinned in
-`packageManager`, so `corepack` will fetch it for you.
+Installing and consuming the published `linkfolio` package needs Node 20.9+
+(the floor in `engines.node`). Working in this repo needs a newer Node:
+`pnpm gen:readme` and `pnpm indexnow` run under plain `node` and rely on
+native TypeScript type-stripping, which needs Node 22.18+ or 23.6+ — an
+older Node fails them with `ERR_UNKNOWN_FILE_EXTENSION`. `engines.node`
+isn't raised to match, because it would lock out package consumers to solve
+a contributor-only problem; `scripts/` never ships to them (see `files` in
+`package.json`). Use pnpm — the version is pinned in `packageManager`, so
+`corepack` will fetch it for you.
 
 By default `pnpm dev` serves the personal profile page, which is what a fork
 deploys. To work on the landing page, `/docs` or `/demo`, set
