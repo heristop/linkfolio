@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { COMPARISON_ROWS } from "../app/lib/projectContent";
 
 async function graphOf(page: import("@playwright/test").Page) {
   const scripts = await page
@@ -52,7 +53,37 @@ test("the comparison table names the products it compares against", async ({
 
   const table = page.getByRole("table");
 
-  await expect(table.getByText("Linktree", { exact: true })).toBeVisible();
-  await expect(table.getByText("LinkStack", { exact: true })).toBeVisible();
-  await expect(table.getByText("Bio.link", { exact: true })).toBeVisible();
+  // Not a header-label assertion: below `sm` the <thead> is `max-sm:sr-only`,
+  // and `toBeVisible()` passes for a 1×1 clipped sr-only element, so a
+  // header-only check is vacuous on the two mobile projects. A comparison
+  // cell's value only exists in the table body, so it means something at
+  // every viewport.
+  const costRow = COMPARISON_ROWS.find((row) => row.label === "Cost");
+
+  if (!costRow) throw new Error('no "Cost" row in COMPARISON_ROWS');
+
+  await expect(
+    table.getByText(costRow.cells.linktree, { exact: true }),
+  ).toBeVisible();
+  await expect(
+    table.getByText(costRow.cells.linkstack, { exact: true }),
+  ).toBeVisible();
+  await expect(
+    table.getByText(costRow.cells.biolink, { exact: true }),
+  ).toBeVisible();
+});
+
+test("/llms-full.txt is published on the showcase build", async ({
+  request,
+}) => {
+  const response = await request.get("/llms-full.txt");
+
+  expect(response.ok()).toBe(true);
+
+  const body = await response.text();
+  const costRow = COMPARISON_ROWS.find((row) => row.label === "Cost");
+
+  if (!costRow) throw new Error('no "Cost" row in COMPARISON_ROWS');
+
+  expect(body).toContain(costRow.label);
 });
