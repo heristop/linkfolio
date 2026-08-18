@@ -1,4 +1,34 @@
 import { escapeJsonLd } from "@/lib/sanitize";
+import { version } from "../../package.json";
+
+const REPO_URL = "https://github.com/heristop/linkfolio";
+const PACKAGE_URL = "https://www.npmjs.com/package/linkfolio";
+
+/**
+ * The two URLs that corroborate this site's identity.
+ *
+ * Several unrelated commercial products share the name "Linkfolio", so a
+ * search engine reading this page cannot infer which entity it describes.
+ * `sameAs` is the structured claim that binds site, repository and package
+ * into one — the same corroboration pattern `off-page-seo-checklist.md`
+ * applies to the author, applied here to the project.
+ */
+const SAME_AS = [REPO_URL, PACKAGE_URL];
+
+/**
+ * Capabilities, not marketing copy: `featureList` is read by answer engines
+ * summarising what the software does, so each entry states one capability
+ * plainly enough to be quoted on its own.
+ */
+const FEATURE_LIST = [
+  "Self-hosted on your own domain and infrastructure",
+  "No account, subscription or usage limit",
+  "Two layouts: a classic list and a bento mosaic",
+  "Five theme presets with a genuine dark mode",
+  "Accessible by default (keyboard, screen reader, reduced motion)",
+  "Pluggable analytics, or none at all",
+  "Open source under the MIT licence",
+];
 
 /**
  * Structured data for the marketing landing page at `/`.
@@ -37,6 +67,14 @@ export function buildLandingJsonLd(siteUrl: string): string {
           codeRepository: "https://github.com/heristop/linkfolio",
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           author: { "@id": authorId },
+          sameAs: SAME_AS,
+          softwareVersion: version,
+          applicationSubCategory: "Link in bio page",
+          isAccessibleForFree: true,
+          installUrl: PACKAGE_URL,
+          downloadUrl: PACKAGE_URL,
+          screenshot: `${origin}/opengraph-image`,
+          featureList: FEATURE_LIST,
         },
         {
           "@type": "Person",
@@ -52,6 +90,7 @@ export function buildLandingJsonLd(siteUrl: string): string {
           url: origin,
           name: "Linkfolio",
           publisher: { "@id": authorId },
+          sameAs: SAME_AS,
         },
       ],
     }),

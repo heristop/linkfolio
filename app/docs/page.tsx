@@ -5,6 +5,7 @@ import { escapeJsonLd } from "@/lib/sanitize";
 import BackLink from "../lib/BackLink";
 import CodeBlock from "../lib/CodeBlock";
 import { appUrl, isShowcase, pageMetadata } from "../lib/siteMeta";
+import { FAQ } from "../lib/projectContent";
 import OnThisPage from "./OnThisPage";
 
 // Under ~60 characters so the whole title survives in results. "Linktree
@@ -27,29 +28,6 @@ export const metadata: Metadata = isShowcase
       path: "/docs",
     })
   : { robots: { index: false, follow: false }, alternates: {} };
-
-const FAQ = [
-  {
-    q: "Is Linkfolio free?",
-    a: "Yes. Linkfolio is open source under the MIT licence. You host it yourself, so there is no subscription and no usage limit.",
-  },
-  {
-    q: "How is it different from Linktree?",
-    a: "Linkfolio runs on your own domain and infrastructure. You have full access to the source, can inject your own React components, and no third party sits between you and your visitors.",
-  },
-  {
-    q: "Do I need to know Next.js to use it?",
-    a: "No. You can deploy the template to Vercel in one click and personalise it by editing a single configuration file. Knowing Next.js helps if you want to customise components.",
-  },
-  {
-    q: "Can I add it to an existing Next.js project?",
-    a: "Yes. Install the linkfolio package and render the LinkFolio component with your own config object.",
-  },
-  {
-    q: "Can I use Google Analytics with Linkfolio?",
-    a: 'Yes, and it is not the only option. Set analytics: { provider: "ga", id: "G-…" } in your config and Linkfolio loads the tag and reports which link each visitor clicked. Google Tag Manager, Plausible and Umami ship as built-in providers too, you can register your own, and every link card emits a linkfolio:analytics DOM event you can listen to without configuring any provider at all.',
-  },
-];
 
 // Escaped because the result is embedded verbatim in a <script> element —
 // matches how src/seo/jsonLd.ts hardens its own JSON-LD sink.

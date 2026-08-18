@@ -65,6 +65,8 @@ export function buildSitemapEntries(
     entries.push(
       { url: `${origin}/demo`, priority: 0.9 },
       { url: `${origin}/docs`, priority: 0.8 },
+      { url: `${origin}/llms.txt`, priority: 0.5 },
+      { url: `${origin}/llms-full.txt`, priority: 0.5 },
     );
   }
 

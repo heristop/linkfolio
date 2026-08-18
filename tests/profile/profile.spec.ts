@@ -57,10 +57,14 @@ test("the sitemap lists only the root", async ({ request }) => {
   expect(xml.match(/<loc>/g)).toHaveLength(1);
 });
 
-test("the project llms.txt is not published", async ({ request }) => {
-  const response = await request.get("/llms.txt");
+test("the project llms.txt and llms-full.txt are not published", async ({
+  request,
+}) => {
+  for (const path of ["/llms.txt", "/llms-full.txt"]) {
+    const response = await request.get(path);
 
-  expect(response.status()).toBe(404);
+    expect(response.status(), path).toBe(404);
+  }
 });
 
 test("the 404 page stops advertising the documentation", async ({ page }) => {

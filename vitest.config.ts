@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 /**
@@ -14,6 +15,14 @@ import { defineConfig } from "vitest/config";
  * `IntersectionObserver` and the scroll listeners.
  */
 export default defineConfig({
+  resolve: {
+    // Mirrors tsconfig.json's "@/*" path so app/lib modules that import
+    // from src/ (e.g. landingJsonLd.ts -> "@/lib/sanitize") resolve the
+    // same way here as they do under Next.js's own bundler.
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
   test: {
     include: ["tests/unit/**/*.spec.ts"],
     environment: "node",

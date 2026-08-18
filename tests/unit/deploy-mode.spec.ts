@@ -43,6 +43,8 @@ test("the sitemap advertises marketing routes only in showcase mode", () => {
     "https://x.dev",
     "https://x.dev/demo",
     "https://x.dev/docs",
+    "https://x.dev/llms.txt",
+    "https://x.dev/llms-full.txt",
   ]);
   expect(profile.map((e) => e.url)).toEqual(["https://x.dev"]);
 });
