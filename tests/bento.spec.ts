@@ -24,6 +24,25 @@ async function selectLayout(page: Page, layout: "classic" | "bento") {
   await page.keyboard.press("Escape");
 }
 
+/**
+ * One phone viewport for every test that needs one, and one navigation for
+ * all of them.
+ *
+ * `domcontentloaded`, not the default `load`: a phone-width page asks the
+ * image optimiser for widths it has not produced before, and waiting for all
+ * of them makes a layout assertion hostage to image work it never looks at —
+ * on a single-worker runner that has timed out the navigation outright. The
+ * width is shared rather than per-test so those variants are generated once;
+ * a second, slightly different width would pay the whole cost again, which is
+ * exactly how this last broke.
+ */
+const PHONE = { width: 375, height: 780 };
+
+async function gotoDemoOnPhone(page: Page) {
+  await page.setViewportSize(PHONE);
+  await page.goto("/demo", { waitUntil: "domcontentloaded" });
+}
+
 /** Bounding box of the first tile of a given span, failing loudly if absent. */
 async function tileBox(page: Page, span: string) {
   const box = await page
@@ -158,8 +177,7 @@ test.describe("bento layout", () => {
     // A phone row is the tight case: two columns, a shorter row unit, and a
     // description long enough to wrap. Overflow here does not clip — it paints
     // over the tiles above and below.
-    await page.setViewportSize({ width: 390, height: 900 });
-    await page.goto("/demo");
+    await gotoDemoOnPhone(page);
     await selectLayout(page, "bento");
 
     const cards = page.locator('.network[data-direction="horizontal"]');
@@ -208,13 +226,7 @@ test.describe("bento layout", () => {
   });
 
   test("the grid collapses to two columns on a phone", async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 780 });
-    // `domcontentloaded`, not the default `load`: this is the only test that
-    // asks for a 375px-wide page, so every image is requested at a width the
-    // optimiser has not produced before. Waiting for all of them to arrive
-    // makes a layout assertion hostage to image work it never looks at, and
-    // on a single-worker runner that has timed out the navigation.
-    await page.goto("/demo", { waitUntil: "domcontentloaded" });
+    await gotoDemoOnPhone(page);
     await selectLayout(page, "bento");
 
     const columns = await page
