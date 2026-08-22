@@ -85,6 +85,24 @@ default is used instead. `attrs` is string-valued and is deliberately not the
 place for `async` or `defer`: loading is already controlled by `next/script`'s
 `strategy="afterInteractive"`.
 
+Together, `src` and `attrs` are what a self-hosted tracker needs. Umami is the
+common case — every adapter defaults to its vendor's cloud, so an instance you
+run yourself has to be named explicitly or the tag quietly reports to theirs:
+
+```javascript
+analytics: {
+  provider: "umami",
+  id: "00000000-0000-0000-0000-000000000000", // the website id from your dashboard
+  src: "https://umami.example.com/script.js",  // your instance, not cloud.umami.is
+  // Only when the collect API answers on another origin than the script.
+  attrs: { "data-host-url": "https://collect.example.com" },
+},
+```
+
+Umami sets no cookie and stores no visitor identifier, which is what lets a
+site drop its cookie banner when it switches — there is nothing left to ask
+about. Linkfolio itself never renders one either way.
+
 `trackLinkClicks` and `linkClickEvent` only affect what reaches the provider.
 The DOM event is unconditional and always carries `link_click`, so turning
 forwarding off never blinds your own listener.
