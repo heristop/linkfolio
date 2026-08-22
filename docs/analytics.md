@@ -85,6 +85,34 @@ default is used instead. `attrs` is string-valued and is deliberately not the
 place for `async` or `defer`: loading is already controlled by `next/script`'s
 `strategy="afterInteractive"`.
 
+Together, `src` and `attrs` are what a self-hosted tracker needs. Umami is the
+common case — every adapter defaults to its vendor's cloud, so an instance you
+run yourself has to be named explicitly or the tag quietly reports to theirs:
+
+```javascript
+analytics: {
+  provider: "umami",
+  id: "00000000-0000-0000-0000-000000000000", // the website id from your dashboard
+  // Your instance, not cloud.umami.is. Absolute http(s) only — see below.
+  src: "https://umami.example.com/script.js",
+  // Only when the collect API answers on another origin than the script.
+  attrs: { "data-host-url": "https://collect.example.com" },
+},
+```
+
+Get that `src` wrong and nothing tells you. A path like `/stats/script.js`, or
+a bare `umami.example.com/script.js`, is not an absolute `http(s)` URL, so it
+is rejected and the vendor default takes its place — the page then loads Umami
+Cloud with your website id and reports every visit there. Validate the value
+where you set it; the library cannot tell a typo from a deliberate cloud setup.
+
+Linkfolio renders no cookie banner under any provider. Whether your site needs
+one is yours to decide, but the input to that decision is what a tracker puts
+on the visitor's device: Umami's script sets no cookie and writes no id there,
+while `ga` and `gtm` do. Umami still derives a pseudonymous visitor hash
+server-side, so "no cookie" is not the same as "no personal data" — which is a
+question for your jurisdiction, not for this table.
+
 `trackLinkClicks` and `linkClickEvent` only affect what reaches the provider.
 The DOM event is unconditional and always carries `link_click`, so turning
 forwarding off never blinds your own listener.

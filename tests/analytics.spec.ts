@@ -195,6 +195,39 @@ test("umami keys off its own attribute", () => {
   expect(umami.attrs?.["data-website-id"]).toBe("abc-123");
 });
 
+test("a self-hosted umami carries its script, its id and its collect host", () => {
+  // The three pieces are covered apart — `src` on plausible, the id above,
+  // `attrs` on ga — but this is the shape someone running their own instance
+  // actually writes, and the one that has to keep working: a tracker that
+  // reaches Umami Cloud instead of their server is a silent data leak.
+  const [script] = analyticsScriptsFor({
+    provider: "umami",
+    id: "abc-123",
+    src: "https://stats.example.com/script.js",
+    attrs: { "data-host-url": "https://collect.example.com" },
+  });
+
+  expect(script.src).toBe("https://stats.example.com/script.js");
+  expect(script.attrs?.["data-website-id"]).toBe("abc-123");
+  expect(script.attrs?.["data-host-url"]).toBe("https://collect.example.com");
+});
+
+test("a self-hosted umami src that is not absolute falls back to the vendor", () => {
+  // Documented rather than desirable: `/stats/script.js` looks like a
+  // self-hosted instance and is not one, so the page loads Umami Cloud with
+  // the website id and reports there. The library cannot tell that from a
+  // deliberate cloud setup — docs/analytics.md tells the reader to validate it
+  // where they set it, and this pins the behaviour they would be validating
+  // against.
+  const [script] = analyticsScriptsFor({
+    provider: "umami",
+    id: "abc-123",
+    src: "/stats/script.js",
+  });
+
+  expect(script.src).toBe("https://cloud.umami.is/script.js");
+});
+
 test("config attrs are merged onto every script the adapter returns", () => {
   const scripts = analyticsScriptsFor({
     provider: "ga",
