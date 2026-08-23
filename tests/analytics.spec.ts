@@ -190,6 +190,48 @@ test("a self-hosted origin overrides the vendor default", () => {
   expect(script.src).toBe("https://stats.example.com/js/script.js");
 });
 
+test("cloudflare carries its token in the beacon's JSON attribute", () => {
+  const [script] = analyticsScriptsFor({
+    provider: "cloudflare",
+    id: "abc-123",
+  });
+
+  expect(script.src).toContain("static.cloudflareinsights.com");
+  // A JSON attribute, not a plain one: the quoting is what makes the token
+  // readable by the beacon at all.
+  expect(script.attrs?.["data-cf-beacon"]).toBe('{"token":"abc-123"}');
+});
+
+test("cloudflare drops events rather than pretending to send them", () => {
+  const globals = globalThis as { umami?: unknown; gtag?: unknown };
+  const previous = { umami: globals.umami, gtag: globals.gtag };
+  let reached = false;
+
+  globals.umami = {
+    track: () => {
+      reached = true;
+    },
+  };
+  globals.gtag = () => {
+    reached = true;
+  };
+
+  try {
+    // Cloudflare Web Analytics has no event API. The adapter says so by doing
+    // nothing — the risk being a silent fallthrough onto whatever global some
+    // other tag happens to have installed.
+    sendAnalyticsEvent(
+      { name: "link_click", params: { url: "https://example.com" } },
+      { provider: "cloudflare", id: "abc-123" },
+    );
+  } finally {
+    globals.umami = previous.umami;
+    globals.gtag = previous.gtag;
+  }
+
+  expect(reached).toBe(false);
+});
+
 test("umami keys off its own attribute", () => {
   const [umami] = analyticsScriptsFor({ provider: "umami", id: "abc-123" });
   expect(umami.attrs?.["data-website-id"]).toBe("abc-123");

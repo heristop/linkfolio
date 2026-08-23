@@ -230,7 +230,12 @@ export type AnalyticsAdapter = {
 };
 
 /** The adapters that ship built in. Consumers may register any other name. */
-export type AnalyticsProviderName = "ga" | "gtm" | "plausible" | "umami";
+export type AnalyticsProviderName =
+  | "cloudflare"
+  | "ga"
+  | "gtm"
+  | "plausible"
+  | "umami";
 
 export type AnalyticsConfig = {
   /**

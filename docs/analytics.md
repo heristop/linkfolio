@@ -55,14 +55,22 @@ Settings → Environment Variables) to switch analytics on; leave it unset and n
 third-party script is loaded at all. The `NEXT_PUBLIC_` prefix is required — see
 the note at the end of this section.
 
-| Provider      | `id` is your…              | Custom events        |
-| ------------- | -------------------------- | -------------------- |
-| `"ga"`        | GA4 measurement ID (`G-…`) | Yes, via `gtag`      |
-| `"gtm"`       | GTM container ID (`GTM-…`) | Yes, via `dataLayer` |
-| `"plausible"` | Site domain                | Yes, as props        |
-| `"umami"`     | Website ID                 | Yes                  |
+| Provider       | `id` is your…              | Custom events        |
+| -------------- | -------------------------- | -------------------- |
+| `"ga"`         | GA4 measurement ID (`G-…`) | Yes, via `gtag`      |
+| `"gtm"`        | GTM container ID (`GTM-…`) | Yes, via `dataLayer` |
+| `"plausible"`  | Site domain                | Yes, as props        |
+| `"umami"`      | Website ID                 | Yes                  |
+| `"cloudflare"` | Web Analytics token        | **No** — see below   |
 
-Two provider quirks worth knowing before you read your dashboard. Plausible's
+Cloudflare Web Analytics has no event API at all: no `track()`, no queue, no
+global to forward to. It collects page views on its own and nothing else, so a
+card click — or any `sendAnalyticsEvent` call — is recorded nowhere. The adapter
+does nothing rather than pretend, which is the honest shape but also the quiet
+one: pick it for a site you only need visit counts for, and something else where
+a click is the thing you are measuring.
+
+Two other provider quirks worth knowing before you read your dashboard. Plausible's
 default script is `script.outbound-links.js`, which already records outbound
 clicks on its own, so a card click shows up twice under two names — Plausible's
 `Outbound Link: Click` and the forwarded `link_click`. Point `src` at a plain
