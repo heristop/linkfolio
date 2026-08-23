@@ -133,6 +133,29 @@ function publicSrc(config: AnalyticsConfig, fallback: string): string {
   return config.src && isPublicUrl(config.src) ? config.src : fallback;
 }
 
+registerAnalyticsAdapter("cloudflare", {
+  scripts: (config) => [
+    {
+      id: "lf-cloudflare",
+      src: publicSrc(
+        config,
+        "https://static.cloudflareinsights.com/beacon.min.js",
+      ),
+      // The beacon reads its token from a JSON attribute rather than a plain
+      // one. `JSON.stringify` is what makes the value safe to sit inside it:
+      // the id is already restricted to letters, digits, dots, dashes and
+      // underscores by `isSafeAnalyticsId`, but the quoting is not optional.
+      attrs: { "data-cf-beacon": JSON.stringify({ token: config.id ?? "" }) },
+    },
+  ],
+  // Cloudflare Web Analytics has no event API — no `track()`, no queue, nothing
+  // to forward to. Page views it collects on its own; anything you send here,
+  // including `link_click`, is not recorded anywhere. That is a property of the
+  // vendor, not an omission: a site that needs events wants a provider that has
+  // them. Left as an explicit no-op so the shape stays honest.
+  send: () => {},
+});
+
 registerAnalyticsAdapter("ga", {
   scripts: (config) => {
     // `resolveAnalyticsAdapter` hands this adapter to any caller, not just

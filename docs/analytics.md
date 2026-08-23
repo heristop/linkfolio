@@ -55,14 +55,22 @@ Settings → Environment Variables) to switch analytics on; leave it unset and n
 third-party script is loaded at all. The `NEXT_PUBLIC_` prefix is required — see
 the note at the end of this section.
 
-| Provider      | `id` is your…              | Custom events        |
-| ------------- | -------------------------- | -------------------- |
-| `"ga"`        | GA4 measurement ID (`G-…`) | Yes, via `gtag`      |
-| `"gtm"`       | GTM container ID (`GTM-…`) | Yes, via `dataLayer` |
-| `"plausible"` | Site domain                | Yes, as props        |
-| `"umami"`     | Website ID                 | Yes                  |
+| Provider       | `id` is your…              | Custom events        |
+| -------------- | -------------------------- | -------------------- |
+| `"ga"`         | GA4 measurement ID (`G-…`) | Yes, via `gtag`      |
+| `"gtm"`        | GTM container ID (`GTM-…`) | Yes, via `dataLayer` |
+| `"plausible"`  | Site domain                | Yes, as props        |
+| `"umami"`      | Website ID                 | Yes                  |
+| `"cloudflare"` | Web Analytics token        | **No** — see below   |
 
-Two provider quirks worth knowing before you read your dashboard. Plausible's
+Cloudflare Web Analytics has no event API at all: no `track()`, no queue, no
+global to forward to. It collects page views on its own and nothing else, so a
+card click — or any `sendAnalyticsEvent` call — is recorded nowhere. The adapter
+does nothing rather than pretend, which is the honest shape but also the quiet
+one: pick it for a site you only need visit counts for, and something else where
+a click is the thing you are measuring.
+
+Two other provider quirks worth knowing before you read your dashboard. Plausible's
 default script is `script.outbound-links.js`, which already records outbound
 clicks on its own, so a card click shows up twice under two names — Plausible's
 `Outbound Link: Click` and the forwarded `link_click`. Point `src` at a plain
@@ -84,6 +92,34 @@ anything else — a `data:` or `javascript:` value — is ignored and the vendor
 default is used instead. `attrs` is string-valued and is deliberately not the
 place for `async` or `defer`: loading is already controlled by `next/script`'s
 `strategy="afterInteractive"`.
+
+Together, `src` and `attrs` are what a self-hosted tracker needs. Umami is the
+common case — every adapter defaults to its vendor's cloud, so an instance you
+run yourself has to be named explicitly or the tag quietly reports to theirs:
+
+```javascript
+analytics: {
+  provider: "umami",
+  id: "00000000-0000-0000-0000-000000000000", // the website id from your dashboard
+  // Your instance, not cloud.umami.is. Absolute http(s) only — see below.
+  src: "https://umami.example.com/script.js",
+  // Only when the collect API answers on another origin than the script.
+  attrs: { "data-host-url": "https://collect.example.com" },
+},
+```
+
+Get that `src` wrong and nothing tells you. A path like `/stats/script.js`, or
+a bare `umami.example.com/script.js`, is not an absolute `http(s)` URL, so it
+is rejected and the vendor default takes its place — the page then loads Umami
+Cloud with your website id and reports every visit there. Validate the value
+where you set it; the library cannot tell a typo from a deliberate cloud setup.
+
+Linkfolio renders no cookie banner under any provider. Whether your site needs
+one is yours to decide, but the input to that decision is what a tracker puts
+on the visitor's device: Umami's script sets no cookie and writes no id there,
+while `ga` and `gtm` do. Umami still derives a pseudonymous visitor hash
+server-side, so "no cookie" is not the same as "no personal data" — which is a
+question for your jurisdiction, not for this table.
 
 `trackLinkClicks` and `linkClickEvent` only affect what reaches the provider.
 The DOM event is unconditional and always carries `link_click`, so turning
