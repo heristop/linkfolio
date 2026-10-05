@@ -12,6 +12,45 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 > from the versions actually published, so headings below follow the npm
 > versions. See [Release tagging](#release-tagging).
 
+## [3.2.0] - 2026-10-05
+
+No config change is required and nothing is removed. One visible difference
+without any action on your part: the first large tiles on the page now load
+eagerly, so the banner that is usually the page's Largest Contentful Paint
+arrives with the first render instead of after it.
+
+### Added
+
+- **A `cloudflare` analytics provider.** Loads the Cloudflare Web Analytics
+  beacon with the site token from `analytics.id`. Cloudflare has no event API,
+  so page views are recorded and `link_click` events are not; the adapter's
+  `send` is an explicit no-op rather than a silent drop.
+- **Theme preset changes follow you across tabs.** Picking a palette in one tab
+  now updates the others through the `storage` event.
+- **The project describes itself on the surfaces it owns.** A rewritten README
+  and package description, topic docs under `docs/` (configuration, layouts,
+  theming, assets, analytics, SEO), `/llms-full.txt`, richer landing-page
+  JSON-LD, and an IndexNow ping on release.
+
+### Fixed
+
+- **The LCP image is no longer lazy-loaded.** Only the first four tiles were
+  given `priority`, and on most real configs those are small social icons; the
+  large project or website banner further down, the one the browser actually
+  measures, was loaded lazily and Next.js warned about it. The first two large
+  tiles (any span other than `1x1`) are now eager as well.
+- **No more state set inside effects.** The theme toggle and profile header
+  detect the client with `useSyncExternalStore` instead of a `mounted` flag
+  set in an effect, the theme preset is read the same way, a changed `alias`
+  restarts the typing animation during render rather than after a paint, and
+  the QR dialog clears its "Copied" state when it closes. Behaviour is
+  unchanged; each saves a render.
+
+### Changed
+
+- **Dependencies updated**, notably Next.js 16.3.8 and React 19.3. Peer ranges
+  are unchanged.
+
 ## [3.1.1] - 2026-08-16
 
 A rendering fix for `layout: "bento"`, scoped to cards carrying
@@ -281,6 +320,7 @@ above can be trusted:
 Tagging `3.0.0` on the release commit, with `package.json` matching, brings the
 two back into step.
 
+[3.2.0]: https://github.com/heristop/linkfolio/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/heristop/linkfolio/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/heristop/linkfolio/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/heristop/linkfolio/compare/2.2.3...3.0.0
