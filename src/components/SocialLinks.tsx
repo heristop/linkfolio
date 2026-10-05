@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import SocialNetwork from "./SocialNetwork";
 import type { SocialLinksProps, SocialNetworkType } from "../types";
 import { arrangeBento } from "../lib/bento";
+import { eagerTileIndexes } from "../lib/priority";
 
 /**
  * Classic wraps each group into its own centred row. Bento is one grid, so the
@@ -56,8 +57,8 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     : [...groups.entries()];
 
   // A single counter running across every group, in render order, so
-  // "priority" reflects the first 4 tiles on the page overall — not the
-  // first 4 of each group.
+  // "priority" reflects the page overall — not each group on its own.
+  const eager = eagerTileIndexes(sections.flatMap(([, networks]) => networks));
   let runningIndex = 0;
 
   return (
@@ -83,7 +84,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
               <SocialNetwork
                 key={config.url || idx}
                 config={config}
-                priority={globalIndex < 4}
+                priority={eager.has(globalIndex)}
                 onLinkClick={onLinkClick}
                 titleLevel={titleLevel}
               />
