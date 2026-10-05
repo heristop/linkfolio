@@ -1,13 +1,13 @@
 "use client";
 import { useTheme } from "next-themes";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useIsClient } from "../lib/useIsClient";
 
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => setMounted(true), []);
+  const mounted = useIsClient();
 
   if (!mounted) return <div className="lf-icon-button" aria-hidden="true" />;
 

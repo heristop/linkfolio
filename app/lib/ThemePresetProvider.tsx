@@ -4,9 +4,9 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
+  useSyncExternalStore,
 } from "react";
 import type { ThemePresetKey } from "@/themes";
 import {
@@ -25,23 +25,39 @@ const ThemePresetContext = createContext<ThemePresetValue | undefined>(
   undefined,
 );
 
+function readStoredPreset(): ThemePresetKey {
+  try {
+    const stored = globalThis.localStorage.getItem(PRESET_STORAGE_KEY);
+    return isThemePresetKey(stored) ? stored : DEFAULT_PRESET;
+  } catch {
+    // Storage can be unavailable (privacy settings); fall back to the default.
+    return DEFAULT_PRESET;
+  }
+}
+
+// Another tab picking a palette updates this one too.
+function subscribeToStorage(onChange: () => void) {
+  globalThis.addEventListener("storage", onChange);
+  return () => globalThis.removeEventListener("storage", onChange);
+}
+
 export function ThemePresetProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Starts at the default on both sides of hydration — reading storage during
-  // the first render would render different markup on the client than the
-  // server sent. The page is already showing the stored palette by then: the
-  // boot script applied it before first paint, so this only catches React up.
-  const [preset, setPresetState] = useState<ThemePresetKey>(DEFAULT_PRESET);
-
-  useEffect(() => {
-    const stored = globalThis.localStorage.getItem(PRESET_STORAGE_KEY);
-
-    if (isThemePresetKey(stored)) setPresetState(stored);
-  }, []);
+  // The server snapshot is the default, so hydration renders the same markup
+  // the server sent; the client snapshot then reads storage. The page is
+  // already showing the stored palette by then: the boot script applied it
+  // before first paint, so this only catches React up.
+  const stored = useSyncExternalStore(
+    subscribeToStorage,
+    readStoredPreset,
+    () => DEFAULT_PRESET,
+  );
+  const [chosen, setChosen] = useState<ThemePresetKey | null>(null);
+  const preset = chosen ?? stored;
 
   const setPreset = useCallback((key: ThemePresetKey) => {
-    setPresetState(key);
+    setChosen(key);
     applyPresetCss(key);
 
     try {

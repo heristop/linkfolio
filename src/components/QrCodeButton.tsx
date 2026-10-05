@@ -70,7 +70,6 @@ export default function QrCodeButton() {
     }
 
     dialogRef.current?.showModal();
-    setCopied(false);
 
     // The encoder chunk can fail to load (offline, blocked). The dialog itself
     // still works, so that must not surface as an unhandled rejection.
@@ -90,7 +89,11 @@ export default function QrCodeButton() {
     if (!dialog) return;
 
     // Native <dialog> already closes on Escape, which fires "close".
-    const handleClose = () => setOpen(false);
+    // A closed dialog forgets the "Copied" state, so reopening starts fresh.
+    const handleClose = () => {
+      setOpen(false);
+      setCopied(false);
+    };
     // Light dismiss: a click on the backdrop targets the dialog element itself.
     const handleClick = (event: MouseEvent) => {
       if (event.target === dialog) setOpen(false);

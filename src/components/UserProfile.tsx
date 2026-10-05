@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import Image from "next/image";
 import type { UserProfileProps } from "../types";
 import { defaultAvatarIcon } from "../assets";
+import { useTypedAlias } from "../lib/useTypedAlias";
 
 const UserProfile: React.FC<UserProfileProps> = ({
   userConfig,
@@ -11,58 +12,10 @@ const UserProfile: React.FC<UserProfileProps> = ({
   const aliasText = userConfig.alias;
   const HeadingTag = headingLevel ?? "h1";
 
-  const [isMounted, setIsMounted] = useState(false);
-  const [typing, setTyping] = useState(false);
-  const [alias, setAlias] = useState("");
-  const [index, setIndex] = useState(0);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const typeAlias = useCallback(() => {
-    if (!aliasText) return;
-
-    if (typing && index < aliasText.length) {
-      const timeoutId = setTimeout(() => {
-        setAlias((prev) => prev + aliasText[index]);
-        setIndex((prev) => prev + 1);
-      }, 100);
-
-      return () => clearTimeout(timeoutId);
-    }
-
-    if (typing && index >= aliasText.length && !done) {
-      const timeoutId = setTimeout(() => setDone(true), 1500);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [aliasText, typing, index, done]);
-
-  // A new alias restarts the animation. Without this the counters only ever
-  // grow, so shortening the alias leaves the visible text longer than the
-  // value it is supposed to be spelling out — and `done` latches the second
-  // branch off, so nothing recovers it.
-  useEffect(() => {
-    setAlias("");
-    setIndex(0);
-    setDone(false);
-  }, [aliasText]);
-
-  useEffect(() => {
-    if (!userConfig.enableTypingAlias) return;
-
-    // `typeAlias` returns the clearTimeout for the step it scheduled;
-    // dropping it leaves timers running against a stale index.
-    return typeAlias();
-  }, [userConfig.enableTypingAlias, typeAlias]);
-
-  useEffect(() => {
-    if (userConfig.enableTypingAlias && isMounted) {
-      const timeoutId = setTimeout(() => setTyping(true), 300);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [isMounted, userConfig.enableTypingAlias]);
+  const { alias, done } = useTypedAlias(
+    aliasText,
+    userConfig.enableTypingAlias,
+  );
 
   return (
     <header className="profile mt-2 text-center mb-(--lf-profile-margin-bottom)">
