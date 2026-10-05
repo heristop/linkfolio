@@ -12,6 +12,19 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 > from the versions actually published, so headings below follow the npm
 > versions. See [Release tagging](#release-tagging).
 
+## [3.2.1] - 2026-10-05
+
+A follow-up to the 3.2.0 loading fix for the classic layout. No config change
+is required.
+
+### Fixed
+
+- **The LCP banner is eager in the classic layout again.** 3.2.0 counted any
+  tile with a non-`1x1` span as large, but only bento reads `span`. A social
+  link carrying `span: "1x2"` for the bento grid still renders as a small icon
+  in classic, yet it took one of the two large-tile eager slots, so the second
+  banner on the page stayed lazy. Classic now sizes tiles by their group.
+
 ## [3.2.0] - 2026-10-05
 
 No config change is required and nothing is removed. One visible difference
@@ -320,6 +333,7 @@ above can be trusted:
 Tagging `3.0.0` on the release commit, with `package.json` matching, brings the
 two back into step.
 
+[3.2.1]: https://github.com/heristop/linkfolio/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/heristop/linkfolio/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/heristop/linkfolio/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/heristop/linkfolio/compare/3.0.0...3.1.0
