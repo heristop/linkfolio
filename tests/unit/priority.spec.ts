@@ -26,15 +26,16 @@ test("large tiles after the icons are eager too: one of them is the LCP", () => 
   ]);
 });
 
-test("an explicit span counts as large, an explicit 1x1 does not", () => {
+test("bento: an explicit span counts as large, an explicit 1x1 does not", () => {
   const networks = [
     ...icons(4),
     link({ group: "project", span: "1x1" }),
     link({ span: "2x1" }),
   ];
 
-  expect(eagerTileIndexes(networks).has(4)).toBe(false);
-  expect(eagerTileIndexes(networks).has(5)).toBe(true);
+  const eager = eagerTileIndexes(networks, { bento: true });
+  expect(eager.has(4)).toBe(false);
+  expect(eager.has(5)).toBe(true);
 });
 
 test("large tiles already among the first four use up the large budget", () => {
@@ -50,4 +51,19 @@ test("large tiles already among the first four use up the large budget", () => {
 
 test("no tiles, nothing eager", () => {
   expect(eagerTileIndexes([]).size).toBe(0);
+});
+
+test("classic: a social icon given a bento span stays small", () => {
+  // The real-world config that left the LCP banner lazy: GitHub carries
+  // `span: "1x2"` for bento, which classic ignores.
+  const networks = [
+    link({ group: "socialnetwork", span: "1x2" }),
+    ...icons(4),
+    link({ group: "website" }),
+    link({ group: "project" }),
+  ];
+
+  const eager = eagerTileIndexes(networks);
+  expect(eager.has(5)).toBe(true);
+  expect(eager.has(6)).toBe(true);
 });

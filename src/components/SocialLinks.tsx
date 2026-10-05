@@ -58,7 +58,10 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
 
   // A single counter running across every group, in render order, so
   // "priority" reflects the page overall — not each group on its own.
-  const eager = eagerTileIndexes(sections.flatMap(([, networks]) => networks));
+  const eager = eagerTileIndexes(
+    sections.flatMap(([, networks]) => networks),
+    { bento },
+  );
   let runningIndex = 0;
 
   return (

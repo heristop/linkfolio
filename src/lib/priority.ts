@@ -7,6 +7,16 @@ const LEADING_TILES = 4;
 const LEADING_LARGE_TILES = 2;
 
 /**
+ * Only bento reads `span`; the classic layout sizes a tile by its group, so a
+ * social link given `span: "1x2"` for the bento grid is still a small icon
+ * there and must not take a large tile's eager slot.
+ */
+function isLarge(network: SocialNetworkType, bento: boolean): boolean {
+  const config = bento ? network : { ...network, span: undefined };
+  return resolveSpan(config) !== "1x1";
+}
+
+/**
  * Which tiles load eagerly, by render index.
  *
  * Counting only the first few tiles missed the Largest Contentful Paint on
@@ -16,6 +26,7 @@ const LEADING_LARGE_TILES = 2;
  */
 export function eagerTileIndexes(
   networks: readonly SocialNetworkType[],
+  { bento = false }: { bento?: boolean } = {},
 ): Set<number> {
   const eager = new Set<number>();
   let large = 0;
@@ -25,7 +36,7 @@ export function eagerTileIndexes(
       eager.add(index);
     }
 
-    if (large >= LEADING_LARGE_TILES || resolveSpan(network) === "1x1") {
+    if (large >= LEADING_LARGE_TILES || !isLarge(network, bento)) {
       return;
     }
 
