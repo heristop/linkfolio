@@ -21,6 +21,18 @@ export default defineConfig({
     ".svg": "dataurl",
     ".webp": "dataurl",
   },
+  inputOptions: {
+    // Each component keeps its own `"use client"` for the demo app in this
+    // repo, which imports them unbundled. Bundling merges them into one
+    // chunk, where the directive is meaningless — the `use-client-banner`
+    // plugin below puts the one that matters on the entry — so rolldown's
+    // per-file warning about dropping them is expected, not a problem.
+    onLog(level, log, defaultHandler) {
+      if (log.code === "MODULE_LEVEL_DIRECTIVE") return;
+
+      defaultHandler(level, log);
+    },
+  },
   plugins: [
     {
       name: "use-client-banner",
